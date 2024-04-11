@@ -91,6 +91,7 @@ public class Code01_FindFirstIntersectNode {
 	public static Node bothLoop(Node head1, Node loop1, Node head2, Node loop2) {
 		Node cur1 = null;
 		Node cur2 = null;
+		// 情况二：入环节点相同
 		if (loop1 == loop2) {
 			cur1 = head1;
 			cur2 = head2;
@@ -116,6 +117,9 @@ public class Code01_FindFirstIntersectNode {
 			}
 			return cur1;
 		} else {
+			// 情况一、三
+			// loop1绕一圈，能找到loop2，就是情况三，然会任意一个相交节点
+			// 找不到loop2，就是情况一，没有相交节点
 			cur1 = loop1.next;
 			while (cur1 != loop1) {
 				if (cur1 == loop2) {
