@@ -17,12 +17,15 @@ public class Code01_FindFirstIntersectNode {
 		}
 		Node loop1 = getLoopNode(head1);
 		Node loop2 = getLoopNode(head2);
+		// 都无环
 		if (loop1 == null && loop2 == null) {
 			return noLoop(head1, head2);
 		}
+		// 都有环
 		if (loop1 != null && loop2 != null) {
 			return bothLoop(head1, loop1, head2, loop2);
 		}
+		// 一个有环一个无环。不可能相交
 		return null;
 	}
 
