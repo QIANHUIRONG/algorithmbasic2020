@@ -34,7 +34,7 @@ public class Code03_UnRecursiveTraversalBT {
 		System.out.println();
 	}
 
-	// 中序
+	// 中序 1：48
 	public static void in(Node cur) {
 		System.out.print("in-order: ");
 		if (cur != null) {
@@ -46,7 +46,7 @@ public class Code03_UnRecursiveTraversalBT {
 				} else {
 					cur = stack.pop();
 					System.out.print(cur.value + " ");
-					cur = cur.right;
+
 				}
 			}
 		}
