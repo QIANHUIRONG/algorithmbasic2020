@@ -33,6 +33,9 @@ public class Code02_SerializeAndReconstructTree {
 
 	/**
 	 * 一、先序方式序列化
+	 * Queue<String> ans = new LinkedList<>();只是存储的容器，你用其他的也行,
+	 * 像力扣297题就要求序列化成String类型。
+	 * 注意：不能忽略空节点
 	 */
 	public static Queue<String> preSerial(Node head) {
 		Queue<String> ans = new LinkedList<>();
@@ -97,7 +100,7 @@ public class Code02_SerializeAndReconstructTree {
 		if (poslist == null || poslist.size() == 0) {
 			return null;
 		}
-		// 左右中  ->  stack(中右左)
+		// 左右中  ->  stack(中右左) -> 和先序一样，先建立头，再建左，再建右
 		Stack<String> stack = new Stack<>();
 		while (!poslist.isEmpty()) {
 			stack.push(poslist.poll());
@@ -120,6 +123,13 @@ public class Code02_SerializeAndReconstructTree {
 
 	/**
 	 * 三、按层方式序列化
+	 *
+	 *  本质就是宽度优先遍历->宽度优先遍历需要一个队列
+	 *     也是不能忽略空节点
+	 *     序列化的规则:
+	 *         遇到一个节点，序列化它的左右孩子。
+	 *         如果孩子为空，就只序列化不往队列里去
+	 *         如果孩子不为空，就即序列化又往队列里去。（宽度优先遍历的体现罢了）
 	 */
 	public static Queue<String> levelSerial(Node head) {
 		Queue<String> ans = new LinkedList<>();
@@ -170,6 +180,43 @@ public class Code02_SerializeAndReconstructTree {
 			}
 			if (node.right != null) {
 				queue.add(node.right);
+			}
+		}
+		return head;
+	}
+
+	// 自己的反序列化版本，更好理解一点
+	// 按层方式序列化和反序列化归根结底都是按层方式，都需要一个队列
+	public static Node buildByLevelQueue2(Queue<String> levelList) {
+		if (levelList == null || levelList.size() == 0) {
+			return null;
+		}
+		String value = levelList.poll();
+		Node head = null;
+		if (value == null) {
+			return head;
+		}
+		head = new Node(Integer.valueOf(value));
+		// BFS需要的
+		Queue<Node> queue = new LinkedList<>();
+		queue.add(head);
+		while (!queue.isEmpty()) {
+			Node node = queue.poll();
+			// 左
+			value = levelList.poll();
+			if (value != null) {
+				node.left = new Node(Integer.valueOf(value));
+				queue.add(node.left);
+			} else {
+				node.left = null;
+			}
+			// 右
+			value = levelList.poll();
+			if (value != null) {
+				node.right = new Node(Integer.valueOf(value));
+				queue.add(node.right);
+			} else {
+				node.right = null;
 			}
 		}
 		return head;
