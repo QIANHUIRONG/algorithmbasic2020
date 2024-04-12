@@ -1,5 +1,6 @@
 package class10;
 
+// 有笔记，语雀
 public class Code02_RecursiveTraversalBT {
 
 	public static class Node {
@@ -33,6 +34,7 @@ public class Code02_RecursiveTraversalBT {
 		pre(head.right);
 	}
 
+	// 中序
 	public static void in(Node head) {
 		if (head == null) {
 			return;
@@ -42,6 +44,8 @@ public class Code02_RecursiveTraversalBT {
 		in(head.right);
 	}
 
+
+	// 后序
 	public static void pos(Node head) {
 		if (head == null) {
 			return;

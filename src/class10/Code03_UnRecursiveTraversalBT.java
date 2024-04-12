@@ -14,6 +14,7 @@ public class Code03_UnRecursiveTraversalBT {
 		}
 	}
 
+	// 先序
 	public static void pre(Node head) {
 		System.out.print("pre-order: ");
 		if (head != null) {
@@ -33,6 +34,7 @@ public class Code03_UnRecursiveTraversalBT {
 		System.out.println();
 	}
 
+	// 中序
 	public static void in(Node cur) {
 		System.out.print("in-order: ");
 		if (cur != null) {
@@ -51,6 +53,7 @@ public class Code03_UnRecursiveTraversalBT {
 		System.out.println();
 	}
 
+	// 后序
 	public static void pos1(Node head) {
 		System.out.print("pos-order: ");
 		if (head != null) {
@@ -75,6 +78,7 @@ public class Code03_UnRecursiveTraversalBT {
 		System.out.println();
 	}
 
+	// 后序：只使用1个栈
 	public static void pos2(Node h) {
 		System.out.print("pos-order: ");
 		if (h != null) {
