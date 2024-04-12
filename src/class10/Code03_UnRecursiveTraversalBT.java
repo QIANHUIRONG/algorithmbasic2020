@@ -64,6 +64,7 @@ public class Code03_UnRecursiveTraversalBT {
 
 	// 中序，自己的优化，更符合自然智慧
 	public static void in2(Node head) {
+		System.out.print("in-order2: ");
 		if (head != null) {
 			Stack<Node> stack = new Stack<>();
 			// 先将头节点整条左边界压入栈中
@@ -82,6 +83,7 @@ public class Code03_UnRecursiveTraversalBT {
 				}
 			}
 		}
+		System.out.println();
 	}
 
 	// 后序
@@ -143,6 +145,8 @@ public class Code03_UnRecursiveTraversalBT {
 		pre(head);
 		System.out.println("========");
 		in(head);
+		System.out.println("========");
+		in2(head);
 		System.out.println("========");
 		pos1(head);
 		System.out.println("========");
