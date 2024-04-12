@@ -35,7 +35,6 @@ public class Code03_UnRecursiveTraversalBT {
 	}
 
 	// 中序 1：48
-
 	/**
 	 * 原理：整棵树可以被子树的左边界分解
 	 * 既然遇到cur，整个左边界入栈，那么弹出打印的时候一定是先左再当前节点；弹出当前节点时，cur会来到右树进行这个过程。所以完成了左头右。
@@ -61,6 +60,28 @@ public class Code03_UnRecursiveTraversalBT {
 			}
 		}
 		System.out.println();
+	}
+
+	// 中序，自己的优化，更符合自然智慧
+	public static void in2(Node head) {
+		if (head != null) {
+			Stack<Node> stack = new Stack<>();
+			// 先将头节点整条左边界压入栈中
+			while (head != null) {
+				stack.add(head);
+				head = head.left;
+			}
+			// 弹出节点打印，然后指向右子树，接着右子树上将整条左边界压入栈中；
+			while (!stack.isEmpty()) {
+				head = stack.pop();
+				System.out.print(head.value + " ");
+				head = head.right;
+				while (head != null) {
+					stack.add(head);
+					head = head.left;
+				}
+			}
+		}
 	}
 
 	// 后序
