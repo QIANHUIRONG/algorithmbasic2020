@@ -31,6 +31,9 @@ public class Code02_SerializeAndReconstructTree {
 		}
 	}
 
+	/**
+	 * 一、先序方式序列化
+	 */
 	public static Queue<String> preSerial(Node head) {
 		Queue<String> ans = new LinkedList<>();
 		pres(head, ans);
@@ -47,38 +50,9 @@ public class Code02_SerializeAndReconstructTree {
 		}
 	}
 
-	public static Queue<String> inSerial(Node head) {
-		Queue<String> ans = new LinkedList<>();
-		ins(head, ans);
-		return ans;
-	}
-
-	public static void ins(Node head, Queue<String> ans) {
-		if (head == null) {
-			ans.add(null);
-		} else {
-			ins(head.left, ans);
-			ans.add(String.valueOf(head.value));
-			ins(head.right, ans);
-		}
-	}
-
-	public static Queue<String> posSerial(Node head) {
-		Queue<String> ans = new LinkedList<>();
-		poss(head, ans);
-		return ans;
-	}
-
-	public static void poss(Node head, Queue<String> ans) {
-		if (head == null) {
-			ans.add(null);
-		} else {
-			poss(head.left, ans);
-			poss(head.right, ans);
-			ans.add(String.valueOf(head.value));
-		}
-	}
-
+	/**
+	 * 一、先序方式返序列化
+	 */
 	public static Node buildByPreQueue(Queue<String> prelist) {
 		if (prelist == null || prelist.size() == 0) {
 			return null;
@@ -97,6 +71,28 @@ public class Code02_SerializeAndReconstructTree {
 		return head;
 	}
 
+	/**
+	 * 二、后序方式序列化
+	 */
+	public static Queue<String> posSerial(Node head) {
+		Queue<String> ans = new LinkedList<>();
+		poss(head, ans);
+		return ans;
+	}
+
+	public static void poss(Node head, Queue<String> ans) {
+		if (head == null) {
+			ans.add(null);
+		} else {
+			poss(head.left, ans);
+			poss(head.right, ans);
+			ans.add(String.valueOf(head.value));
+		}
+	}
+
+	/**
+	 * 二、后序方式反序列化
+	 */
 	public static Node buildByPosQueue(Queue<String> poslist) {
 		if (poslist == null || poslist.size() == 0) {
 			return null;
@@ -120,6 +116,11 @@ public class Code02_SerializeAndReconstructTree {
 		return head;
 	}
 
+
+
+	/**
+	 * 三、按层方式序列化
+	 */
 	public static Queue<String> levelSerial(Node head) {
 		Queue<String> ans = new LinkedList<>();
 		if (head == null) {
@@ -147,6 +148,9 @@ public class Code02_SerializeAndReconstructTree {
 		return ans;
 	}
 
+	/**
+	 * 三、按层方式返序列化
+	 */
 	public static Node buildByLevelQueue(Queue<String> levelList) {
 		if (levelList == null || levelList.size() == 0) {
 			return null;
