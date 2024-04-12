@@ -3,6 +3,12 @@ package class11;
 import java.util.LinkedList;
 import java.util.Queue;
 
+// 按照层级遍历二叉树
+/*
+ *      ①入队列
+ * 		②遍历 出队列
+ *      ②有左入左，有右入右
+ */
 public class Code01_LevelTraversalBT {
 
 	public static class Node {
