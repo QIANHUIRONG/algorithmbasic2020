@@ -17,6 +17,7 @@ public class Code05_TreeMaxWidth {
 		}
 	}
 
+	// 使用容器的做法
 	public static int maxWidthUseMap(Node head) {
 		if (head == null) {
 			return 0;
@@ -52,6 +53,7 @@ public class Code05_TreeMaxWidth {
 		return max;
 	}
 
+	// 不用容器，老师课堂讲的，比较复杂，下面有自己的优化版本
 	public static int maxWidthNoMap(Node head) {
 		if (head == null) {
 			return 0;
@@ -82,6 +84,36 @@ public class Code05_TreeMaxWidth {
 		return max;
 	}
 
+
+	// 不用容器，自己的优化版本
+	// 按层遍历时，直接遍历一整层。就可以拿到每一个层的宽度
+	public static int maxWidthNoMap1(Node head) {
+		if (head == null) {
+			return 0;
+		}
+		Queue<Node> queue = new LinkedList<>();
+		queue.add(head);
+		int max = 0;
+		int curLevelNodes = 0; // 当前层的节点数
+		while (!queue.isEmpty()) {
+			int size = queue.size();
+			// 直接遍历一整层
+			for (int i = 0; i < size; i++) {
+				Node cur = queue.poll();
+				curLevelNodes++;
+				if (cur.left != null) {
+					queue.add(cur.left);
+				}
+				if (cur.right != null) {
+					queue.add(cur.right);
+				}
+			}
+			max = Math.max(max, curLevelNodes);
+			curLevelNodes = 0;
+		}
+		return max;
+	}
+
 	// for test
 	public static Node generateRandomBST(int maxLevel, int maxValue) {
 		return generate(1, maxLevel, maxValue);
@@ -104,7 +136,7 @@ public class Code05_TreeMaxWidth {
 		int testTimes = 1000000;
 		for (int i = 0; i < testTimes; i++) {
 			Node head = generateRandomBST(maxLevel, maxValue);
-			if (maxWidthUseMap(head) != maxWidthNoMap(head)) {
+			if (maxWidthUseMap(head) != maxWidthNoMap1(head)) {
 				System.out.println("Oops!");
 			}
 		}
