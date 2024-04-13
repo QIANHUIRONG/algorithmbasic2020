@@ -3,6 +3,10 @@ package class12;
 import java.util.ArrayList;
 
 // 在线测试链接 : https://leetcode.com/problems/largest-bst-subtree
+// 给定一棵二叉树的头节点head，返回这颗二叉树中最大的二叉搜索子树的头节点
+// 1:18
+
+
 public class Code05_MaxSubBSTSize {
 
 	// 提交时不要提交这个类
@@ -17,6 +21,12 @@ public class Code05_MaxSubBSTSize {
 	}
 
 	// 提交如下的largestBSTSubtree方法，可以直接通过
+	/*
+	1、与X无关：Math.max(左树的最大BST,右树的最大BST)
+	2、与X有关：那么X整棵树必须是BST：左树是BST && 右树是BST && 左最大<=x<=右最小
+	需要的信息：①最大BST size；②是否是BST；③max；④min；⑤树的节点树size
+	发现如果size == 最大BST size，那么就是BST，②条件可以省略。
+	 */
 	public static int largestBSTSubtree(TreeNode head) {
 		if (head == null) {
 			return 0;
@@ -25,7 +35,9 @@ public class Code05_MaxSubBSTSize {
 	}
 
 	public static class Info {
+		// 最大搜索子树的节点树
 		public int maxBSTSubtreeSize;
+		// 整棵树的节点树
 		public int allSize;
 		public int max;
 		public int min;
@@ -40,6 +52,7 @@ public class Code05_MaxSubBSTSize {
 
 	public static Info process(TreeNode x) {
 		if (x == null) {
+			// 空树无法设置最大最小值，直接设置null，上游自行判断处理
 			return null;
 		}
 		Info leftInfo = process(x.left);
@@ -66,12 +79,14 @@ public class Code05_MaxSubBSTSize {
 			p2 = rightInfo.maxBSTSubtreeSize;
 		}
 		int p3 = -1;
+		// 判断左树是不是BST
 		boolean leftBST = leftInfo == null ? true : (leftInfo.maxBSTSubtreeSize == leftInfo.allSize);
+		// 判断右树是不是BST
 		boolean rightBST = rightInfo == null ? true : (rightInfo.maxBSTSubtreeSize == rightInfo.allSize);
-		if (leftBST && rightBST) {
-			boolean leftMaxLessX = leftInfo == null ? true : (leftInfo.max < x.val);
-			boolean rightMinMoreX = rightInfo == null ? true : (x.val < rightInfo.min);
-			if (leftMaxLessX && rightMinMoreX) {
+		if (leftBST && rightBST) { // 左右子树都是BST的情况下
+			boolean leftMaxLessX = leftInfo == null ? true : (leftInfo.max < x.val); // 判断左最大<=x
+			boolean rightMinMoreX = rightInfo == null ? true : (x.val < rightInfo.min); // x<=右最小
+			if (leftMaxLessX && rightMinMoreX) { //  左右子树都是BST的情况下 && 左最大<=x<=右最小
 				int leftSize = leftInfo == null ? 0 : leftInfo.allSize;
 				int rightSize = rightInfo == null ? 0 : rightInfo.allSize;
 				p3 = leftSize + rightSize + 1;
