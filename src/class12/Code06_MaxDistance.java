@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * 给定一棵二叉树的头节点head,任何两个节点之间都存在距离
+ * 返回整棵二叉树的最大距离
+ */
+
 public class Code06_MaxDistance {
 
 	public static class Node {
@@ -16,6 +21,12 @@ public class Code06_MaxDistance {
 		}
 	}
 
+	/**
+	 * 方法一、暴力法
+	 * 暴力法：任何两个节点都拽出来，N^2对
+	 * @param head
+	 * @return
+	 */
 	public static int maxDistance1(Node head) {
 		if (head == null) {
 			return 0;
@@ -92,33 +103,16 @@ public class Code06_MaxDistance {
 		return distance1 + distance2 - 1;
 	}
 
-//	public static int maxDistance2(Node head) {
-//		return process(head).maxDistance;
-//	}
-//
-//	public static class Info {
-//		public int maxDistance;
-//		public int height;
-//
-//		public Info(int dis, int h) {
-//			maxDistance = dis;
-//			height = h;
-//		}
-//	}
-//
-//	public static Info process(Node X) {
-//		if (X == null) {
-//			return new Info(0, 0);
-//		}
-//		Info leftInfo = process(X.left);
-//		Info rightInfo = process(X.right);
-//		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
-//		int maxDistance = Math.max(
-//				Math.max(leftInfo.maxDistance, rightInfo.maxDistance),
-//				leftInfo.height + rightInfo.height + 1);
-//		return new Info(maxDistance, height);
-//	}
-
+	/**
+	 * 方法二：递归套路
+	 *
+	 * 1、与X无关（最大距离没有经过X）：Math.max(左树的最大距离，右树的最大距离）
+	 * 2、与X有关（最大距离经过了X）：左树高度 + 右树高度 + 1
+	 *
+	 * 需要的信息：最大距离、高度；
+	 * @param head
+	 * @return
+	 */
 	public static int maxDistance2(Node head) {
 		return process(head).maxDistance;
 	}
@@ -131,7 +125,6 @@ public class Code06_MaxDistance {
 			maxDistance = m;
 			height = h;
 		}
-
 	}
 
 	public static Info process(Node x) {
