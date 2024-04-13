@@ -53,6 +53,9 @@ public class Code03_EncodeNaryTreeToBinaryTree {
 		}
 
 		private TreeNode en(List<Node> children) {
+			if (children == null || children.size() == 0) {
+				return null;
+			}
 			TreeNode head = null;
 			TreeNode cur = null;
 			// 遍历孩子节点
@@ -66,7 +69,7 @@ public class Code03_EncodeNaryTreeToBinaryTree {
 					cur.right = tNode;
 				}
 				cur = tNode;
-				// 递归下去
+				// 这个循环是生成当前child的二叉树形式，当然需要继续递归child的子节点
 				cur.left = en(child.children);
 			}
 			return head;
