@@ -1,5 +1,6 @@
 package class11;
 
+// 2：07
 public class Code07_PaperFolding {
 
 	public static void printAllFolds(int N) {

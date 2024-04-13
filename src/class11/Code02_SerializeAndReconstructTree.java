@@ -141,8 +141,11 @@ public class Code02_SerializeAndReconstructTree {
 		if (head == null) {
 			return null;
 		}
+		// 收集答案的队列
 		Queue<String> ans = new LinkedList<>();
+		// 先序列化头节点
 		ans.add(String.valueOf(head.value));
+		// 按层遍历需要的队列
 		Queue<Node> queue = new LinkedList<Node>();
 		queue.add(head);
 		while (!queue.isEmpty()) {
@@ -166,50 +169,51 @@ public class Code02_SerializeAndReconstructTree {
 	/**
 	 * 三、按层方式返序列化
 	 */
+//	public static Node buildByLevelQueue(Queue<String> levelList) {
+//		if (levelList == null || levelList.size() == 0) {
+//			return null;
+//		}
+//		Node head = generateNode(levelList.poll());
+//		Queue<Node> queue = new LinkedList<Node>();
+//		if (head != null) {
+//			queue.add(head);
+//		}
+//		Node node = null;
+//		while (!queue.isEmpty()) {
+//			node = queue.poll();
+//			node.left = generateNode(levelList.poll());
+//			node.right = generateNode(levelList.poll());
+//			if (node.left != null) {
+//				queue.add(node.left);
+//			}
+//			if (node.right != null) {
+//				queue.add(node.right);
+//			}
+//		}
+//		return head;
+//	}
+
+	// 自己的反序列化版本，更好理解一点
+	// 按层方式序列化和反序列化归根结底都是按层方式，都需要一个队列
 	public static Node buildByLevelQueue(Queue<String> levelList) {
 		if (levelList == null || levelList.size() == 0) {
 			return null;
 		}
-		Node head = generateNode(levelList.poll());
-		Queue<Node> queue = new LinkedList<Node>();
-		if (head != null) {
-			queue.add(head);
-		}
-		Node node = null;
-		while (!queue.isEmpty()) {
-			node = queue.poll();
-			node.left = generateNode(levelList.poll());
-			node.right = generateNode(levelList.poll());
-			if (node.left != null) {
-				queue.add(node.left);
-			}
-			if (node.right != null) {
-				queue.add(node.right);
-			}
-		}
-		return head;
-	}
-
-	// 自己的反序列化版本，更好理解一点
-	// 按层方式序列化和反序列化归根结底都是按层方式，都需要一个队列
-	public static Node buildByLevelQueue2(Queue<String> levelList) {
-		if (levelList == null || levelList.size() == 0) {
+		// 序列化时先序列化头节点，反序列化同样道理，先建出头节点
+		String value = levelList.poll();
+		if (value == null) {
 			return null;
 		}
-		String value = levelList.poll();
-		Node head = null;
-		if (value == null) {
-			return head;
-		}
-		head = new Node(Integer.valueOf(value));
-		// BFS需要的
+		Node head = new Node(Integer.valueOf(value));
+		// 按层遍历需要的队列
 		Queue<Node> queue = new LinkedList<>();
 		queue.add(head);
 		while (!queue.isEmpty()) {
 			Node node = queue.poll();
-			// 左
+			// 返序列化左子树。序列化是让头节点去序列化左右子树，返序列化就让头节点去返序列化左右子树
 			value = levelList.poll();
 			if (value != null) {
+				// 左树不为空，即反序列化又往队列里去；为空，只反序列化不往队列里去
 				node.left = new Node(Integer.valueOf(value));
 				queue.add(node.left);
 			} else {

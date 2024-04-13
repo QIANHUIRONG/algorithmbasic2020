@@ -1,5 +1,6 @@
 package class11;
 
+// 1：45
 public class Code06_SuccessorNode {
 
 	public static class Node {
