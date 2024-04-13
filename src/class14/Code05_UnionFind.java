@@ -48,7 +48,7 @@ public class Code05_UnionFind {
 			father = new HashMap<>();
 			size = new HashMap<>();
 			for (V cur : values) {
-				father.put(cur, cur);// 初始时，每个节点的代表节点都是自己
+				father.put(cur, cur);// 初始时，每个节点的父亲节点都是自己
 				size.put(cur, 1);// 每个代表节点的size都是1
 			}
 		}

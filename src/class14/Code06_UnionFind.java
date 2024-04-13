@@ -22,31 +22,18 @@ public class Code06_UnionFind {
 
 	public static int MAXN = 1000001;
 
-	public static int[] father = new int[MAXN];
+	public static int[] father = new int[MAXN];// father[i] = k, 表示i的父节点是k。
 
-	public static int[] size = new int[MAXN];
+	public static int[] size = new int[MAXN]; // size[i]=k, 如果i是代表节点，那么i所在集合大小是k；如果不是代表节点，无意义。
 
-	public static int[] help = new int[MAXN];
+	public static int[] help = new int[MAXN]; // 辅助数组，用于链扁平化充当原本栈的结构
 
 	// 初始化并查集
 	public static void init(int n) {
 		for (int i = 0; i <= n; i++) {
-			father[i] = i;
-			size[i] = 1;
+			father[i] = i; // 初始化时，i的父节点就是i
+			size[i] = 1; // 初始化时，都是代表节点，size都是1
 		}
-	}
-
-	// 从i开始寻找集合代表点
-	public static int find(int i) {
-		int hi = 0;
-		while (i != father[i]) {
-			help[hi++] = i;
-			i = father[i];
-		}
-		for (hi--; hi >= 0; hi--) {
-			father[help[hi]] = i;
-		}
-		return i;
 	}
 
 	// 查询x和y是不是一个集合
@@ -56,17 +43,38 @@ public class Code06_UnionFind {
 
 	// x所在的集合，和y所在的集合，合并成一个集合
 	public static void union(int x, int y) {
+		// 1、找到各自的代表节点
 		int fx = find(x);
 		int fy = find(y);
 		if (fx != fy) {
-			if (size[fx] >= size[fy]) {
-				size[fx] += size[fy];
-				father[fy] = fx;
+			// 2、小挂大优化。这里也是一个大优化，可以使得合并完链长度短一点
+			if (size[fx] >= size[fy]) { // y小，y挂x
+				father[fy] = fx; // y的父亲变成a，表示y挂a
+				size[fx] += size[fy]; // 累加y的size到x上
 			} else {
-				size[fy] += size[fx];
 				father[fx] = fy;
+				size[fy] += size[fx];
 			}
 		}
+	}
+
+	// 从i开始寻找集合代表点
+	/*
+	这里会做链的扁平化优化
+	从某个节点一直往上找到代表节点x，记录沿途经过的节点，最后把沿途节点的父亲节点都设置为x
+	这里是一个大优化，单次看起来可能慢，但是痛就痛1次，调用频繁之后，均摊下来O（1）
+	 */
+	public static int find(int i) {
+		int hi = 0; // 这个变量用来表示沿途的长度，不然不知道help[]数组什么时候遍历完
+		// i不等于自己的父亲，就一直往上。什么时候i和自己的父亲是相等，就是i到了代表节点的时候
+		while (i != father[i]) {
+			help[hi++] = i;
+			i = father[i];
+		}
+		for (hi--; hi >= 0; hi--) {
+			father[help[hi]] = i; // 沿途节点的父节点都变成代表节点
+		}
+		return i;
 	}
 
 	public static void main(String[] args) throws IOException {
