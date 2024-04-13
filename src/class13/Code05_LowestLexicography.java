@@ -4,8 +4,29 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.TreeSet;
 
+/*
+贪心算法
+	定义：
+	1)最自然智慧的算法
+	2)用一种局部最功利的标准，总是做出在当前看来是最好的选择。如果得到了最优解，说明贪心策略有效；否则贪心策略无效；
+	3)难点在于证明局部最功利的标准可以得到全局最优解-> 写一个暴力解，用对数器证明。
+	4)对于贪心算法的学习主要以增加阅历和经验为主
+	5)笔试有可能考贪心；面试几乎不可能，因为区分度太差。一般就是用比较器、堆等结构去贪心。
+ */
+/*
+题意：给定一个由字符串组成的数组strs，必须把所有的字符串拼接起来，返回所有可能的拼接结果中，字典序最小的结果
+	两个字符串，放到字典中，谁先放在前面，谁的字典序就最小
+
+题解：两个字符串a、b。(a+b) <= (b+a), a在前；否则b在前；
+
+证明：不用管证明。用暴力法当对数期
+
+ */
 public class Code05_LowestLexicography {
 
+	/**
+	 * 方法一：暴力方法：穷举拼接所有可能的字符串，
+	 */
 	public static String lowestString1(String[] strs) {
 		if (strs == null || strs.length == 0) {
 			return "";
@@ -23,8 +44,11 @@ public class Code05_LowestLexicography {
 		}
 		for (int i = 0; i < strs.length; i++) {
 			String first = strs[i];
+			// 移除当前字符
 			String[] nexts = removeIndexString(strs, i);
+			// 移除我之后，跑后序结果
 			TreeSet<String> next = process(nexts);
+			// 拼接移除我之后的后序结果。
 			for (String cur : next) {
 				ans.add(first + cur);
 			}
@@ -47,23 +71,34 @@ public class Code05_LowestLexicography {
 		return ans;
 	}
 
-	public static class MyComparator implements Comparator<String> {
-		@Override
-		public int compare(String a, String b) {
-			return (a + b).compareTo(b + a);
-		}
-	}
 
+	/**
+	 * 方法二：贪心
+	 */
 	public static String lowestString2(String[] strs) {
 		if (strs == null || strs.length == 0) {
 			return "";
 		}
 		Arrays.sort(strs, new MyComparator());
-		String res = "";
+		StringBuilder res = new StringBuilder();
 		for (int i = 0; i < strs.length; i++) {
-			res += strs[i];
+			res.append(strs[i]);
 		}
-		return res;
+		return res.toString();
+	}
+
+	public static class MyComparator implements Comparator<String> {
+		// 两个字符串a、b。(a+b) <= (b+a), a在前；否则b在前；
+		/*
+		字符串的compareTo()方法用于比较两个字符串的字典顺序。
+		如果字符串a按字典顺序应该排在字符串b的前面，则返回负数。
+		如果字符串a按字典顺序应该排在字符串b的后面，则返回正数。
+		如果字符串a和字符串b相等，则返回0。
+		 */
+		@Override
+		public int compare(String a, String b) {
+			return (a + b).compareTo(b + a);
+		}
 	}
 
 	// for test

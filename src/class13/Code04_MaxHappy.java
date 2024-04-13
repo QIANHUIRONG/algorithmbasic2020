@@ -37,6 +37,8 @@ public class Code04_MaxHappy {
 	X不来：下属a，b，c爱来不来。Max(a来，a不来） + Max(b来，b不来） + max(c来，c不来）
 
 	需要的信息：x来的最大happy；x不来的最大happy
+
+	O（N）
 	 */
 	public static int maxHappy1(Employee boss) {
 		if (boss == null) {
