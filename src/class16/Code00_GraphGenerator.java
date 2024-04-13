@@ -23,12 +23,12 @@ public class Code00_GraphGenerator {
 			Node fromNode = graph.nodes.get(from);
 			Node toNode = graph.nodes.get(to);
 			Edge newEdge = new Edge(weight, fromNode, toNode); // 边
+			graph.edges.add(newEdge);
 
 			fromNode.nexts.add(toNode);
 			fromNode.out++;
 			toNode.in++;
 			fromNode.edges.add(newEdge);
-			graph.edges.add(newEdge);
 		}
 		return graph;
 	}
