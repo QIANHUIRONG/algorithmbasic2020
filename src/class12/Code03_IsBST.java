@@ -1,10 +1,14 @@
 package class12;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 // 判断是否是搜索二叉树：36
+
+/**
+ * 搜索二叉树：任何一颗树都是左树的最大值比当前值小；右树的最小值比当前值大
+ */
 public class Code03_IsBST {
 
 	public static class Node {
@@ -18,7 +22,7 @@ public class Code03_IsBST {
 	}
 
 	/**
-	 * 常规方法：中序遍历，然后看是不是递增的
+	 * 方法一：中序遍历，然后看是不是递增的
 	 * @param head
 	 * @return
 	 */
@@ -26,7 +30,7 @@ public class Code03_IsBST {
 		if (head == null) {
 			return true;
 		}
-		ArrayList<Node> arr = new ArrayList<>();
+		List<Node> arr = new ArrayList<>();
 		// 中序遍历收集
 		in(head, arr);
 		for (int i = 1; i < arr.size(); i++) {
@@ -38,7 +42,7 @@ public class Code03_IsBST {
 	}
 
 	// 中序遍历
-	public static void in(Node head, ArrayList<Node> arr) {
+	public static void in(Node head, List<Node> arr) {
 		if (head == null) {
 			return;
 		}
@@ -49,6 +53,10 @@ public class Code03_IsBST {
 
 	/**
 	 * 方法二：二叉树的递归套路
+	 * 1)X左树是BST
+	 * 2)X右树是BST
+	 * 3)X左树最大值max<X
+	 * 4)X右树最小值min>X
 	 * @param head
 	 * @return
 	 */
@@ -72,8 +80,10 @@ public class Code03_IsBST {
 
 	}
 
+	// 返回以x为头的整棵树是不是搜索二叉树
 	public static Info process(Node x) {
 		if (x == null) {
+			// 空树最大值、最小值无法设置，可以返回null，让上游函数自己判断。上游拿到null，就知道子树是null。
 			return null;
 		}
 		Info leftInfo = process(x.left);
