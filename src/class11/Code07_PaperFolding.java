@@ -7,6 +7,12 @@ package class11;
  * 此时有三条折痕，从上到下依次是下折痕、下折痕和上折痕。给定一 个输入参
  * 数N，代表纸条都从下边向上方连续对折N次，请从上到下打印所有折痕的方向。
  */
+
+/**
+ * 折纸之后发现，头节点一定是凹，左子树头节点是凹，右子树头节点是凸
+ * 没有建出这颗二叉树，用递归模拟了想象，模拟了这颗二叉树
+ * 空间复杂度是O（N）， N是层数
+ */
 public class Code07_PaperFolding {
 
 	public static void printAllFolds(int N) {
@@ -23,8 +29,11 @@ public class Code07_PaperFolding {
 		if (i > N) {
 			return;
 		}
+		// 先左
 		process(i + 1, N, true);
+		// 再头
 		System.out.print(down ? "凹 " : "凸 ");
+		// 再右
 		process(i + 1, N, false);
 	}
 
