@@ -1,6 +1,15 @@
 package class11;
 
-// 1：45
+/**
+ * 二叉树的后继节点：1：45	coding:2:03
+ * 二叉树的结构如下：
+ * Class Node{
+ * v value;
+ * Node right;
+ * Node parent;
+ * }
+ * 给你某个节点，返回该节点的后继节点
+ */
 public class Code06_SuccessorNode {
 
 	public static class Node {
