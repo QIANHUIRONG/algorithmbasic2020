@@ -53,11 +53,9 @@ public class Code02_NumberOfIslands {
 	}
 
 	/*
-	方法二：并查集。（这里是哈希表实现的并查集，下面还有效率更高的数组实现的）
-	1、如果当前位置是‘1’，看自己左边和上边，如果也是‘1’，就合并。（因为是从左到右，从上到下遍历，所以遍历完之后，该合并的都合并了）
-	2、两个位置都是‘1’，怎么认为他们是不同的？包一层对象，也生成一个m*n的对象数组
+	方法二：并查集。（这里是哈希表实现的并查集，去看下面还有效率更高的数组实现的）
 	 */
-	// 这里的并查集用的哈希表的方式，暂时不想看了。但是要直到有这个解法，也是最优解。
+	// 这里的并查集用的哈希表的方式，暂时不想看了。
 	public static int numIslands1(char[][] board) {
 		int n = board.length;
 		int m = board[0].length;
@@ -161,57 +159,69 @@ public class Code02_NumberOfIslands {
 
 	}
 
+	/*
+	1、如果当前位置是‘1’，看自己左边和上边，如果也是‘1’，就合并。（因为是从左到右，从上到下遍历，所以遍历完之后，该合并的都合并了）
+	2、两个位置都是‘1’，怎么认为他们是不同的？包一层对象，也生成一个m*n的对象数组
+	 */
 	public static int numIslands2(char[][] board) {
-		int row = board.length;
-		int col = board[0].length;
+		int n = board.length;
+		int m = board[0].length;
+		// 初始化并查集
 		UnionFind2 uf = new UnionFind2(board);
-		for (int j = 1; j < col; j++) {
+
+		// 合并
+		for (int j = 1; j < m; j++) { // 遍历第一行去合并
 			if (board[0][j - 1] == '1' && board[0][j] == '1') {
 				uf.union(0, j - 1, 0, j);
 			}
 		}
-		for (int i = 1; i < row; i++) {
+		for (int i = 1; i < n; i++) { // 遍历第一列去合并
 			if (board[i - 1][0] == '1' && board[i][0] == '1') {
 				uf.union(i - 1, 0, i, 0);
 			}
 		}
-		for (int i = 1; i < row; i++) {
-			for (int j = 1; j < col; j++) {
+		for (int i = 1; i < n; i++) { // 遍历其他所有去合并
+			for (int j = 1; j < m; j++) {
 				if (board[i][j] == '1') {
-					if (board[i][j - 1] == '1') {
+					if (board[i][j - 1] == '1') { // 合并左
 						uf.union(i, j - 1, i, j);
 					}
-					if (board[i - 1][j] == '1') {
+					if (board[i - 1][j] == '1') { // 合并上
 						uf.union(i - 1, j, i, j);
 					}
 				}
 			}
 		}
-		return uf.sets();
+		return uf.setCount();
 	}
 
 	public static class UnionFind2 {
 		private int[] parent;
 		private int[] size;
 		private int[] help;
-		private int col;
-		private int sets;
+		private int m;
+		private int setCount;
 
 		public UnionFind2(char[][] board) {
-			col = board[0].length;
-			sets = 0;
-			int row = board.length;
-			int len = row * col;
+			// 初始化长度
+			setCount = 0;
+			int n = board.length; // 行数
+			m = board[0].length; // 列数。使用成员变量是因为二位数组转一维需要用
+			int len = n * m; // 总长
 			parent = new int[len];
 			size = new int[len];
 			help = new int[len];
-			for (int r = 0; r < row; r++) {
-				for (int c = 0; c < col; c++) {
-					if (board[r][c] == '1') {
-						int i = index(r, c);
-						parent[i] = i;
-						size[i] = 1;
-						sets++;
+
+			// 初始化元素
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					if (board[i][j] == '1') { // 是岛才初始化元素放入并查集
+						// 二维数组转一维
+						// 原本是[i][j], 那么对应一维下标就是 i * 列数 + j
+						int index = index(i, j);
+						parent[index] = index;
+						size[index] = 1;
+						setCount++;
 					}
 				}
 			}
@@ -219,7 +229,7 @@ public class Code02_NumberOfIslands {
 
 		// (r,c) -> i
 		private int index(int r, int c) {
-			return r * col + c;
+			return r * m + c;
 		}
 
 		// 原始位置 -> 下标
@@ -248,12 +258,12 @@ public class Code02_NumberOfIslands {
 					size[f2] += size[f1];
 					parent[f1] = f2;
 				}
-				sets--;
+				setCount--;
 			}
 		}
 
-		public int sets() {
-			return sets;
+		public int setCount() {
+			return setCount;
 		}
 
 	}
