@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+// 时间：20
 public class Code02_SerializeAndReconstructTree {
     /*
      * 二叉树可以通过先序、后序或者按层遍历的方式序列化和反序列化，
@@ -32,6 +33,10 @@ public class Code02_SerializeAndReconstructTree {
 	}
 
 	/**
+	 * 无论是先序、后序、按层方式序列化，都是在遍历的过程中，不要忽略空节点，该占位就占位。
+	 */
+
+	/**
 	 * 一、先序方式序列化
 	 * Queue<String> ans = new LinkedList<>();只是存储的容器，你用其他的也行,
 	 * 像力扣297题就要求序列化成String类型。
@@ -45,6 +50,7 @@ public class Code02_SerializeAndReconstructTree {
 
 	public static void pres(Node head, Queue<String> ans) {
 		if (head == null) {
+			// 空节点也需要存起来，才能唯一对应一颗二叉树
 			ans.add(null);
 		} else {
 			ans.add(String.valueOf(head.value));
@@ -56,21 +62,21 @@ public class Code02_SerializeAndReconstructTree {
 	/**
 	 * 一、先序方式返序列化
 	 */
-	public static Node buildByPreQueue(Queue<String> prelist) {
-		if (prelist == null || prelist.size() == 0) {
+	public static Node buildByPreQueue(Queue<String> queue) {
+		if (queue == null || queue.size() == 0) {
 			return null;
 		}
-		return preb(prelist);
+		return preb(queue);
 	}
 
-	public static Node preb(Queue<String> prelist) {
-		String value = prelist.poll();
+	public static Node preb(Queue<String> queue) {
+		String value = queue.poll();
 		if (value == null) {
 			return null;
 		}
 		Node head = new Node(Integer.valueOf(value));
-		head.left = preb(prelist);
-		head.right = preb(prelist);
+		head.left = preb(queue);
+		head.right = preb(queue);
 		return head;
 	}
 
@@ -100,7 +106,7 @@ public class Code02_SerializeAndReconstructTree {
 		if (poslist == null || poslist.size() == 0) {
 			return null;
 		}
-		// 左右中  ->  stack(中右左) -> 和先序一样，先建立头，再建左，再建右
+		// 左右头  ->  stack(头右左) -> 和先序类似，先建立头，再建右，再建左
 		Stack<String> stack = new Stack<>();
 		while (!poslist.isEmpty()) {
 			stack.push(poslist.poll());
@@ -132,27 +138,26 @@ public class Code02_SerializeAndReconstructTree {
 	 *         如果孩子不为空，就即序列化又往队列里去。（宽度优先遍历的体现罢了）
 	 */
 	public static Queue<String> levelSerial(Node head) {
-		Queue<String> ans = new LinkedList<>();
 		if (head == null) {
-			ans.add(null);
-		} else {
-			ans.add(String.valueOf(head.value));
-			Queue<Node> queue = new LinkedList<Node>();
-			queue.add(head);
-			while (!queue.isEmpty()) {
-				head = queue.poll(); // head 父   子
-				if (head.left != null) {
-					ans.add(String.valueOf(head.left.value));
-					queue.add(head.left);
-				} else {
-					ans.add(null);
-				}
-				if (head.right != null) {
-					ans.add(String.valueOf(head.right.value));
-					queue.add(head.right);
-				} else {
-					ans.add(null);
-				}
+			return null;
+		}
+		Queue<String> ans = new LinkedList<>();
+		ans.add(String.valueOf(head.value));
+		Queue<Node> queue = new LinkedList<Node>();
+		queue.add(head);
+		while (!queue.isEmpty()) {
+			head = queue.poll(); // head 父   子
+			if (head.left != null) {
+				ans.add(String.valueOf(head.left.value));
+				queue.add(head.left);
+			} else {
+				ans.add(null);
+			}
+			if (head.right != null) {
+				ans.add(String.valueOf(head.right.value));
+				queue.add(head.right);
+			} else {
+				ans.add(null);
 			}
 		}
 		return ans;
