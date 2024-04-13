@@ -58,6 +58,11 @@ public class Code01_IsCBT {
 		return true;
 	}
 
+	/**
+	 * 方法二、二叉树的递归套路
+	 * @param head
+	 * @return
+	 */
 	public static boolean isCBT2(Node head) {
 		if (head == null) {
 			return true;

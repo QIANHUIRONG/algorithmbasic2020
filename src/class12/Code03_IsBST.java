@@ -2,8 +2,10 @@ package class12;
 
 import java.util.ArrayList;
 
-// 二叉树的递归套路19
-public class Code02_IsBST {
+
+
+// 判断是否是搜索二叉树：36
+public class Code03_IsBST {
 
 	public static class Node {
 		public int value;
@@ -15,11 +17,17 @@ public class Code02_IsBST {
 		}
 	}
 
+	/**
+	 * 常规方法：中序遍历，然后看是不是递增的
+	 * @param head
+	 * @return
+	 */
 	public static boolean isBST1(Node head) {
 		if (head == null) {
 			return true;
 		}
 		ArrayList<Node> arr = new ArrayList<>();
+		// 中序遍历收集
 		in(head, arr);
 		for (int i = 1; i < arr.size(); i++) {
 			if (arr.get(i).value <= arr.get(i - 1).value) {
@@ -29,6 +37,7 @@ public class Code02_IsBST {
 		return true;
 	}
 
+	// 中序遍历
 	public static void in(Node head, ArrayList<Node> arr) {
 		if (head == null) {
 			return;
@@ -38,6 +47,11 @@ public class Code02_IsBST {
 		in(head.right, arr);
 	}
 
+	/**
+	 * 方法二：二叉树的递归套路
+	 * @param head
+	 * @return
+	 */
 	public static boolean isBST2(Node head) {
 		if (head == null) {
 			return true;

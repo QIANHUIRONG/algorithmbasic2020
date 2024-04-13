@@ -1,7 +1,12 @@
 package class12;
 
-// 判断是否是搜索二叉树：36
-public class Code03_IsBalanced {
+
+// 是否是平衡二叉树：20	coding:26
+/**
+ * 平衡二叉树：子树都是平衡二叉树；左右子树高度差不超过1
+ * 需要向左右子树要的信息：是否是平衡二叉树；高度
+ */
+public class Code02_IsBalanced {
 
 	public static class Node {
 		public int value;
@@ -13,6 +18,11 @@ public class Code03_IsBalanced {
 		}
 	}
 
+	/**
+	 * 方法一：常规方法：略
+	 * @param head
+	 * @return
+	 */
 	public static boolean isBalanced1(Node head) {
 		boolean[] ans = new boolean[1];
 		ans[0] = true;
@@ -32,6 +42,12 @@ public class Code03_IsBalanced {
 		return Math.max(leftHeight, rightHeight) + 1;
 	}
 
+	/**
+	 * 方法二：二叉树的递归套路
+	 * 递归套路的本质：找左树要信息、找右树要信息；整合出我的信息。即左右头-->后序遍历！时间复杂度O（N）
+	 * @param head
+	 * @return
+	 */
 	public static boolean isBalanced2(Node head) {
 		return process(head).isBalanced;
 	}
@@ -45,9 +61,11 @@ public class Code03_IsBalanced {
 			height = h;
 		}
 	}
-	
+
+	// 返回以X为头的二叉树是不是平衡二叉树
 	public static Info process(Node x) {
 		if(x == null) {
+			// 空节点认为是平衡二叉树，高度0
 			return new Info(true, 0);
 		}
 		Info leftInfo = process(x.left);
@@ -63,13 +81,11 @@ public class Code03_IsBalanced {
 		if(Math.abs(leftInfo.height - rightInfo.height) > 1) {
 			isBalanced = false;
 		}
+		// 返回我当前这个树的2个信息
 		return new Info(isBalanced, height);
 	}
 	
-	
-	
-	
-	
+
 
 	// for test
 	public static Node generateRandomBST(int maxLevel, int maxValue) {
