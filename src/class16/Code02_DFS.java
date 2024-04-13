@@ -5,6 +5,7 @@ import java.util.Stack;
 
 public class Code02_DFS {
 
+	// 时间：42
 	/*
 	DFS——栈
 	入栈就打印
@@ -33,6 +34,7 @@ public class Code02_DFS {
 					stack.push(next);
 					set.add(next);
 					System.out.println(next.value);
+					// 有一个不在set中，就跳出这个循环了！去回退继续深度优先遍历，如果继续循环，就是广度优先遍历的那种感觉了
 					break;
 				}
 			}
