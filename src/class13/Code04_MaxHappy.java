@@ -2,7 +2,22 @@ package class13;
 
 import java.util.ArrayList;
 import java.util.List;
+/*
+员工信息的定义如下:
 
+class Employee {
+    public int happy; // 这名员工可以带来的快乐值
+    List<Employee> subordinates; // 这名员工有哪些直接下级
+}
+公司的每个员工都符合 Employee 类的描述。整个公司的人员结构可以看作是一棵标准的、 没有环的多叉树。
+树的头节点是公司唯一的老板。除老板之外的每个员工都是有唯一的直接上级。
+叶节点没有任何下属的基层员工(subordinates列表为空)，除基层员工外，每个员工都有一个或多个直接下级。
+这个公司现在要办party，你可以决定哪些员工来，哪些员工不来，规则：
+1.如果某个员工来了，那么这个员工的所有直接下级都不能来
+2.派对的整体快乐值是所有到场员工快乐值的累加
+3.你的目标是让派对的整体快乐值尽量大
+给定一棵多叉树的头节点boss，请返回派对的最大快乐值。
+ */
 public class Code04_MaxHappy {
 
 	public static class Employee {
@@ -16,11 +31,19 @@ public class Code04_MaxHappy {
 
 	}
 
+	/*
+	以X为头的整棵树，获得的最大快乐值是多少？
+	X来：来的情况下，x的直接下属a,b,c不来的整棵树的最大快乐值全部累加
+	X不来：下属a，b，c爱来不来。Max(a来，a不来） + Max(b来，b不来） + max(c来，c不来）
+
+	需要的信息：x来的最大happy；x不来的最大happy
+	 */
 	public static int maxHappy1(Employee boss) {
 		if (boss == null) {
 			return 0;
 		}
-		return process1(boss, false);
+		// 头节点，可能来可能不来，求max
+		return Math.max(process1(boss, false), process1(boss, true));
 	}
 
 	// 当前来到的节点叫cur，
@@ -39,8 +62,8 @@ public class Code04_MaxHappy {
 			int p1 = cur.happy;
 			int p2 = 0;
 			for (Employee next : cur.nexts) {
-				p1 += process1(next, true);
-				p2 += process1(next, false);
+				p1 += process1(next, true);// 我来的情况下，我整棵树的最大happy
+				p2 += process1(next, false);// 我不来的情况下，我整棵树的最大happy
 			}
 			return Math.max(p1, p2);
 		}
