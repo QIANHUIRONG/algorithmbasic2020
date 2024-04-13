@@ -64,14 +64,15 @@ public class Code06_UnionFind {
 	 */
 	public static int find(int i) {
 		int[] help = new int[MAXN];// 充当原本栈的结构
-		int hi = 0; // 这个变量用来表示沿途的长度，不然不知道help[]数组什么时候遍历完
+		int j = 0; // 这个变量用来表示沿途的长度，不然不知道help[]数组什么时候遍历完
 		// i不等于自己的父亲，就一直往上。什么时候i和自己的父亲是相等，就是i到了代表节点的时候
-		while (i != father[i]) {
-			help[hi++] = i;
-			i = father[i];
+		while (father[i] != i) {
+			help[j++] = i;
+			i = father[i]; // 我来到我的父
 		}
-		for (hi--; hi >= 0; hi--) {
-			father[help[hi]] = i; // 沿途节点的父节点都变成代表节点
+		j--;
+		while (j >= 0) {
+			father[help[j--]] = i;
 		}
 		return i;
 	}
