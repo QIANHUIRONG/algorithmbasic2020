@@ -2,6 +2,10 @@ package class13;
 
 import java.util.ArrayList;
 
+/**
+ * 二叉树中最大的二叉搜索子树的头节点
+ * 和day12 Code05_MaxSubBSTSize一样。
+ */
 public class Code02_MaxSubBSTHead {
 
 	public static class Node {
