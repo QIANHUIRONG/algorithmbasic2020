@@ -38,7 +38,7 @@ public class Code03_IPO {
 			if (maxProfitQ.isEmpty()) { // 没项目可做了，直接返回
 				return M;
 			}
-			M += maxProfitQ.poll().p;
+			M += maxProfitQ.poll().p; // 能做项目，累计金额
 		}
 		return M;
 	}
