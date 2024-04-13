@@ -60,6 +60,10 @@ public class Code02_LessMoneySplitGold {
 	贪心策略：哈夫曼树
 	准备一个小根堆，每次从小根堆弹出2个数，合并成1个数，再放回去。周而复始，放回去的数就是答案
 	 */
+	/*
+	小根堆，大根堆，排序是贪心策略最常用的三个工具
+	堆：根据我指定的排序标准把数组组成堆，依次弹出，就有贪心的意思
+	 */
 	public static int lessMoney2(int[] arr) {
 		PriorityQueue<Integer> heap = new PriorityQueue<>();
 		for (int i = 0; i < arr.length; i++) {
