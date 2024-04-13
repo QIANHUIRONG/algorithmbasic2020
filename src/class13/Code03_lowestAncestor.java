@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/*
+题意：给定一棵二叉树的头节点head，和另外两个节点a和b。返回a和b的最低公共祖先
+题解：
+什么是最低公共祖先：两个节点都往上跑，头结点碰上的最初汇聚点
+ */
 public class Code03_lowestAncestor {
 
 	public static class Node {
@@ -16,31 +21,41 @@ public class Code03_lowestAncestor {
 		}
 	}
 
+	/*
+	方法一：
+		1、遍历二叉树，生成map记录每个节点的父节点
+		2、x遍历找父节点，加入set,然后y找父，每到一个节点检查是不是在set里，第一次找到的就是最低公共祖先
+		复杂度：O（N）
+	 */
 	public static Node lowestAncestor1(Node head, Node o1, Node o2) {
 		if (head == null) {
 			return null;
 		}
-		// key的父节点是value
+		// 记录每个节点的父节点
 		HashMap<Node, Node> parentMap = new HashMap<>();
 		parentMap.put(head, null);
-		fillParentMap(head, parentMap);
+		fillParentMap(head, parentMap); // 遍历二叉树，生成所有节点的父节点
+
+		// o1去找父节点，set存放经过的父节点
 		HashSet<Node> o1Set = new HashSet<>();
-		Node cur = o1;
-		o1Set.add(cur);
-		while (parentMap.get(cur) != null) {
-			cur = parentMap.get(cur);
-			o1Set.add(cur);
+		o1Set.add(o1);
+		while (parentMap.get(o1) != null) {
+			o1 = parentMap.get(o1);
+			o1Set.add(o1);
 		}
-		cur = o2;
-		while (!o1Set.contains(cur)) {
-			cur = parentMap.get(cur);
+
+		// 轮到o2去找父节点，第一次在set出现过的节点就是最低公共祖先
+		while (!o1Set.contains(o2)) {
+			o2 = parentMap.get(o2);
 		}
-		return cur;
+		return o2;
 	}
 
 	public static void fillParentMap(Node head, HashMap<Node, Node> parentMap) {
 		if (head.left != null) {
+			// 左孩子不为空，就收集到容器中
 			parentMap.put(head.left, head);
+			// 接着左孩子去收集
 			fillParentMap(head.left, parentMap);
 		}
 		if (head.right != null) {
@@ -49,6 +64,19 @@ public class Code03_lowestAncestor {
 		}
 	}
 
+	/*
+	方法二：递归套路
+	与X无关：
+		X不是最低汇聚点：左树有答案 || 右树有答案 || x树上a、b不全
+	与X有关：
+		X就是最低汇聚点：
+			左树发现a b中一个，右树发现另一个
+			X本身是a,左树或右树发现b
+			X本身是b,左树或右树发现a
+
+	需要的信息：
+		发现a否？发现b否？最低公共祖先是谁？
+	 */
 	public static Node lowestAncestor2(Node head, Node a, Node b) {
 		return process(head, a, b).ans;
 	}
