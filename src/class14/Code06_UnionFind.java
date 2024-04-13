@@ -27,7 +27,7 @@ public class Code06_UnionFind {
 
 	// 初始化并查集
 	public static void init(int n) {
-		for (int i = 0; i <= n; i++) {
+		for (int i = 0; i <= n; i++) { // 集合初始元素是[0,n]
 			father[i] = i; // 初始化时，i的父节点就是i
 			size[i] = 1; // 初始化时，都是代表节点，size都是1
 		}

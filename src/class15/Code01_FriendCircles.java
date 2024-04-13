@@ -17,70 +17,78 @@ public class Code01_FriendCircles {
 
 	public static int findCircleNum(int[][] M) {
 		int N = M.length;
+		// 1、每一个人都当作一个元素，初始化并查集
 		UnionFind unionFind = new UnionFind(N);
+		// 2、遍历所有人，如果认识就合并
 		for (int i = 0; i < N; i++) {
-			for (int j = i + 1; j < N; j++) {
+			for (int j = i + 1; j < N; j++) { // 两个for只遍历右上半部区
 				if (M[i][j] == 1) { // i和j互相认识
 					unionFind.union(i, j);
 				}
 			}
 		}
-		return unionFind.sets();
+		// 3、返回集合个数
+		return unionFind.setCount();
 	}
 
 	public static class UnionFind {
-		// parent[i] = k ： i的父亲是k
-		private int[] parent;
-		// size[i] = k ： 如果i是代表节点，size[i]才有意义，否则无意义
-		// i所在的集合大小是多少
-		private int[] size;
-		// 辅助结构
-		private int[] help;
-		// 一共有多少个集合
-		private int setCount;
+		public static int[] father;// father[i] = k, 表示i的父节点是k。
+		public static int[] size; // size[i]=k, 如果i是代表节点，那么i所在集合大小是k；如果不是代表节点，无意义。
+		public static int setCount; // 一共有多少个集合
 
-		public UnionFind(int N) {
-			parent = new int[N];
-			size = new int[N];
-			help = new int[N];
-			setCount = N;
-			for (int i = 0; i < N; i++) {
-				parent[i] = i;
-				size[i] = 1;
+		// 初始化并查集
+		public  UnionFind(int n) {
+			father = new int[n];
+			size = new int[n];
+			setCount = n; // 初始化时，每一个元素都是一个独立的集合
+			for (int i = 0; i < n; i++) {
+				father[i] = i; // 初始化时，i的父节点就是i
+				size[i] = 1; // 初始化时，都是代表节点，size都是1
 			}
 		}
 
-		// 从i开始一直往上，往上到不能再往上，代表节点，返回
-		// 这个过程要做路径压缩
-		private int find(int i) {
-			int hi = 0;
-			while (i != parent[i]) {
-				help[hi++] = i;
-				i = parent[i];
+		// x所在的集合，和y所在的集合，合并成一个集合
+		public static void union(int x, int y) {
+			// 1、找到各自的代表节点
+			int fx = find(x);
+			int fy = find(y);
+			if (fx != fy) {
+				// 2、小挂大优化。这里也是一个大优化，可以使得合并完链长度短一点
+				if (size[fx] >= size[fy]) { // y小，y挂x
+					father[fy] = fx; // y的父亲变成a，表示y挂a
+					size[fx] += size[fy]; // 累加y的size到x上
+				} else {
+					father[fx] = fy;
+					size[fy] += size[fx];
+				}
+				setCount--; // 产生一次集合的合并，setCount--
 			}
-			for (hi--; hi >= 0; hi--) {
-				parent[help[hi]] = i;
+		}
+
+		// 返回并查集有几个集合
+		public int setCount() {
+			return setCount;
+		}
+
+		// 从i开始寻找集合代表点
+		/*
+		这里会做链的扁平化优化
+		从某个节点一直往上找到代表节点x，记录沿途经过的节点，最后把沿途节点的父亲节点都设置为x
+		这里是一个大优化，单次看起来可能慢，但是痛就痛1次，调用频繁之后，均摊下来O（1）
+		 */
+		public static int find(int i) {
+			int[] help = new int[father.length];// 充当原本栈的结构
+			int j = 0; // 这个变量用来表示沿途的长度，不然不知道help[]数组什么时候遍历完
+			// i不等于自己的父亲，就一直往上。什么时候i和自己的父亲是相等，就是i到了代表节点的时候
+			while (father[i] != i) {
+				help[j++] = i;
+				i = father[i]; // 我来到我的父
+			}
+			j--;
+			while (j >= 0) {
+				father[help[j--]] = i;
 			}
 			return i;
-		}
-
-		public void union(int i, int j) {
-			int f1 = find(i);
-			int f2 = find(j);
-			if (f1 != f2) {
-				if (size[f1] >= size[f2]) {
-					size[f1] += size[f2];
-					parent[f2] = f1;
-				} else {
-					size[f2] += size[f1];
-					parent[f1] = f2;
-				}
-				setCount--;
-			}
-		}
-
-		public int sets() {
-			return setCount;
 		}
 	}
 
