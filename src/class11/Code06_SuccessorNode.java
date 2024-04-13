@@ -45,7 +45,7 @@ public class Code06_SuccessorNode {
 		} else { // 无右子树
 			Node parent = node.parent;
 			while (parent != null && parent.right == node) {
-				// 我是我父亲的右孩子，我就来到父节点，父节点继续往上
+				// 我是我父亲的右孩子，我就来到父节点，父节点重新赋值新的父节点
 				// 直到我是我父亲的左；或者我父亲为null（我是整棵树的头），就跳出循环
 				node = parent;
 				parent = node.parent;
