@@ -8,13 +8,27 @@ import java.util.Stack;
 // 本题为leetcode原题
 // 测试链接：https://leetcode.com/problems/number-of-islands/
 // 所有方法都可以直接通过
+/*
+题意：
+给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
+岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
+此外，你可以假设该网格的四条边均被水包围。
+ */
+
+
 public class Code02_NumberOfIslands {
 
+	/*
+	方法一：递归
+	遍历所有的位置，把所有连成一片的'1'字符，变成0
+	时间复杂度：O（N * M），也是最优解，看似暴力，但是递归中每个节点最多到自己4次。
+	 */
 	public static int numIslands3(char[][] board) {
 		int islands = 0;
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[0].length; j++) {
 				if (board[i][j] == '1') {
+					//如果当前是岛，岛数量++，并且把相邻的岛也感染了
 					islands++;
 					infect(board, i, j);
 				}
@@ -23,45 +37,54 @@ public class Code02_NumberOfIslands {
 		return islands;
 	}
 
-	// 从(i,j)这个位置出发，把所有练成一片的'1'字符，变成0
+	// 从(i,j)这个位置出发，把所有连成一片的'1'字符，变成0
 	public static void infect(char[][] board, int i, int j) {
+		// 遇到边界、或者水、或者感染过了都直接return；
 		if (i < 0 || i == board.length || j < 0 || j == board[0].length || board[i][j] != '1') {
 			return;
 		}
+		// 感染了，下一次递归就不会走了
 		board[i][j] = 0;
+		// 感染上下左右
 		infect(board, i - 1, j);
 		infect(board, i + 1, j);
 		infect(board, i, j - 1);
 		infect(board, i, j + 1);
 	}
 
+	/*
+	方法二：并查集。（这里是哈希表实现的并查集，下面还有效率更高的数组实现的）
+	1、如果当前位置是‘1’，看自己左边和上边，如果也是‘1’，就合并。（因为是从左到右，从上到下遍历，所以遍历完之后，该合并的都合并了）
+	2、两个位置都是‘1’，怎么认为他们是不同的？包一层对象，也生成一个m*n的对象数组
+	 */
+	// 这里的并查集用的哈希表的方式，暂时不想看了。但是要直到有这个解法，也是最优解。
 	public static int numIslands1(char[][] board) {
-		int row = board.length;
-		int col = board[0].length;
-		Dot[][] dots = new Dot[row][col];
-		List<Dot> dotList = new ArrayList<>();
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
+		int n = board.length;
+		int m = board[0].length;
+		Dot[][] dots = new Dot[n][m]; // 包一层对象数组
+		List<Dot> dotList = new ArrayList<>(); // 收集list，用于初始化并查集
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
 				if (board[i][j] == '1') {
 					dots[i][j] = new Dot();
 					dotList.add(dots[i][j]);
 				}
 			}
 		}
-		UnionFind1<Dot> uf = new UnionFind1<>(dotList);
-		for (int j = 1; j < col; j++) {
+		UnionFind1<Dot> uf = new UnionFind1<>(dotList); // 初始化并查集
+		for (int j = 1; j < m; j++) {
 			// (0,j)  (0,0)跳过了  (0,1) (0,2) (0,3)
 			if (board[0][j - 1] == '1' && board[0][j] == '1') {
 				uf.union(dots[0][j - 1], dots[0][j]);
 			}
 		}
-		for (int i = 1; i < row; i++) {
+		for (int i = 1; i < n; i++) {
 			if (board[i - 1][0] == '1' && board[i][0] == '1') {
 				uf.union(dots[i - 1][0], dots[i][0]);
 			}
 		}
-		for (int i = 1; i < row; i++) {
-			for (int j = 1; j < col; j++) {
+		for (int i = 1; i < n; i++) {
+			for (int j = 1; j < m; j++) {
 				if (board[i][j] == '1') {
 					if (board[i][j - 1] == '1') {
 						uf.union(dots[i][j - 1], dots[i][j]);
