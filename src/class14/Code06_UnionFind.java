@@ -26,8 +26,6 @@ public class Code06_UnionFind {
 
 	public static int[] size = new int[MAXN]; // size[i]=k, 如果i是代表节点，那么i所在集合大小是k；如果不是代表节点，无意义。
 
-	public static int[] help = new int[MAXN]; // 辅助数组，用于链扁平化充当原本栈的结构
-
 	// 初始化并查集
 	public static void init(int n) {
 		for (int i = 0; i <= n; i++) {
@@ -65,6 +63,7 @@ public class Code06_UnionFind {
 	这里是一个大优化，单次看起来可能慢，但是痛就痛1次，调用频繁之后，均摊下来O（1）
 	 */
 	public static int find(int i) {
+		int[] help = new int[MAXN];// 充当原本栈的结构
 		int hi = 0; // 这个变量用来表示沿途的长度，不然不知道help[]数组什么时候遍历完
 		// i不等于自己的父亲，就一直往上。什么时候i和自己的父亲是相等，就是i到了代表节点的时候
 		while (i != father[i]) {
