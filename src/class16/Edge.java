@@ -1,7 +1,7 @@
 package class16;
 
 public class Edge {
-	public int weight;
+	public int weight; // 权重
 	public Node from;
 	public Node to;
 
