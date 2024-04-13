@@ -1,6 +1,7 @@
 package class12;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class Code01_IsCBT {
 
@@ -27,10 +28,10 @@ public class Code01_IsCBT {
 		if (head == null) {
 			return true;
 		}
-		// 按层遍历需要的队列
-		LinkedList<Node> queue = new LinkedList<>();
 		// 是否遇到过左右两个孩子不双全的节点
 		boolean leaf = false;
+		// 按层遍历需要的队列
+		Queue<Node> queue = new LinkedList<>();
 		queue.add(head);
 		while (!queue.isEmpty()) {
 			head = queue.poll();
