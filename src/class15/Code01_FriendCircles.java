@@ -3,11 +3,20 @@ package class15;
 // 本题为leetcode原题
 // 测试链接：https://leetcode.com/problems/friend-circles/
 // 可以直接通过
+/*
+题意：
+n个人，给你一个 n x n 的矩阵 isFriends ，其中 isFriends[i][j] = 1 表示第 i 个人和第 j 个人认识，
+而 isFriends[i][j] = 0 表示二者不认识
+返回矩阵中朋友圈数量
+ */
+
+/*
+题解：使用并查集数据结构，认识就合并，最终返回有几个集合。
+ */
 public class Code01_FriendCircles {
 
 	public static int findCircleNum(int[][] M) {
 		int N = M.length;
-		// {0} {1} {2} {N-1}
 		UnionFind unionFind = new UnionFind(N);
 		for (int i = 0; i < N; i++) {
 			for (int j = i + 1; j < N; j++) {
@@ -28,13 +37,13 @@ public class Code01_FriendCircles {
 		// 辅助结构
 		private int[] help;
 		// 一共有多少个集合
-		private int sets;
+		private int setCount;
 
 		public UnionFind(int N) {
 			parent = new int[N];
 			size = new int[N];
 			help = new int[N];
-			sets = N;
+			setCount = N;
 			for (int i = 0; i < N; i++) {
 				parent[i] = i;
 				size[i] = 1;
@@ -66,12 +75,12 @@ public class Code01_FriendCircles {
 					size[f2] += size[f1];
 					parent[f1] = f2;
 				}
-				sets--;
+				setCount--;
 			}
 		}
 
 		public int sets() {
-			return sets;
+			return setCount;
 		}
 	}
 

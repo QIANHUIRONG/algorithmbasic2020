@@ -21,10 +21,9 @@ import java.io.StreamTokenizer;
 public class Code06_UnionFind {
 
 	public static int MAXN = 1000001;
-
 	public static int[] father = new int[MAXN];// father[i] = k, 表示i的父节点是k。
-
 	public static int[] size = new int[MAXN]; // size[i]=k, 如果i是代表节点，那么i所在集合大小是k；如果不是代表节点，无意义。
+	public static int setCount; // 一共有多少个集合
 
 	// 初始化并查集
 	public static void init(int n) {
@@ -32,6 +31,7 @@ public class Code06_UnionFind {
 			father[i] = i; // 初始化时，i的父节点就是i
 			size[i] = 1; // 初始化时，都是代表节点，size都是1
 		}
+		setCount = n; // 初始化时，每一个元素都是一个独立的集合
 	}
 
 	// 查询x和y是不是一个集合
@@ -53,7 +53,13 @@ public class Code06_UnionFind {
 				father[fx] = fy;
 				size[fy] += size[fx];
 			}
+			setCount--; // 产生一次集合的合并，setCount--
 		}
+	}
+
+	// 返回并查集有几个集合
+	public int setCount() {
+		return setCount;
 	}
 
 	// 从i开始寻找集合代表点
