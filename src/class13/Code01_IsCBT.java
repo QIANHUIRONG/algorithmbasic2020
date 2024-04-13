@@ -1,6 +1,7 @@
 package class13;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 // 测试链接 : https://leetcode.com/problems/check-completeness-of-a-binary-tree/
 
@@ -17,25 +18,33 @@ public class Code01_IsCBT {
 		}
 	}
 
+	/**
+	 * 方法一：7：00
+	 * 1、玩一个按层遍历，遍历过程中2个原则：
+	 * 	①如果一个节点，有右无左，直接false
+	 * 	②第一次遇到左右孩子不双全的节点，那么接下来的所有节点都必须是叶子节点；
+	 *
+	 * @param head
+	 * @return
+	 */
 	public static boolean isCompleteTree1(TreeNode head) {
 		if (head == null) {
 			return true;
 		}
-		LinkedList<TreeNode> queue = new LinkedList<>();
 		// 是否遇到过左右两个孩子不双全的节点
 		boolean leaf = false;
-		TreeNode l = null;
-		TreeNode r = null;
+		// 按层遍历需要的队列
+		Queue<TreeNode> queue = new LinkedList<>();
 		queue.add(head);
 		while (!queue.isEmpty()) {
 			head = queue.poll();
-			l = head.left;
-			r = head.right;
+			TreeNode l = head.left;
+			TreeNode r = head.right;
 			if (
-			// 如果遇到了不双全的节点之后，又发现当前节点不是叶节点
-			(leaf && (l != null || r != null)) || (l == null && r != null)
-
-			) {
+				// 如果一个节点，有右无左，直接false
+				// 如果遇到了不双全的节点之后，又发现当前节点不是叶节点，false
+					((l == null && r != null) ||
+							(leaf && (l != null || r != null)))) {
 				return false;
 			}
 			if (l != null) {
@@ -44,6 +53,7 @@ public class Code01_IsCBT {
 			if (r != null) {
 				queue.add(r);
 			}
+			// 遇到第一个左右孩子不双全的节点，标记后面节点都得是叶节点
 			if (l == null || r == null) {
 				leaf = true;
 			}
@@ -51,6 +61,20 @@ public class Code01_IsCBT {
 		return true;
 	}
 
+	/*
+	方法二：二叉树递归套路
+	四种情况是完全二叉树：
+		1、左满 && 右满 && 左高 == 右高
+		2、左完全 && 右满 && 左高 = 右高+1
+		3、左满 && 右满 && 左高 == 右高 + 1
+		4、左满 && 右完全 && 左高==右高
+	除去这4种情况，都不是CBT
+
+	需要的信息：
+	是否是满
+	是否是完全
+	高度
+	 */
 	public static boolean isCompleteTree2(TreeNode head) {
 		return process(head).isCBT;
 	}
@@ -74,8 +98,10 @@ public class Code01_IsCBT {
 		Info leftInfo = process(x.left);
 		Info rightInfo = process(x.right);
 		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+		// 判断一棵树是否是满二叉树，上节课讲过。左满&&右满&&左高==右高
 		boolean isFull = leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height;
 		boolean isCBT = false;
+		// 4种情况，看能不能改true
 		if (leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height) {
 			isCBT = true;
 		} else if (leftInfo.isCBT && rightInfo.isFull && leftInfo.height == rightInfo.height + 1) {
