@@ -17,6 +17,10 @@ package class12;
  * ２.写代码模板化
  * ３.一旦把可能性分析清楚，练习熟了以后，写这种题就很简单
  */
+
+/**
+ * 满二叉树：每一层节点都是满的。那么就会满足 2^h - 1 == N h是高度，N是节点总数。
+ */
 public class Code04_IsFull {
 
 	public static class Node {
