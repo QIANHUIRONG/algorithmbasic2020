@@ -246,6 +246,7 @@ public class Code02_NumberOfIslands {
 		}
 
 		public void union(int r1, int c1, int r2, int c2) {
+			// 合并的时候，先计算对应的一维下标，再合并
 			int i1 = index(r1, c1);
 			int i2 = index(r2, c2);
 			int f1 = find(i1);
