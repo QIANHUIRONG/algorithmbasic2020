@@ -7,11 +7,23 @@ import java.util.List;
 // 本题为leetcode原题
 // 测试链接：https://leetcode.com/problems/number-of-islands-ii/
 // 所有方法都可以直接通过
+// 时间：1：32
+/*
+题意：
+假设你设计一个游戏，用一个 m 行 n 列的 2D 网格来存储你的游戏地图。
+起始的时候，每个格子的地形都被默认标记为「水」。我们可以通过使用 addLand 进行操作，将位置 (row, col) 的「水」变成「陆地」。
+你将会被给定一个列表，来记录所有需要被操作的位置，然后你需要返回计算出来 每次 addLand 操作后岛屿的数量。
+注意：一个岛的定义是被「水」包围的「陆地」，通过水平方向或者垂直方向上相邻的陆地连接而成。你可以假设地图网格的四边均被无边无际的「水」所包围。
+ */
 public class Code03_NumberOfIslandsII {
 
+	/*
+	题解：动态初始化并查集
+	复杂度：初始化O(M*N) + O(k), k是positions的对数，没来一对一次O（1）的并查集合并。
+	 */
 	public static List<Integer> numIslands21(int m, int n, int[][] positions) {
 		UnionFind1 uf = new UnionFind1(m, n);
-		List<Integer> ans = new ArrayList<>();
+		List<Integer> ans = new ArrayList<>(); // 收集每一次的答案
 		for (int[] position : positions) {
 			ans.add(uf.connect(position[0], position[1]));
 		}
@@ -26,6 +38,7 @@ public class Code03_NumberOfIslandsII {
 		private final int col;
 		private int sets;
 
+		// 初始化的时候都是‘0’，所以只设置长度，没有做其他的
 		public UnionFind1(int m, int n) {
 			row = m;
 			col = n;
@@ -58,7 +71,7 @@ public class Code03_NumberOfIslandsII {
 			}
 			int i1 = index(r1, c1);
 			int i2 = index(r2, c2);
-			if (size[i1] == 0 || size[i2] == 0) {
+			if (size[i1] == 0 || size[i2] == 0) { // 有一个还没有被初始化，那么它就是水，不用连了
 				return;
 			}
 			int f1 = find(i1);
@@ -77,7 +90,7 @@ public class Code03_NumberOfIslandsII {
 
 		public int connect(int r, int c) {
 			int index = index(r, c);
-			if (size[index] == 0) {
+			if (size[index] == 0) { // 表示从来没有被初始化过，此时才需要初始化
 				parent[index] = index;
 				size[index] = 1;
 				sets++;
@@ -86,6 +99,7 @@ public class Code03_NumberOfIslandsII {
 				union(r, c - 1, r, c);
 				union(r, c + 1, r, c);
 			}
+			// 否则，就是重复初始化，不需要去动态合并
 			return sets;
 		}
 
