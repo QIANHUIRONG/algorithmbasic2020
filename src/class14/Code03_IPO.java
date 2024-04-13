@@ -3,7 +3,8 @@ package class14;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-public class Code04_IPO {
+// 做项目获得的最大钱数
+public class Code03_IPO {
 
 	// 最多K个项目
 	// W是初始资金

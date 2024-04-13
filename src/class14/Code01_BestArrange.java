@@ -3,7 +3,8 @@ package class14;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class Code03_BestArrange {
+// 会议室能容纳的最多宣讲场次
+public class Code01_BestArrange {
 
 	public static class Program {
 		public int start;
@@ -15,6 +16,9 @@ public class Code03_BestArrange {
 		}
 	}
 
+	/*
+	方法一：纯暴力
+	 */
 	// 暴力！所有情况都尝试！
 	public static int bestArrange1(Program[] programs) {
 		if (programs == null || programs.length == 0) {
@@ -56,6 +60,10 @@ public class Code03_BestArrange {
 		return ans;
 	}
 
+	/*
+	方法二：贪心
+	贪心策略：按照会议结束时间早，先安排
+	 */
 	// 会议的开始时间和结束时间，都是数值，不会 < 0
 	public static int bestArrange2(Program[] programs) {
 		Arrays.sort(programs, new ProgramComparator());
@@ -63,7 +71,8 @@ public class Code03_BestArrange {
 		int result = 0;
 		// 依次遍历每一个会议，结束时间早的会议先遍历
 		for (int i = 0; i < programs.length; i++) {
-			if (timeLine <= programs[i].start) {
+			// 当前会议的开始时间必须在timeLine之后
+			if (programs[i].start >= timeLine) {
 				result++;
 				timeLine = programs[i].end;
 			}
@@ -73,6 +82,7 @@ public class Code03_BestArrange {
 
 	public static class ProgramComparator implements Comparator<Program> {
 
+		// 按照结束时间由小到大排序
 		@Override
 		public int compare(Program o1, Program o2) {
 			return o1.end - o2.end;
