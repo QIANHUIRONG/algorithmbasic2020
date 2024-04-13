@@ -2,6 +2,7 @@ package class12;
 
 import java.util.ArrayList;
 
+// 二叉树的递归套路19
 public class Code02_IsBST {
 
 	public static class Node {

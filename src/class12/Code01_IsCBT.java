@@ -14,27 +14,33 @@ public class Code01_IsCBT {
 		}
 	}
 
+	/**
+	 * 方法一：7：00
+	 * 1、玩一个按层遍历，遍历过程中2个原则：
+	 * 	①如果一个节点，有右无左，直接false
+	 * 	②第一次遇到左右孩子不双全的节点，那么接下来的所有节点都必须是叶子节点；
+	 *
+	 * @param head
+	 * @return
+	 */
 	public static boolean isCBT1(Node head) {
 		if (head == null) {
 			return true;
 		}
+		// 按层遍历需要的队列
 		LinkedList<Node> queue = new LinkedList<>();
 		// 是否遇到过左右两个孩子不双全的节点
 		boolean leaf = false;
-		Node l = null;
-		Node r = null;
 		queue.add(head);
 		while (!queue.isEmpty()) {
 			head = queue.poll();
-			l = head.left;
-			r = head.right;
+			Node l = head.left;
+			Node r = head.right;
 			if (
-			// 如果遇到了不双全的节点之后，又发现当前节点不是叶节点
-			    (leaf && (l != null || r != null)) 
-			    || 
-			    (l == null && r != null)
-
-			) {
+				// 如果一个节点，有右无左，直接false
+				// 如果遇到了不双全的节点之后，又发现当前节点不是叶节点，false
+			    ((l == null && r != null) ||
+						(leaf && (l != null || r != null)))) {
 				return false;
 			}
 			if (l != null) {
@@ -43,6 +49,7 @@ public class Code01_IsCBT {
 			if (r != null) {
 				queue.add(r);
 			}
+			// 遇到第一个左右孩子不双全的节点，标记后面节点都得是叶节点
 			if (l == null || r == null) {
 				leaf = true;
 			}

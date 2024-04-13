@@ -1,5 +1,6 @@
 package class12;
 
+// 判断是否是搜索二叉树：36
 public class Code03_IsBalanced {
 
 	public static class Node {
