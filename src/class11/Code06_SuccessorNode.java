@@ -22,6 +22,7 @@ public class Code06_SuccessorNode {
 		public int value;
 		public Node left;
 		public Node right;
+		// 有一个指向父节点的指针
 		public Node parent;
 
 		public Node(int data) {
@@ -29,15 +30,23 @@ public class Code06_SuccessorNode {
 		}
 	}
 
+	// 主函数
 	public static Node getSuccessorNode(Node node) {
 		if (node == null) {
 			return node;
 		}
 		if (node.right != null) {
-			return getLeftMost(node.right);
+			// 有右子树，找到右树上的最左孩子
+			Node cur = node.right;
+			while (cur.left != null) {
+				cur = cur.left;
+			}
+			return cur;
 		} else { // 无右子树
 			Node parent = node.parent;
-			while (parent != null && parent.right == node) { // 当前节点是其父亲节点右孩子
+			while (parent != null && parent.right == node) {
+				// 我是我父亲的右孩子，我就来到父节点，父节点继续往上
+				// 直到我是我父亲的左；或者我父亲为null（我是整棵树的头），就跳出循环
 				node = parent;
 				parent = node.parent;
 			}
@@ -45,15 +54,15 @@ public class Code06_SuccessorNode {
 		}
 	}
 
-	public static Node getLeftMost(Node node) {
-		if (node == null) {
-			return node;
-		}
-		while (node.left != null) {
-			node = node.left;
-		}
-		return node;
-	}
+//	public static Node getLeftMost(Node node) {
+//		if (node == null) {
+//			return node;
+//		}
+//		while (node.left != null) {
+//			node = node.left;
+//		}
+//		return node;
+//	}
 
 	public static void main(String[] args) {
 		Node head = new Node(6);
