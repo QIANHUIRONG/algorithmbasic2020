@@ -29,13 +29,13 @@ public class Code06_Kruskal {
 		unionFind.makeSets(graph.nodes.values());
 
 		// 2、所有边入小根堆，每次弹出边最小的
-		PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
+		PriorityQueue<Edge> heap = new PriorityQueue<>(new EdgeComparator());
 		for (Edge edge : graph.edges) {
-			priorityQueue.add(edge);
+			heap.add(edge);
 		}
 		Set<Edge> result = new HashSet<>();
-		while (!priorityQueue.isEmpty()) {
-			Edge edge = priorityQueue.poll();
+		while (!heap.isEmpty()) {
+			Edge edge = heap.poll();
 			// 3、如果加入这条边不会形成环，就确定要这条边
 			if (!unionFind.isSameSet(edge.from, edge.to)) {
 				result.add(edge);
