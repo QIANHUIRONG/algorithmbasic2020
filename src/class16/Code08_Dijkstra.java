@@ -6,35 +6,44 @@ import java.util.Map.Entry;
 
 /*
 迪杰斯特拉算法：1：57
+算法描述：给定一个出发点A，出发点A能够到的了的点（到不了的点距离是正无穷），最短距离是多少？
+经典的迪杰斯特拉：没有负数的边
+ */
+/*
+每次都没有锁定的点中，选一个此时A点到达距离最短的点X，X去解锁边，看能不能更新那些没有被锁定的点的距离成更短
  */
 // no negative weight
 public class Code08_Dijkstra {
 
-	public static HashMap<Node, Integer> dijkstra1(Node from) {
+	public static HashMap<Node, Integer> dijkstra1(Node start) {
+		// 1、距离表。从开始节点出发到每个节点的最短距离
 		HashMap<Node, Integer> distanceMap = new HashMap<>();
-		distanceMap.put(from, 0);
-		// 打过对号的点
+		distanceMap.put(start, 0);
+		// 2、已经锁定的点。也就是已经求出答案的点
 		HashSet<Node> selectedNodes = new HashSet<>();
+		// 3、从距离表中选一个，未被锁定 && 距离最短的点，作为中继点
 		Node minNode = getMinDistanceAndUnselectedNode(distanceMap, selectedNodes);
 		while (minNode != null) {
-			//  原始点  ->  minNode(跳转点)   最小距离distance
-			int distance = distanceMap.get(minNode);
+			int distance = distanceMap.get(minNode); //  原始点 到 中继点 此时的最小距离
+			// 4、可以解锁这个中继点所有的边，看能不能更短
 			for (Edge edge : minNode.edges) {
 				Node toNode = edge.to;
-				if (!distanceMap.containsKey(toNode)) {
+				if (!distanceMap.containsKey(toNode)) { // 以前还到不了
 					distanceMap.put(toNode, distance + edge.weight);
-				} else { // toNode 
+				} else { // 以前到得了，选距离短的
 					distanceMap.put(edge.to, Math.min(distanceMap.get(toNode), distance + edge.weight));
 				}
 			}
+			// 5、锁定当前节点
 			selectedNodes.add(minNode);
+			// 6、拿到下一个中继点
 			minNode = getMinDistanceAndUnselectedNode(distanceMap, selectedNodes);
 		}
 		return distanceMap;
 	}
 
 	public static Node getMinDistanceAndUnselectedNode(HashMap<Node, Integer> distanceMap, HashSet<Node> touchedNodes) {
-		Node minNode = null;
+		Node minNode = null; // 距离最短的点
 		int minDistance = Integer.MAX_VALUE;
 		for (Entry<Node, Integer> entry : distanceMap.entrySet()) {
 			Node node = entry.getKey();
