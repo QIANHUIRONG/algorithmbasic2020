@@ -5,8 +5,62 @@ import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+/*
+最小生成树——普利姆算法：1：43
+算法描述：
+	1)可以从任意节点出发来寻找最小生成树
+	2)某个点加入到被选取的点中后，解锁这个点出发的所有新的边
+	3)在所有解锁的边中选最小的边，然后看看这个边会不会形成环
+	4)如果会，不要当前边，继续考察剩下解锁的边中最小的边，重复3)
+	5)如果不会，要当前边，将该边的指向点加入到被选取的点中，重复2)
+	6)当所有点都被选取，最小生成树就得到了
+ */
+/*
+1、无向图，需要指定从哪个点出发
+2、点解锁边，选一个最小的边（堆），如果不会形成环（set），要这条边，接着边解锁点
+3、当所有的点都解锁了，停
+4、不需要并查集：每次都是一个一个的点进入集合，不存在两大片集合的合并问题。表达解锁的点->一个正常的set就足够了
+
+ */
 // undirected graph only
 public class Code07_Prim {
+
+
+
+	public static Set<Edge> primMST(Graph graph) {
+		// 1、小根堆。存放解锁的边
+		PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
+		// 2、集合，存放解锁的点
+		HashSet<Node> nodeSet = new HashSet<>();
+		Set<Edge> res = new HashSet<>(); // 依次挑选的的边在result里
+
+		// 这里是对所有的点都作为出发点，跑了一遍普利姆算法。经典的是会给一个出发点。
+		for (Node node : graph.nodes.values()) { // 随便挑一个点作为开始点
+			if (!nodeSet.contains(node)) {
+				// 3、先解锁点，存入集合。解锁关联的边
+				nodeSet.add(node);
+				for (Edge edge : node.edges) { // 由一个点，解锁所有相连的边
+					priorityQueue.add(edge);
+				}
+				// 4、选一条最小的边，且不会形成环
+				while (!priorityQueue.isEmpty()) {
+					Edge edge = priorityQueue.poll();
+					Node toNode = edge.to;
+					if (!nodeSet.contains(toNode)) { // 不会形成环，就要这条边。对应的点收集到res
+						nodeSet.add(toNode);
+						res.add(edge);
+						// 5、点再去解锁边
+						for (Edge nextEdge : toNode.edges) {
+							priorityQueue.add(nextEdge);
+						}
+					}
+				}
+			}
+			// 加了break，就是从某个点出发，生成了一次普利姆算法，就退出循环了。
+			// break;
+		}
+		return res;
+	}
 
 	public static class EdgeComparator implements Comparator<Edge> {
 
@@ -15,41 +69,6 @@ public class Code07_Prim {
 			return o1.weight - o2.weight;
 		}
 
-	}
-
-	public static Set<Edge> primMST(Graph graph) {
-		// 解锁的边进入小根堆
-		PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
-
-		// 哪些点被解锁出来了
-		HashSet<Node> nodeSet = new HashSet<>();
-		
-		
-		
-		Set<Edge> result = new HashSet<>(); // 依次挑选的的边在result里
-
-		for (Node node : graph.nodes.values()) { // 随便挑了一个点
-			// node 是开始点
-			if (!nodeSet.contains(node)) {
-				nodeSet.add(node);
-				for (Edge edge : node.edges) { // 由一个点，解锁所有相连的边
-					priorityQueue.add(edge);
-				}
-				while (!priorityQueue.isEmpty()) {
-					Edge edge = priorityQueue.poll(); // 弹出解锁的边中，最小的边
-					Node toNode = edge.to; // 可能的一个新的点
-					if (!nodeSet.contains(toNode)) { // 不含有的时候，就是新的点
-						nodeSet.add(toNode);
-						result.add(edge);
-						for (Edge nextEdge : toNode.edges) {
-							priorityQueue.add(nextEdge);
-						}
-					}
-				}
-			}
-			// break;
-		}
-		return result;
 	}
 
 	// 请保证graph是连通图

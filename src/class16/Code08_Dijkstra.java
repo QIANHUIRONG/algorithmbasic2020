@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 
+/*
+迪杰斯特拉算法：1：57
+ */
 // no negative weight
 public class Code08_Dijkstra {
 
