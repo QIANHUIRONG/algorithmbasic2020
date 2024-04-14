@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 
 /*
-迪杰斯特拉算法：1：57
+迪杰斯特拉算法：1：57。加强堆优化：day17，03
 算法描述：给定一个出发点A，出发点A能够到的了的点（到不了的点距离是正无穷），最短距离是多少？
 经典的迪杰斯特拉：没有负数的边
  */
@@ -15,6 +15,9 @@ import java.util.Map.Entry;
 // no negative weight
 public class Code08_Dijkstra {
 
+	/*
+	未用加强堆优化版本：
+	 */
 	public static HashMap<Node, Integer> dijkstra1(Node start) {
 		// 1、距离表。从开始节点出发到每个节点的最短距离
 		HashMap<Node, Integer> distanceMap = new HashMap<>();
@@ -34,7 +37,7 @@ public class Code08_Dijkstra {
 					distanceMap.put(edge.to, Math.min(distanceMap.get(toNode), distance + edge.weight));
 				}
 			}
-			// 5、锁定当前节点
+			// 5、锁定当前节点，就是当前点已经求出答案了
 			selectedNodes.add(minNode);
 			// 6、拿到下一个中继点
 			minNode = getMinDistanceAndUnselectedNode(distanceMap, selectedNodes);
@@ -42,6 +45,9 @@ public class Code08_Dijkstra {
 		return distanceMap;
 	}
 
+	/*
+	这个方法现在就是遍历，可以用加强堆优化
+	 */
 	public static Node getMinDistanceAndUnselectedNode(HashMap<Node, Integer> distanceMap, HashSet<Node> touchedNodes) {
 		Node minNode = null; // 距离最短的点
 		int minDistance = Integer.MAX_VALUE;
