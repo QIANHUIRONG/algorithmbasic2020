@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.Stack;
 
 //undirected graph only
-public class Code04_Kruskal {
+public class Code06_Kruskal {
 
 	// Union-Find Set
 	public static class UnionFind {

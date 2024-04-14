@@ -14,7 +14,7 @@ import java.util.HashMap;
 拓扑排序中的第一个节点可以是图中的任何一个没有其他节点指向它的节点.
 针对给定的有向图找到任意一种拓扑排序的顺序.
  */
-public class Code03_TopologicalOrderDFS2 {
+public class Code04_TopologicalOrderDFS1 {
 
 	// 不要提交这个类
 	// 本题的图结构。当前这个节点的value，当前这个节点的邻居节点。可以理解成邻接表法
@@ -37,6 +37,10 @@ public class Code03_TopologicalOrderDFS2 {
 
 	现在我要统计每个点走过的节点，这里就可能会有大量重复计算的问题，如果算过了，放到缓存中去（对动态规划的提前预热）
 
+	 */
+	/*
+	为什么这里没有写转换类：如果是新手，可以写转换器，转换成我们熟悉的结构去玩；
+	如果是老手，就来啥结构玩啥结构，这里也是对这种方式进行练习
 	 */
 	public static ArrayList<DirectedGraphNode> topSort(ArrayList<DirectedGraphNode> graph) {
 		HashMap<DirectedGraphNode, Record> map = new HashMap<>();
