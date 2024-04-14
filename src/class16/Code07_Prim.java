@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 // undirected graph only
-public class Code06_Prim {
+public class Code07_Prim {
 
 	public static class EdgeComparator implements Comparator<Edge> {
 

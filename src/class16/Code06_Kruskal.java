@@ -1,15 +1,50 @@
 package class16;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 //undirected graph only
 public class Code06_Kruskal {
+
+	/*
+	最小生成树算法：1、克鲁斯卡尔算法；2、普利姆算法
+	定义：在不影响所有点都连通的情况下，所有边的权值累加最小。
+	提到最小生成树一般都是无向图。当然有向图也可以，但是需要给出发点。
+	 */
+	/*
+	克鲁斯卡尔算法
+	算法描述：
+		1)总是从权值最小的边开始考虑，依次考察权值依次变大的边
+		2)当前的边要么进入最小生成树的集合，要么丢弃
+		3)如果当前的边进入最小生成树的集合中不会形成环，就要当前边
+		4)如果当前的边进入最小生成树的集合中会形成环，就不要当前边
+		5)考察完所有边之后，最小生成树的集合也得到了
+
+	一句话：把所有的边，根据权值由小到大排序，如果当前边不会形成环就要当前边会形成环就不要当前边
+	怎么检查有无环：并查集！
+		一开始所有的点都是单独的集合，选了那条边，就把边的from和to节点合并到一个集合。
+	 */
+	public static Set<Edge> kruskalMST(Graph graph) {
+		UnionFind unionFind = new UnionFind();
+		// 1、初始化并查集。一开始所有的点都是单独的集合
+		unionFind.makeSets(graph.nodes.values());
+
+		// 2、所有边入小根堆，每次弹出边最小的
+		PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
+		for (Edge edge : graph.edges) {
+			priorityQueue.add(edge);
+		}
+		Set<Edge> result = new HashSet<>();
+		while (!priorityQueue.isEmpty()) {
+			Edge edge = priorityQueue.poll();
+			// 3、如果加入这条边不会形成环，就确定要这条边
+			if (!unionFind.isSameSet(edge.from, edge.to)) {
+				result.add(edge);
+				unionFind.union(edge.from, edge.to);
+			}
+		}
+		return result;
+	}
+
 
 	// Union-Find Set
 	public static class UnionFind {
@@ -80,22 +115,4 @@ public class Code06_Kruskal {
 
 	}
 
-	public static Set<Edge> kruskalMST(Graph graph) {
-		UnionFind unionFind = new UnionFind();
-		unionFind.makeSets(graph.nodes.values());
-		// 从小的边到大的边，依次弹出，小根堆！
-		PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
-		for (Edge edge : graph.edges) { // M 条边
-			priorityQueue.add(edge);  // O(logM)
-		}
-		Set<Edge> result = new HashSet<>();
-		while (!priorityQueue.isEmpty()) { // M 条边
-			Edge edge = priorityQueue.poll(); // O(logM)
-			if (!unionFind.isSameSet(edge.from, edge.to)) { // O(1)
-				result.add(edge);
-				unionFind.union(edge.from, edge.to);
-			}
-		}
-		return result;
-	}
 }
