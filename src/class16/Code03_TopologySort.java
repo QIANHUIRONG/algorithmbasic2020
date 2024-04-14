@@ -1,10 +1,6 @@
 package class16;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /*
 经典拓扑排序。
@@ -16,9 +12,9 @@ public class Code03_TopologySort {
 
 	// graph：有向无环图
 	public static List<Node> sortedTopology(Graph graph) {
-		// key 某个节点   value 剩余的入度
-		HashMap<Node, Integer> inMap = new HashMap<>();
-		// 只有剩余入度为0的点，才进入这个队列
+		// 节点的入度哈希表。key 某个节点   value 剩余的入度
+		Map<Node, Integer> inMap = new HashMap<>();
+		// 入度为0的节点队列。只有剩余入度为0的点，才进入这个队列
 		Queue<Node> zeroInQueue = new LinkedList<>();
 		for (Node node : graph.nodes.values()) {
 			inMap.put(node, node.in);
