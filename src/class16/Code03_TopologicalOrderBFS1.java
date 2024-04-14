@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
+// 拓扑排序BFS解法
 // OJ链接：https://www.lintcode.com/problem/topological-sorting
 public class Code03_TopologicalOrderBFS1 {
 
