@@ -3,6 +3,11 @@ package class17;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+题目：打印字符串的全排列 1:14
+permutation 英/ˌpɜːmjuˈteɪʃn/ 排列
+
+ */
 public class Code04_PrintAllPermutations {
 
 	public static List<String> permutation1(String s) {

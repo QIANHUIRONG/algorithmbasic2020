@@ -3,6 +3,9 @@ package class17;
 import java.util.HashSet;
 import java.util.Stack;
 
+/*
+时间：37
+ */
 public class Code02_Hanoi {
 
 	public static void hanoi1(int n) {

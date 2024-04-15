@@ -2,6 +2,9 @@ package class17;
 
 import java.util.Stack;
 
+/*
+时间：1小时49分
+ */
 public class Code05_ReverseStackUsingRecursive {
 
 	public static void reverse(Stack<Integer> stack) {
