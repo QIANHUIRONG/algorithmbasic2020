@@ -1,5 +1,8 @@
 package class18;
 
+/*
+时间：1：31
+ */
 public class Code02_CardsInLine {
 
 	// 根据规则，返回获胜者的分数
