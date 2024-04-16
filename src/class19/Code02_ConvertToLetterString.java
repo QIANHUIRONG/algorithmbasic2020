@@ -1,5 +1,8 @@
 package class19;
 
+/*
+时间：46
+ */
 public class Code02_ConvertToLetterString {
 
 	// str只含有数字字符0~9
