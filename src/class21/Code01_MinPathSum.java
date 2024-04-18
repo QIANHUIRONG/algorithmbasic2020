@@ -2,6 +2,9 @@ package class21;
 
 public class Code01_MinPathSum {
 
+	/*
+	时间：5
+	 */
 	public static int minPathSum1(int[][] m) {
 		if (m == null || m.length == 0 || m[0] == null || m[0].length == 0) {
 			return 0;

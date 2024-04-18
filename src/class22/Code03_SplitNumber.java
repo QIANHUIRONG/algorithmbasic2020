@@ -1,5 +1,8 @@
 package class22;
 
+/*
+时间：2：07
+ */
 public class Code03_SplitNumber {
 
 	// n为正数

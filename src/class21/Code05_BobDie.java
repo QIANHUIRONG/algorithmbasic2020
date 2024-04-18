@@ -1,5 +1,8 @@
 package class21;
 
+/*
+1：53
+ */
 public class Code05_BobDie {
 
 	public static double livePosibility1(int row, int col, int k, int N, int M) {

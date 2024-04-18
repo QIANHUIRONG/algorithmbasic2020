@@ -3,6 +3,9 @@ package class21;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+/*
+时间：1：29
+ */
 public class Code04_CoinsWaySameValueSamePapper {
 
 	public static class Info {

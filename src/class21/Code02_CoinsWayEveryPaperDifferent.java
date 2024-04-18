@@ -1,5 +1,8 @@
 package class21;
 
+/*
+时间：46
+ */
 public class Code02_CoinsWayEveryPaperDifferent {
 
 	public static int coinWays(int[] arr, int aim) {

@@ -1,5 +1,8 @@
 package class23;
 
+/*
+时间：52
+   */
 public class Code02_SplitSumClosedSizeHalf {
 
 	public static int right(int[] arr) {

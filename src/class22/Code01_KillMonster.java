@@ -1,5 +1,8 @@
 package class22;
 
+/**
+ * 时间：4
+ */
 public class Code01_KillMonster {
 
 	public static double right(int N, int M, int K) {

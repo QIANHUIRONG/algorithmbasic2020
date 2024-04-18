@@ -1,5 +1,6 @@
 package class20;
 
+// 时间：59
 public class Code02_HorseJump {
 
 	// 当前来到的位置是（x,y）

@@ -1,5 +1,8 @@
 package class23;
 
+/*
+时间：08
+ */
 public class Code01_SplitSumClosed {
 
 	public static int right(int[] arr) {
@@ -14,6 +17,7 @@ public class Code01_SplitSumClosed {
 	}
 
 	// arr[i...]可以自由选择，请返回累加和尽量接近rest，但不能超过rest的情况下，最接近的累加和是多少？
+	// 本质是求的较小集合最大能推到多大
 	public static int process(int[] arr, int i, int rest) {
 		if (i == arr.length) {
 			return 0;

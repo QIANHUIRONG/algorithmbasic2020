@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+// 时间：1：40
+
 // 题目
 // 数组arr代表每一个咖啡机冲一杯咖啡的时间，每个咖啡机只能串行的制造咖啡。
 // 现在有n个人需要喝咖啡，只能用咖啡机来制造咖啡。
