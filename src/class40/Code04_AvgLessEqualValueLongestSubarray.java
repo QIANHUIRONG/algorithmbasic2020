@@ -2,6 +2,9 @@ package class40;
 
 import java.util.TreeMap;
 
+/*
+时间：1：48
+ */
 public class Code04_AvgLessEqualValueLongestSubarray {
 
 	// 暴力解，时间复杂度O(N^3)，用于做对数器

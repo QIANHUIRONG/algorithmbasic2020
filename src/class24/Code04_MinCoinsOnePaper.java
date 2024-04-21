@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.LinkedList;
 
+/*
+时间：2：04
+ */
 public class Code04_MinCoinsOnePaper {
 
 	public static int minCoins(int[] arr, int aim) {

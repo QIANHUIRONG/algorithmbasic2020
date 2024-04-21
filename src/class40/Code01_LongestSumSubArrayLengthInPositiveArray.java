@@ -1,5 +1,8 @@
 package class40;
 
+/*
+时间：17
+ */
 public class Code01_LongestSumSubArrayLengthInPositiveArray {
 
 	public static int getMaxLength(int[] arr, int K) {

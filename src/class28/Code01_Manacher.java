@@ -1,5 +1,10 @@
 package class28;
 
+/*
+时间 ：6
+暴力解：O（N^2)
+manacher: O(N)
+ */
 public class Code01_Manacher {
 
 	public static int manacher(String s) {

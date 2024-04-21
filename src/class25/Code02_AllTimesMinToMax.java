@@ -2,6 +2,10 @@ package class25;
 
 import java.util.Stack;
 
+/*
+时间：52
+子数组：连续的
+ */
 public class Code02_AllTimesMinToMax {
 
 	public static int max1(int[] arr) {

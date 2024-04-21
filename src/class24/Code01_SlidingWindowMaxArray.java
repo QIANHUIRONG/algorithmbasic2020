@@ -2,6 +2,9 @@ package class24;
 
 import java.util.LinkedList;
 
+/*
+时间：34
+ */
 public class Code01_SlidingWindowMaxArray {
 
 	// 暴力的对数器方法

@@ -3,6 +3,7 @@ package class25;
 import java.util.Stack;
 
 // 测试链接：https://leetcode.com/problems/maximal-rectangle/
+// 时间：1：34
 public class Code04_MaximalRectangle {
 
 	public static int maximalRectangle(char[][] map) {

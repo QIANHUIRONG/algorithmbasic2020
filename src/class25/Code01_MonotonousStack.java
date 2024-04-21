@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Stack;
 
+/*
+时间：5
+②暴力法：O(n^2)
+③单调栈：O（N)
+ */
 public class Code01_MonotonousStack {
 
 	// arr = [ 3, 1, 2, 3]

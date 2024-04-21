@@ -1,5 +1,8 @@
 package class39;
 
+/*
+时间：1：46
+ */
 public class Code02_SnacksWays {
 
 	public static int ways1(int[] arr, int w) {

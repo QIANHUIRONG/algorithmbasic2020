@@ -3,6 +3,10 @@ package class29;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+/*
+时间：4
+时间复杂度：快排方法和bfprt算法都是O（N) z
+ */
 public class Code01_FindMinKth {
 
 	public static class MaxHeapComparator implements Comparator<Integer> {

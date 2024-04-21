@@ -3,6 +3,7 @@ package class24;
 import java.util.LinkedList;
 
 // 测试链接：https://leetcode.com/problems/gas-station
+// 时间：1：30
 public class Code03_GasStation {
 
 	// 这个方法的时间复杂度O(N)，额外空间复杂度O(N)

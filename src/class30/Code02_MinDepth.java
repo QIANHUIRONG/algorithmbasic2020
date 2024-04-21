@@ -1,6 +1,9 @@
 package class30;
 
 // 本题测试链接 : https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/
+// 时间：1：23
+// 方法一：二叉树的递归套路
+// 方法二：Morris的版本
 public class Code02_MinDepth {
 
 	// 不提交这个类
@@ -39,7 +42,11 @@ public class Code02_MinDepth {
 		return 1 + Math.min(leftH, rightH);
 	}
 
-	// 下面的方法是morris遍历的解
+	/**
+	 * 下面的方法是morris遍历的解
+	 * @param head
+	 * @return
+	 */
 	public static int minDepth2(TreeNode head) {
 		if (head == null) {
 			return 0;

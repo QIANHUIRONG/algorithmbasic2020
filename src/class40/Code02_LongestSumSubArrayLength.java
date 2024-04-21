@@ -2,6 +2,9 @@ package class40;
 
 import java.util.HashMap;
 
+/*
+时间：36
+ */
 public class Code02_LongestSumSubArrayLength {
 
 	public static int maxLength(int[] arr, int k) {

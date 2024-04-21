@@ -1,5 +1,9 @@
 package class40;
 
+/*
+时间：59
+时间复杂度：O（N）
+ */
 public class Code03_LongestLessSumSubArrayLength {
 
 	public static int maxLengthAwesome(int[] arr, int k) {

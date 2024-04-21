@@ -1,6 +1,6 @@
 package class40;
 
-public class Code07_ZigZagPrintMatrix {
+public class Code08_ZigZagPrintMatrix {
 
 	public static void printMatrixZigZag(int[][] matrix) {
 		int tR = 0;

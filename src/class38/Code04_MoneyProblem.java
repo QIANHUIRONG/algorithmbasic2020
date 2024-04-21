@@ -1,5 +1,8 @@
 package class38;
 
+/*
+时间：1：26
+ */
 public class Code04_MoneyProblem {
 
 	// int[] d d[i]：i号怪兽的武力

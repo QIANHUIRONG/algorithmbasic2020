@@ -1,5 +1,13 @@
 package class30;
 
+/*
+时间：8
+ */
+/*
+补充：
+	利用Morris判断一棵树是不是搜索二叉树：Morris遍历的时候，把中序遍历的打印行为变为对比值大小的行为
+
+ */
 public class Code01_MorrisTraversal {
 
 	public static class Node {
@@ -180,6 +188,11 @@ public class Code01_MorrisTraversal {
 		return buf.toString();
 	}
 
+	/**
+	 * 判断是不是搜索二叉树
+	 * @param head
+	 * @return
+	 */
 	public static boolean isBST(Node head) {
 		if (head == null) {
 			return true;

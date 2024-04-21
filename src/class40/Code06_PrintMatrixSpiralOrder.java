@@ -1,6 +1,9 @@
 package class40;
 
-public class Code05_PrintMatrixSpiralOrder {
+/*
+时间：2：16
+ */
+public class Code06_PrintMatrixSpiralOrder {
 
 	public static void spiralOrderPrint(int[][] matrix) {
 		int tR = 0;

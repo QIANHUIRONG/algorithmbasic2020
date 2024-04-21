@@ -2,9 +2,15 @@ package class24;
 
 import java.util.LinkedList;
 
+/*
+时间：58
+子数组是连续的
+ */
+
 public class Code02_AllLessNumSubArray {
 
 	// 暴力的对数器方法
+	// O（N^3)
 	public static int right(int[] arr, int sum) {
 		if (arr == null || arr.length == 0 || sum < 0) {
 			return 0;
@@ -27,6 +33,7 @@ public class Code02_AllLessNumSubArray {
 		return count;
 	}
 
+	// O（N)
 	public static int num(int[] arr, int sum) {
 		if (arr == null || arr.length == 0 || sum < 0) {
 			return 0;

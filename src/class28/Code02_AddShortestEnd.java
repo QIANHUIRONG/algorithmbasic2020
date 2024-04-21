@@ -1,5 +1,8 @@
 package class28;
 
+/*
+时间：1：37
+ */
 public class Code02_AddShortestEnd {
 
 	public static String shortestEnd(String s) {

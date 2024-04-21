@@ -1,6 +1,9 @@
 package class40;
 
-public class Code08_PrintStar {
+/*
+时间：2：19
+ */
+public class Code07_PrintStar {
 
 	public static void printStar(int N) {
 		int leftUp = 0;

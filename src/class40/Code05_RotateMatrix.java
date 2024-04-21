@@ -1,6 +1,9 @@
 package class40;
 
-public class Code06_RotateMatrix {
+/*
+时间：1：59
+ */
+public class Code05_RotateMatrix {
 
 	public static void rotate(int[][] matrix) {
 		int a = 0;
