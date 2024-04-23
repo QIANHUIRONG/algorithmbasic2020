@@ -1,5 +1,11 @@
 package class04;
 
+/**
+ * 总结一下：
+ * 1、查询某个数右边有多少个数比我大，从左往右merge
+ * 2、查询某个数右边有多少个数比我小，从右往左merge
+ * merge的过程都是经典的由小到大。
+ */
 public class Code03_ReversePair {
 
 	public static int reverPairNumber(int[] arr) {
