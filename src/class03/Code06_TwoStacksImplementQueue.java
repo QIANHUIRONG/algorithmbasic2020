@@ -22,7 +22,7 @@ public class Code06_TwoStacksImplementQueue {
 			}
 		}
 
-		public void add(int pushInt) {
+		public void offer(int pushInt) {
 			stackPush.push(pushInt);
 			pushToPop();
 		}
@@ -46,9 +46,9 @@ public class Code06_TwoStacksImplementQueue {
 
 	public static void main(String[] args) {
 		TwoStacksQueue test = new TwoStacksQueue();
-		test.add(1);
-		test.add(2);
-		test.add(3);
+		test.offer(1);
+		test.offer(2);
+		test.offer(3);
 		System.out.println(test.peek());
 		System.out.println(test.poll());
 		System.out.println(test.peek());

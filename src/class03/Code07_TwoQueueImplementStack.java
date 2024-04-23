@@ -19,7 +19,7 @@ public class Code07_TwoQueueImplementStack {
 			queue.offer(value);
 		}
 
-		public Integer poll() {
+		public Integer pop() {
 			while (queue.size() > 1) { // 往help导出，直到剩1个要弹出的元素
 				help.add(queue.poll());
 			}
@@ -72,7 +72,7 @@ public class Code07_TwoQueueImplementStack {
 						System.out.println("Oops");
 					}
 				} else if (Math.random() < 0.75) {
-					if (!myStack.poll().equals(test.pop())) {
+					if (!myStack.pop().equals(test.pop())) {
 						System.out.println("Oops");
 					}
 				} else {

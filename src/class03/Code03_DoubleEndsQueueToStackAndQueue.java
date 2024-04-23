@@ -4,6 +4,16 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+
+/**
+ * Java中的栈：
+ * 	Stack<Integer> stack = new Stack<>();
+ *	方法：stack.push() / stack.add(); stack.pop();
+ * Java中的队列：
+ * 	Queue<Integer> queue = new LinkedList<>();
+ * 	方法：queue.offer() / queue.add(); queue.poll();
+ *
+ */
 public class Code03_DoubleEndsQueueToStackAndQueue {
 
 
