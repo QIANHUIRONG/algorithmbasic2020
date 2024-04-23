@@ -1,5 +1,17 @@
 package class03;
 
+/**
+ * 数组实现栈：
+ *  * 如果是数组实现栈：
+ *  * 只需要一个数组，再加一个index指针指向下一个进来要添加的位置。
+ *  * 入栈就放到arr[index]上，然后index++
+ *  * 出栈就出arr[index-1],然后index--;
+ *  * 一旦index == arr.length,报溢出错误
+ */
+
+/**
+ * 通过pushi，polli，size完美解耦
+ */
 public class Code04_RingArray {
 
 	public static class MyQueue {

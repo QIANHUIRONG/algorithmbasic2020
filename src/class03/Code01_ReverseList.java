@@ -24,9 +24,11 @@ public class Code01_ReverseList {
 		}
 	}
 
-	//  head
-	//   a    ->   b    ->  c  ->  null
-	//   c    ->   b    ->  a  ->  null
+	/**
+	 * 反转链表
+	 * @param head
+	 * @return
+	 */
 	public static Node reverseLinkedList(Node head) {
 		Node pre = null;
 		Node next = null;
@@ -39,6 +41,11 @@ public class Code01_ReverseList {
 		return pre;
 	}
 
+	/**
+	 * 反转双向链表
+	 * @param head
+	 * @return
+	 */
 	public static DoubleNode reverseDoubleList(DoubleNode head) {
 		DoubleNode pre = null;
 		DoubleNode next = null;

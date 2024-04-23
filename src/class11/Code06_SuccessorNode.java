@@ -54,7 +54,7 @@ public class Code06_SuccessorNode {
 		}
 	}
 
-//	public static Node getLeftMost(Node node) {
+//	public static NodeT getLeftMost(NodeT node) {
 //		if (node == null) {
 //			return node;
 //		}

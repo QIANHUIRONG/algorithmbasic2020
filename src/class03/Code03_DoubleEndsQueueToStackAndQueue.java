@@ -6,22 +6,75 @@ import java.util.Stack;
 
 public class Code03_DoubleEndsQueueToStackAndQueue {
 
-	public static class Node<T> {
-		public T value;
-		public Node<T> last;
-		public Node<T> next;
 
-		public Node(T data) {
+	public static class Node {
+		public int value;
+		public Node last;
+		public Node next;
+
+		public Node(Integer data) {
 			value = data;
 		}
 	}
 
+	/**
+	 * 版本1：不带泛型的版本。练习这个就够了
+	 */
+	public static class DoubleEndsQueue1 {
+		public Node head;
+		public Node tail;
+
+		public void addFromHead(int value) {
+			Node node = new Node(value);
+			if (head == null) {
+				head = node;
+				tail = node;
+			} else {
+				node.next = head;
+				head.last = node;
+				head = node;
+			}
+		}
+
+		public Integer popFromBottom() {
+			if (head == null) {
+				return null;
+			}
+			Node cur = tail;
+			if (head == tail) {
+				head = null;
+				tail = null;
+			} else {
+				tail = tail.last;
+				tail.next = null;
+				cur.last = null;
+			}
+			return cur.value;
+		}
+	}
+
+
+
+	public static class NodeT<T> {
+		public T value;
+		public NodeT<T> last;
+		public NodeT<T> next;
+
+		public NodeT(T data) {
+			value = data;
+		}
+	}
+
+	/**
+	 *  版本2：带泛型的版本
+	 * @param <T>
+	 */
 	public static class DoubleEndsQueue<T> {
-		public Node<T> head;
-		public Node<T> tail;
+		public NodeT<T> head;
+		public NodeT<T> tail;
 
 		public void addFromHead(T value) {
-			Node<T> cur = new Node<T>(value);
+			NodeT<T> cur = new NodeT<T>(value);
 			if (head == null) {
 				head = cur;
 				tail = cur;
@@ -33,7 +86,7 @@ public class Code03_DoubleEndsQueueToStackAndQueue {
 		}
 
 		public void addFromBottom(T value) {
-			Node<T> cur = new Node<T>(value);
+			NodeT<T> cur = new NodeT<T>(value);
 			if (head == null) {
 				head = cur;
 				tail = cur;
@@ -48,7 +101,7 @@ public class Code03_DoubleEndsQueueToStackAndQueue {
 			if (head == null) {
 				return null;
 			}
-			Node<T> cur = head;
+			NodeT<T> cur = head;
 			if (head == tail) {
 				head = null;
 				tail = null;
@@ -64,7 +117,7 @@ public class Code03_DoubleEndsQueueToStackAndQueue {
 			if (head == null) {
 				return null;
 			}
-			Node<T> cur = tail;
+			NodeT<T> cur = tail;
 			if (head == tail) {
 				head = null;
 				tail = null;

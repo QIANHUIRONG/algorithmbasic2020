@@ -169,16 +169,16 @@ public class Code02_SerializeAndReconstructTree {
 	/**
 	 * 三、按层方式返序列化
 	 */
-//	public static Node buildByLevelQueue(Queue<String> levelList) {
+//	public static NodeT buildByLevelQueue(Queue<String> levelList) {
 //		if (levelList == null || levelList.size() == 0) {
 //			return null;
 //		}
-//		Node head = generateNode(levelList.poll());
-//		Queue<Node> queue = new LinkedList<Node>();
+//		NodeT head = generateNode(levelList.poll());
+//		Queue<NodeT> queue = new LinkedList<NodeT>();
 //		if (head != null) {
 //			queue.add(head);
 //		}
-//		Node node = null;
+//		NodeT node = null;
 //		while (!queue.isEmpty()) {
 //			node = queue.poll();
 //			node.left = generateNode(levelList.poll());

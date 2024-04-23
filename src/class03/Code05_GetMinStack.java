@@ -4,6 +4,9 @@ import java.util.Stack;
 
 public class Code05_GetMinStack {
 
+	/**
+	 * 看这个就够了
+	 */
 	public static class MyStack1 {
 		private Stack<Integer> stackData;
 		private Stack<Integer> stackMin;
@@ -13,11 +16,11 @@ public class Code05_GetMinStack {
 			stackMin = new Stack<Integer>();
 		}
 
-		public void push(int newNum) {
-			if (stackMin.isEmpty() || newNum <= this.getmin()) {
-				stackMin.push(newNum);
+		public void push(int num) {
+			if (stackMin.isEmpty() || num <= this.getmin()) {
+				stackMin.push(num);
 			}
-			stackData.push(newNum);
+			stackData.push(num);
 		}
 
 		public int pop() {

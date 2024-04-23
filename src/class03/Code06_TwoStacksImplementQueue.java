@@ -15,8 +15,8 @@ public class Code06_TwoStacksImplementQueue {
 
 		// push栈向pop栈倒入数据
 		private void pushToPop() {
-			if (stackPop.empty()) {
-				while (!stackPush.empty()) {
+			if (stackPop.empty()) { // 为空才能导
+				while (!stackPush.empty()) { // 导的话所有数据都导
 					stackPop.push(stackPush.pop());
 				}
 			}

@@ -6,39 +6,39 @@ import java.util.Stack;
 
 public class Code07_TwoQueueImplementStack {
 
-	public static class TwoQueueStack<T> {
-		public Queue<T> queue;
-		public Queue<T> help;
+	public static class TwoQueueStack {
+		public Queue<Integer> queue;
+		public Queue<Integer> help;
 
 		public TwoQueueStack() {
 			queue = new LinkedList<>();
 			help = new LinkedList<>();
 		}
 
-		public void push(T value) {
+		public void push(int value) {
 			queue.offer(value);
 		}
 
-		public T poll() {
-			while (queue.size() > 1) {
-				help.offer(queue.poll());
+		public Integer poll() {
+			while (queue.size() > 1) { // 往help导出，直到剩1个要弹出的元素
+				help.add(queue.poll());
 			}
-			T ans = queue.poll();
-			Queue<T> tmp = queue;
+			int ans = queue.poll();
+			Queue<Integer> t = queue;
 			queue = help;
-			help = tmp;
+			help = t;
 			return ans;
 		}
 
-		public T peek() {
-			while (queue.size() > 1) {
-				help.offer(queue.poll());
+		public Integer peek() {
+			while (queue.size() > 1) { // 往help导出，直到剩1个要弹出的元素
+				help.add(queue.poll());
 			}
-			T ans = queue.poll();
-			help.offer(ans);
-			Queue<T> tmp = queue;
+			int ans = queue.poll();
+			help.add(ans);
+			Queue<Integer> t = queue;
 			queue = help;
-			help = tmp;
+			help = t;
 			return ans;
 		}
 
@@ -50,7 +50,7 @@ public class Code07_TwoQueueImplementStack {
 
 	public static void main(String[] args) {
 		System.out.println("test begin");
-		TwoQueueStack<Integer> myStack = new TwoQueueStack<>();
+		TwoQueueStack myStack = new TwoQueueStack();
 		Stack<Integer> test = new Stack<>();
 		int testTime = 1000000;
 		int max = 1000000;
