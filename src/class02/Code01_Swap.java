@@ -1,5 +1,21 @@
 package class02;
 
+/*
+认识异或运算：
+	1.异或运算：无进位相加
+	异或运算的性质：
+		1.0^N = N; N^N = 0;
+		2.异或运算满足交换律和结合律
+		其实这两个性质用无进位相加去理解就行。
+
+	2.如何不用额外变量交换两个数
+	a = a ^ b;
+	b = a ^ b;
+	a = a ^ b;
+	解释一下：a = a ^ b; b = a ^ b ^ b = a; a = a ^ b ^ a = b;就完成了交换；
+	但是如果a和b相等，那就会全部刷成0；所以知道就好，没用。
+
+ */
 public class Code01_Swap {
 	
 	public static void main(String[] args) {
