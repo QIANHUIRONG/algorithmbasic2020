@@ -4,21 +4,28 @@ import java.util.Arrays;
 
 public class Code05_BSNearLeft {
 
-	// 在arr上，找满足>=value的最左位置
-	public static int nearestIndex(int[] arr, int value) {
-		int L = 0;
-		int R = arr.length - 1;
-		int index = -1; // 记录最左的对号
-		while (L <= R) { // 至少一个数的时候
-			int mid = L + ((R - L) >> 1);
-			if (arr[mid] >= value) {
-				index = mid;
-				R = mid - 1;
+	/**
+	 * 题意：在arr上，找满足>=value的最左位置
+	 * 如果中点>=num,那就临时保存下，但是有可能左边还有更好的选择，继续二分
+	 * @param arr
+	 * @return
+	 */
+	public static int nearestIndex(int[] arr, int num) {
+		if (arr == null || arr.length == 0) {
+			return -1;
+		}
+		int l = 0, r = arr.length - 1, m = 0;
+		int t = -1;
+		while (l <= r) {
+			m = (l + r) / 2;
+			if (arr[m] >= num) {
+				t = m; // 如果中点>=num,那就临时保存下
+				r = m - 1; // 但是有可能左边还有更好的选择，继续二分
 			} else {
-				L = mid + 1;
+				l = m + 1;
 			}
 		}
-		return index;
+		return t;
 	}
 
 	// for test

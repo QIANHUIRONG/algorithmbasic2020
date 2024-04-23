@@ -4,25 +4,32 @@ import java.util.Arrays;
 
 public class Code04_BSExist {
 
-	public static boolean exist(int[] sortedArr, int num) {
-		if (sortedArr == null || sortedArr.length == 0) {
+	/**
+	 * 时间：1；49
+	 * 时间复杂度：O（logN)
+	 * 找一个数，都不会全部的数看一遍，就是因为数据状况有规律，能二分
+	 * @param arr
+	 * @param num
+	 * @return
+	 */
+	public static boolean exist(int[] arr, int num) {
+		if (arr == null || arr.length == 0) {
 			return false;
 		}
-		int L = 0;
-		int R = sortedArr.length - 1;
-		int mid = 0;
-		// L..R
-		while (L < R) { // L..R 至少两个数的时候
-			mid = L + ((R - L) >> 1);
-			if (sortedArr[mid] == num) {
+		int l = 0;
+		int r = arr.length - 1;
+		int m = 0;
+		while (l <= r) {
+			m = (l + r) / 2;
+			if (arr[m] == num) {
 				return true;
-			} else if (sortedArr[mid] > num) {
-				R = mid - 1;
+			} else if (arr[m] > num) {
+				r = m - 1; // 这里不会越界吗？即使r=m-1来到了-1位置，越界了，那么下一轮while循环肯定进不去
 			} else {
-				L = mid + 1;
+				l = m + 1;
 			}
 		}
-		return sortedArr[L] == num;
+		return false;
 	}
 	
 	// for test
