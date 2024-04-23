@@ -4,6 +4,10 @@ import java.util.Arrays;
 
 public class Code02_BubbleSort {
 
+	/**
+	 * 每遍历一趟，就从前往后两两冒泡，把大的一直冒泡到最后
+	 * @param arr
+	 */
 	public static void bubbleSort(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return;
@@ -22,9 +26,9 @@ public class Code02_BubbleSort {
 
 	// 交换arr的i和j位置上的值
 	public static void swap(int[] arr, int i, int j) {
-		arr[i] = arr[i] ^ arr[j];
-		arr[j] = arr[i] ^ arr[j];
-		arr[i] = arr[i] ^ arr[j];
+		int tmp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = tmp;
 	}
 
 	// for test
