@@ -15,8 +15,8 @@ public class Code04_RadixSort {
 			max = Math.max(max, arr[i]);
 		}
 		// 1、最大的位数
-		int maxbits = maxbits(max);
-		// 2、有几位，就入桶出桶几次
+		int maxbits = getMaxbits(max);
+		// 2、有几位，就入桶出桶几次。从1开始
 		for (int d = 1; d <= maxbits; d++) {
 			// 3、count[]数组，从0-9，帮助入桶出桶
 			// count[0] 当前位(d位)是0的数字有多少个
@@ -48,13 +48,13 @@ public class Code04_RadixSort {
 
 
 
-	public static int maxbits(int num) {
-		int res = 0;
+	public static int getMaxbits(int num) {
+		int maxbits = 0;
 		while (num != 0) {
-			res++;
+			maxbits++;
 			num /= 10;
 		}
-		return res;
+		return maxbits;
 	}
 
 	/**
