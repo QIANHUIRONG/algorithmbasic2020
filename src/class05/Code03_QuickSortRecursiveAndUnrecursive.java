@@ -45,6 +45,11 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 	}
 
 	public static void process(int[] arr, int L, int R) {
+		/*
+		是需要这个大于号的。比如partiton完之后是2 2 2 3 4, partiton[0]是1，partition[1]是2，
+		那么process(arr, L, equalArea[0] - 1)就是process(arr, 0, -1)
+		也可以调用下游递归的时候，如果l<r才去调用也行。
+		 */
 		if (L >= R) {
 			return;
 		}
@@ -53,6 +58,9 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 		process(arr, L, equalArea[0] - 1);
 		process(arr, equalArea[1] + 1, R);
 	}
+
+
+
 
 	// 快排非递归版本需要的辅助类
 	// 要处理的是什么范围上的排序
@@ -74,20 +82,16 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 		int N = arr.length;
 		swap(arr, (int) (Math.random() * N), N - 1);
 		int[] equalArea = netherlandsFlag(arr, 0, N - 1);
-		int el = equalArea[0];
-		int er = equalArea[1];
 		Stack<Op> stack = new Stack<>();
-		stack.push(new Op(0, el - 1));
-		stack.push(new Op(er + 1, N - 1));
+		stack.push(new Op(0, equalArea[0] - 1));
+		stack.push(new Op(equalArea[1] + 1, N - 1));
 		while (!stack.isEmpty()) {
-			Op op = stack.pop(); // op.l ... op.r
+			Op op = stack.pop();
 			if (op.l < op.r) {
 				swap(arr, op.l + (int) (Math.random() * (op.r - op.l + 1)), op.r);
 				equalArea = netherlandsFlag(arr, op.l, op.r);
-				el = equalArea[0];
-				er = equalArea[1];
-				stack.push(new Op(op.l, el - 1));
-				stack.push(new Op(er + 1, op.r));
+				stack.push(new Op(op.l, equalArea[0] - 1));
+				stack.push(new Op(equalArea[1] + 1, op.r));
 			}
 		}
 	}

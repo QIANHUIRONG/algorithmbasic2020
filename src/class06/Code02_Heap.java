@@ -5,6 +5,7 @@ import java.util.PriorityQueue;
 
 public class Code02_Heap {
 
+	// 大根堆X
 	public static class MyMaxHeap {
 		private int[] heap;
 		private final int limit;
@@ -45,9 +46,7 @@ public class Code02_Heap {
 		// 新加进来的数，现在停在了index位置，请依次往上移动，
 		// 移动到0位置，或者干不掉自己的父亲了，停！
 		private void heapInsert(int[] arr, int index) {
-			// [index] [index-1]/2
-			// index == 0
-			while (arr[index] > arr[(index - 1) / 2]) {
+			while (arr[index] > arr[(index - 1) / 2]) { // 如果index = 0, 那么（0-1）/ 2 向下取整也是0.
 				swap(arr, index, (index - 1) / 2);
 				index = (index - 1) / 2;
 			}
@@ -129,7 +128,6 @@ public class Code02_Heap {
 	}
 
 	public static void main(String[] args) {
-
 		// 小根堆
 		PriorityQueue<Integer> heap = new PriorityQueue<>(new MyComparator());
 		heap.add(5);

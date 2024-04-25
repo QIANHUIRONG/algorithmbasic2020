@@ -1,11 +1,9 @@
 package class08;
 
+
 public class Code01_Trie {
 
 	// 测试链接 : https://leetcode.cn/problems/implement-trie-ii-prefix-tree/
-	// 提交Trie类可以直接通过
-	// 原来代码是对的，但是既然找到了直接测试的链接，那就直接测吧
-	// 这个链接上要求实现的功能和课上讲的完全一样
 	// 该前缀树的路用数组实现
 	class Trie {
 

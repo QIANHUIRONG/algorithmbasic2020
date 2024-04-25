@@ -3,6 +3,15 @@ package class06;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
+/**
+ * 时间：1:47。heapify()方法建堆，2:17
+ * 堆排序
+ * 1,先让整个数组都变成大根堆结构，建立堆的过程：
+ *	 	1)从上到下的方法，heapInsert()方法，时间复杂度为O(N*ogN)
+ * 		2)从下到上的方法，heapify()方法，时间复杂度为ON)
+ * 2,把堆的最大值和堆末尾的值交换，然后减少堆的大小之后，再去调整堆，一直周而复始，时间复杂度为O(N*ogN)
+ * 3,堆的大小减小成0之后，排序完成
+ */
 public class Code03_HeapSort {
 
 	// 堆排序额外空间复杂度O(1)

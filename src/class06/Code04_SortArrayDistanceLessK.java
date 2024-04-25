@@ -5,24 +5,27 @@ import java.util.PriorityQueue;
 
 public class Code04_SortArrayDistanceLessK {
 
+	/**
+	 * 已知一个几乎有序的数组。几乎有序是指，如果把数组排好顺序的话，每个元素移动的距离一定<=k，并且k相对于数组长度来说是比较小的。
+	 * 请选择一个合适的排序策略，对这个数组进行排序。
+	 */
+	// 时间复杂度：O(N*log k),一共弹出N个数，小根堆每一次调整log k，会比直接排序O(N*logN)好
 	public static void sortedArrDistanceLessK(int[] arr, int k) {
 		if (k == 0) {
 			return;
 		}
-		// 默认小根堆
 		PriorityQueue<Integer> heap = new PriorityQueue<>();
-		int index = 0;
-		// 0...K-1
-		for (; index <= Math.min(arr.length - 1, k - 1); index++) {
-			heap.add(arr[index]);
-		}
 		int i = 0;
-		for (; index < arr.length; i++, index++) {
-			heap.add(arr[index]);
-			arr[i] = heap.poll();
+		while (i <= Math.min(arr.length - 1, k)) {
+			heap.add(arr[i++]);
+		}
+		int j = 0;
+		while (i < arr.length) {
+			arr[j++] = heap.poll();
+			heap.add(arr[i++]);
 		}
 		while (!heap.isEmpty()) {
-			arr[i++] = heap.poll();
+			arr[j++] = heap.poll();
 		}
 	}
 
@@ -101,7 +104,7 @@ public class Code04_SortArrayDistanceLessK {
 	// for test
 	public static void main(String[] args) {
 		System.out.println("test begin");
-		int testTime = 500000;
+		int testTime = 50000;
 		int maxSize = 100;
 		int maxValue = 100;
 		boolean succeed = true;

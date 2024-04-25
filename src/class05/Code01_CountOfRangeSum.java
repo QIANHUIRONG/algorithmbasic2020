@@ -16,46 +16,46 @@ public class Code01_CountOfRangeSum {
 		return process(sum, 0, sum.length - 1, lower, upper);
 	}
 
-	public static int process(long[] sum, int L, int R, int lower, int upper) {
-		if (L == R) {
-			return sum[L] >= lower && sum[L] <= upper ? 1 : 0;
+	public static int process(long[] sum, int l, int r, int lower, int upper) {
+		if (l == r) {
+			return sum[l] >= lower && sum[l] <= upper ? 1 : 0;
 		}
-		int M = L + ((R - L) >> 1);
-		return process(sum, L, M, lower, upper) + process(sum, M + 1, R, lower, upper)
-				+ merge(sum, L, M, R, lower, upper);
+		int m = (l + r) / 2;
+		return process(sum, l, m, lower, upper) + process(sum, m + 1, r, lower, upper)
+				+ merge(sum, l, m, r, lower, upper);
 	}
 
-	public static int merge(long[] arr, int L, int M, int R, int lower, int upper) {
+	public static int merge(long[] arr, int l, int m, int r, int lower, int upper) {
 		int ans = 0;
-		int windowL = L;
-		int windowR = L;
+		int windowL = l;
+		int windowR = l;
 		// [windowL, windowR)
-		for (int i = M + 1; i <= R; i++) {
+		for (int i = m + 1; i <= r; i++) {
 			long min = arr[i] - upper;
 			long max = arr[i] - lower;
-			while (windowR <= M && arr[windowR] <= max) {
+			while (windowR <= m && arr[windowR] <= max) {
 				windowR++;
 			}
-			while (windowL <= M && arr[windowL] < min) {
+			while (windowL <= m && arr[windowL] < min) {
 				windowL++;
 			}
 			ans += windowR - windowL;
 		}
-		long[] help = new long[R - L + 1];
+		long[] help = new long[r - l + 1];
 		int i = 0;
-		int p1 = L;
-		int p2 = M + 1;
-		while (p1 <= M && p2 <= R) {
+		int p1 = l;
+		int p2 = m + 1;
+		while (p1 <= m && p2 <= r) {
 			help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
 		}
-		while (p1 <= M) {
+		while (p1 <= m) {
 			help[i++] = arr[p1++];
 		}
-		while (p2 <= R) {
+		while (p2 <= r) {
 			help[i++] = arr[p2++];
 		}
 		for (i = 0; i < help.length; i++) {
-			arr[L + i] = help[i];
+			arr[l + i] = help[i];
 		}
 		return ans;
 	}

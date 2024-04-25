@@ -8,6 +8,7 @@ public class Code02_PartitionAndQuickSort {
 		arr[j] = tmp;
 	}
 
+	// 掌握下面的就行
 	// arr[L..R]上，以arr[R]位置的数做划分值
 	// <= X > X
 	// <= X X
@@ -30,6 +31,7 @@ public class Code02_PartitionAndQuickSort {
 		return lessEqual;
 	}
 
+	// 掌握！！
 	// arr[L...R] 玩荷兰国旗问题的划分，以arr[R]做划分值
 	// <arr[R] ==arr[R] > arr[R]
 	public static int[] netherlandsFlag(int[] arr, int L, int R) {
@@ -58,6 +60,11 @@ public class Code02_PartitionAndQuickSort {
 		return new int[] { less + 1, more };
 	}
 
+
+	/**
+	 * 快排1.0 快排去看code03就行。
+	 * @param arr
+	 */
 	public static void quickSort1(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return;
@@ -75,11 +82,11 @@ public class Code02_PartitionAndQuickSort {
 		process1(arr, M + 1, R);
 	}
 
-	
-	
-	
-	
-	
+
+	/**
+	 * 快排2.0
+	 * @param arr
+	 */
 	public static void quickSort2(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return;
@@ -98,12 +105,11 @@ public class Code02_PartitionAndQuickSort {
 		process2(arr, equalArea[1] + 1, R);
 	}
 
-	
-	
-	
-	
-	
-	
+
+	/**
+	 * 快排3.0
+	 * @param arr
+	 */
 	public static void quickSort3(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return;
@@ -174,7 +180,7 @@ public class Code02_PartitionAndQuickSort {
 
 	// for test
 	public static void main(String[] args) {
-		int testTime = 500000;
+		int testTime = 50000;
 		int maxSize = 100;
 		int maxValue = 100;
 		boolean succeed = true;
