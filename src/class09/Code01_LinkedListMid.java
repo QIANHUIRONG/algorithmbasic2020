@@ -14,6 +14,9 @@ public class Code01_LinkedListMid {
 	}
 
 	// head 头
+	// 奇数返回中间；
+	// 偶数返回上中点
+	// 这个是最常用的！
 	public static Node midOrUpMidNode(Node head) {
 		if (head == null || head.next == null || head.next.next == null) {
 			return head;
