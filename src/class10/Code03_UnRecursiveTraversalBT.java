@@ -38,24 +38,24 @@ public class Code03_UnRecursiveTraversalBT {
 	/**
 	 * 原理：整棵树可以被子树的左边界分解
 	 * 既然遇到cur，整个左边界入栈，那么弹出打印的时候一定是先左再当前节点；弹出当前节点时，cur会来到右树进行这个过程。所以完成了左头右。
-	 * @param cur
+	 * @param head
 	 */
-	public static void in(Node cur) {
+	public static void in(Node head) {
 		System.out.print("in-order: ");
-		if (cur != null) {
+		if (head != null) {
 			Stack<Node> stack = new Stack<Node>();
 			// 栈不为空或者当前节点不为空，就继续
-			while (!stack.isEmpty() || cur != null) {
-				if (cur != null) {
+			while (!stack.isEmpty() || head != null) {
+				if (head != null) {
 					// cur不为空，整条左边界入栈
-					stack.push(cur);
-					cur = cur.left;
+					stack.push(head);
+					head = head.left;
 				} else {
 					// cur为空弹出节点并打印
-					cur = stack.pop();
-					System.out.print(cur.value + " ");
+					head = stack.pop();
+					System.out.print(head.value + " ");
 					// cur来到弹出节点右边位置
-					cur = cur.right;
+					head = head.right;
 				}
 			}
 		}

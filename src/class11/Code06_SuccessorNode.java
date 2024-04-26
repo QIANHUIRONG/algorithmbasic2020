@@ -43,14 +43,19 @@ public class Code06_SuccessorNode {
 			}
 			return cur;
 		} else { // 无右子树
-			Node parent = node.parent;
-			while (parent != null && parent.right == node) {
-				// 我是我父亲的右孩子，我就来到父节点，父节点重新赋值新的父节点
-				// 直到我是我父亲的左；或者我父亲为null（我是整棵树的头），就跳出循环
-				node = parent;
-				parent = node.parent;
+			// 通过parent指针往上找，直到我是我父亲的左孩子或者我的父亲为null
+			// 如果我的父亲不为空，并且我是我父亲的右孩子，就继续往上找
+			while (node.parent != null && node == node.parent.right) {
+				node = node.parent;
 			}
-			return parent;
+
+			// 出while我的父亲为空，说明node是整棵树的最右节点，它的后继节点就是null
+			if (node.parent == null) {
+				return null;
+			} else {
+				// 或者找到了我是我父亲的左，返回我父亲
+				return node.parent;
+			}
 		}
 	}
 

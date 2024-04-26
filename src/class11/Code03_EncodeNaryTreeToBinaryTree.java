@@ -12,6 +12,7 @@ import java.util.List;
 public class Code03_EncodeNaryTreeToBinaryTree {
 
 	// 提交时不要提交这个类
+	// 多叉树的节点对象
 	public static class Node {
 		public int val;
 		public List<Node> children;
@@ -30,6 +31,7 @@ public class Code03_EncodeNaryTreeToBinaryTree {
 	};
 
 	// 提交时不要提交这个类
+	// 二叉树的节点对象
 	public static class TreeNode {
 		int val;
 		TreeNode left;

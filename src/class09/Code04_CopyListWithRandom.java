@@ -17,6 +17,11 @@ public class Code04_CopyListWithRandom {
 		}
 	}
 
+	/**
+	 * 方法1：使用容器
+	 * @param head
+	 * @return
+	 */
 	public static Node copyRandomList1(Node head) {
 		// key 老节点
 		// value 新节点
@@ -38,6 +43,11 @@ public class Code04_CopyListWithRandom {
 		return map.get(head);
 	}
 
+	/**
+	 * 方法2：不使用容器
+	 * @param head
+	 * @return
+	 */
 	public static Node copyRandomList2(Node head) {
 		if (head == null) {
 			return null;

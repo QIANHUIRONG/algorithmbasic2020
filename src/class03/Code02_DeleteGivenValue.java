@@ -27,17 +27,50 @@ public class Code02_DeleteGivenValue {
 			}
 			head = head.next;
 		}
-		Node pre = head;
+		// 方式1：
+//		Node pre = head;
+//		Node cur = head;
+//		while (cur != null) {
+//			if (cur.value == num) {
+//				pre.next = cur.next;
+//			} else {
+//				pre = cur;
+//			}
+//			cur = cur.next;
+//		}
+		// 方式2：
 		Node cur = head;
-		while (cur != null) {
-			if (cur.value == num) {
-				pre.next = cur.next;
+		while (cur.next != null) {
+			if (cur.next.value == num) {
+				cur.next = cur.next.next;
 			} else {
-				pre = cur;
+				cur = cur.next;
 			}
-			cur = cur.next;
 		}
 		return head;
 	}
 
+	public static void main(String[] args) {
+		// 示例：创建链表 1 -> 2 -> 2 -> 3 -> 3 -> 4，删除值为 2 的所有节点
+		Node head = new Node(1);
+		head.next = new Node(2);
+		head.next.next = new Node(2);
+		head.next.next.next = new Node(3);
+		head.next.next.next.next = new Node(3);
+		head.next.next.next.next.next = new Node(4);
+		Node cur = head;
+		while (cur != null) {
+			System.out.print(cur.value + " -> ");
+			cur = cur.next;
+		}
+		System.out.println();
+
+		Node newHead = removeValue(head, 2);
+
+		// 打印新链表：1 -> 3 -> 3 -> 4
+		while (newHead != null) {
+			System.out.print(newHead.value + " -> ");
+			newHead = newHead.next;
+		}
+	}
 }

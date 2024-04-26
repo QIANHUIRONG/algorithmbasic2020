@@ -87,6 +87,7 @@ public class Code05_TreeMaxWidth {
 
 	// 不用容器，自己的优化版本
 	// 按层遍历时，直接遍历一整层。就可以拿到每一个层的宽度
+	// O（N）：一个节点最多进入一次队列，出一次队列
 	public static int maxWidthNoMap1(Node head) {
 		if (head == null) {
 			return 0;
@@ -94,9 +95,9 @@ public class Code05_TreeMaxWidth {
 		Queue<Node> queue = new LinkedList<>();
 		queue.add(head);
 		int max = 0;
-		int curLevelNodes = 0; // 当前层的节点数
 		while (!queue.isEmpty()) {
 			int size = queue.size();
+			int curLevelNodes = 0;
 			// 直接遍历一整层
 			for (int i = 0; i < size; i++) {
 				Node cur = queue.poll();
@@ -109,7 +110,6 @@ public class Code05_TreeMaxWidth {
 				}
 			}
 			max = Math.max(max, curLevelNodes);
-			curLevelNodes = 0;
 		}
 		return max;
 	}

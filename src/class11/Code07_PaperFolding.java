@@ -39,6 +39,7 @@ public class Code07_PaperFolding {
 
 	public static void main(String[] args) {
 		int N = 4;
+		// 凹 凹 凸 凹 凹 凸 凸 凹 凹 凹 凸 凸 凹 凸 凸
 		printAllFolds(N);
 	}
 }

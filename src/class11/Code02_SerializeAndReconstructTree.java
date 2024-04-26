@@ -50,7 +50,6 @@ public class Code02_SerializeAndReconstructTree {
 
 	public static void pres(Node head, Queue<String> ans) {
 		if (head == null) {
-			// 空节点也需要存起来，才能唯一对应一颗二叉树
 			ans.add(null);
 		} else {
 			ans.add(String.valueOf(head.value));
@@ -61,6 +60,7 @@ public class Code02_SerializeAndReconstructTree {
 
 	/**
 	 * 一、先序方式返序列化
+	 * 就是一个先序遍历，只不过把原因打印的地方换成了序列化
 	 */
 	public static Node buildByPreQueue(Queue<String> queue) {
 		if (queue == null || queue.size() == 0) {
