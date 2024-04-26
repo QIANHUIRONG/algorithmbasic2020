@@ -69,9 +69,9 @@ public class Code02_IsPalindromeList {
 		// n1 中点
 		
 		
-		n2 = n1.next; // n2 -> right part first node
-		n1.next = null; // mid.next -> null
-		Node n3 = null;
+		n2 = n1.next; // n2: cur
+		n1.next = null; // n1: pre
+		Node n3 = null; // n3: null
 		while (n2 != null) { // right part convert
 			n3 = n2.next; // n3 -> save next node
 			n2.next = n1; // next of right node convert
@@ -89,8 +89,8 @@ public class Code02_IsPalindromeList {
 			n1 = n1.next; // left to mid
 			n2 = n2.next; // right to mid
 		}
-		n1 = n3.next;
-		n3.next = null;
+		n1 = n3.next; // cur cur = pre.next;
+		n3.next = null; // pre
 		while (n1 != null) { // recover list
 			n2 = n1.next;
 			n1.next = n3;
