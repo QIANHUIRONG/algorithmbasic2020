@@ -65,37 +65,76 @@ public class Code04_IsFull {
 		return new Info1(height, nodes);
 	}
 
-	// 第二种方法
-	// 收集子树是否是满二叉树
-	// 收集子树的高度
-	// 左树满 && 右树满 && 左右树高度一样 -> 整棵树是满的
+
+
 	public static boolean isFull2(Node head) {
-		if (head == null) {
-			return true;
-		}
-		return process2(head).isFull;
+		return process(head).isFull;
 	}
 
-	public static class Info2 {
+	public static class Info {
 		public boolean isFull;
 		public int height;
+		public int nodes;
 
-		public Info2(boolean f, int h) {
-			isFull = f;
-			height = h;
+		public Info(boolean isFull, int height, int nodes) {
+			this.isFull = isFull;
+			this.height = height;
+			this.nodes = nodes;
 		}
 	}
 
-	public static Info2 process2(Node h) {
-		if (h == null) {
-			return new Info2(true, 0);
+	public static Info process(Node head) {
+		if (head == null) {
+			return new Info(true, 0 , 0);
 		}
-		Info2 leftInfo = process2(h.left);
-		Info2 rightInfo = process2(h.right);
-		boolean isFull = leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height;
+		Info leftInfo = process(head.left);
+		Info rightInfo = process(head.right);
 		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
-		return new Info2(isFull, height);
+		int nodes = leftInfo.nodes + rightInfo.nodes + 1;
+		boolean isFull = true;
+		if (!leftInfo.isFull) {
+			isFull = false;
+		}
+		if (!rightInfo.isFull) {
+			isFull = false;
+		}
+		if (Math.pow(2, height) - 1 != nodes) {
+			isFull = false;
+		}
+		return new Info(isFull, height, nodes);
 	}
+
+//	// 第二种方法
+//	// 收集子树是否是满二叉树
+//	// 收集子树的高度
+//	// 左树满 && 右树满 && 左右树高度一样 -> 整棵树是满的
+//	public static boolean isFull2(Node head) {
+//		if (head == null) {
+//			return true;
+//		}
+//		return process2(head).isFull;
+//	}
+//
+//	public static class Info2 {
+//		public boolean isFull;
+//		public int height;
+//
+//		public Info2(boolean f, int h) {
+//			isFull = f;
+//			height = h;
+//		}
+//	}
+//
+//	public static Info2 process2(Node h) {
+//		if (h == null) {
+//			return new Info2(true, 0);
+//		}
+//		Info2 leftInfo = process2(h.left);
+//		Info2 rightInfo = process2(h.right);
+//		boolean isFull = leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height;
+//		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+//		return new Info2(isFull, height);
+//	}
 
 	// for test
 	public static Node generateRandomBST(int maxLevel, int maxValue) {
