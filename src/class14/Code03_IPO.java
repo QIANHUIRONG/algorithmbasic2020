@@ -21,56 +21,56 @@ M表示你初始的资金
  */
 public class Code03_IPO {
 
-	// 最多K个项目
-	// M是初始资金
-	// Profits[] Capital[] 一定等长
-	// 返回最终最大的资金
-	public static int findMaximizedCapital(int K, int M, int[] Profits, int[] Capital) {
-		PriorityQueue<Program> minCostQ = new PriorityQueue<>(new MinCostComparator());
-		PriorityQueue<Program> maxProfitQ = new PriorityQueue<>(new MaxProfitComparator());
-		for (int i = 0; i < Profits.length; i++) { // 所有项目先放到小根堆
-			minCostQ.add(new Program(Profits[i], Capital[i]));
-		}
-		for (int i = 0; i < K; i++) {
-			while (!minCostQ.isEmpty() && minCostQ.peek().c <= M) { // 挑出能做的。花费小于我的资金，入大根堆
-				maxProfitQ.add(minCostQ.poll());
-			}
-			if (maxProfitQ.isEmpty()) { // 没项目可做了，直接返回
-				return M;
-			}
-			M += maxProfitQ.poll().p; // 能做项目，累计金额
-		}
-		return M;
-	}
+    // 最多K个项目
+    // M是初始资金
+    // Profits[] Capital[] 一定等长
+    // 返回最终最大的资金
+    public static int findMaximizedCapital(int K, int M, int[] Profits, int[] Capital) {
+        PriorityQueue<Program> minCostQ = new PriorityQueue<>(new MinCostComparator());
+        PriorityQueue<Program> maxProfitQ = new PriorityQueue<>(new MaxProfitComparator());
+        for (int i = 0; i < Profits.length; i++) { // 所有项目先放到小根堆
+            minCostQ.add(new Program(Profits[i], Capital[i]));
+        }
+        for (int i = 0; i < K; i++) {
+            while (!minCostQ.isEmpty() && minCostQ.peek().c <= M) { // 挑出能做的。花费小于我的资金，入大根堆
+                maxProfitQ.add(minCostQ.poll());
+            }
+            if (maxProfitQ.isEmpty()) { // 没项目可做了，直接返回
+                return M;
+            }
+            M += maxProfitQ.poll().p; // 能做项目，累计金额
+        }
+        return M;
+    }
 
-	public static class Program {
-		// 利润
-		public int p;
-		// 花费
-		public int c;
+    public static class Program {
+        // 利润
+        public int p;
+        // 花费
+        public int c;
 
-		public Program(int p, int c) {
-			this.p = p;
-			this.c = c;
-		}
-	}
+        public Program(int p, int c) {
+            this.p = p;
+            this.c = c;
+        }
+    }
 
-	public static class MinCostComparator implements Comparator<Program> {
+    public static class MinCostComparator implements Comparator<Program> {
 
-		@Override
-		public int compare(Program o1, Program o2) {
-			return o1.c - o2.c;
-		}
+        @Override
+        public int compare(Program o1, Program o2) {
+            return o1.c - o2.c;
+        }
 
-	}
+    }
 
-	public static class MaxProfitComparator implements Comparator<Program> {
+    public static class MaxProfitComparator implements Comparator<Program> {
 
-		@Override
-		public int compare(Program o1, Program o2) {
-			return o2.p - o1.p;
-		}
+        @Override
+        public int compare(Program o1, Program o2) {
+            return o2.p - o1.p;
+        }
 
-	}
+    }
 
 }

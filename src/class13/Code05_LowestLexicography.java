@@ -11,7 +11,8 @@ import java.util.TreeSet;
 	2)用一种局部最功利的标准，总是做出在当前看来是最好的选择。如果得到了最优解，说明贪心策略有效；否则贪心策略无效；
 	3)难点在于证明局部最功利的标准可以得到全局最优解-> 写一个暴力解，用对数器证明。
 	4)对于贪心算法的学习主要以增加阅历和经验为主
-	5)笔试有可能考贪心；面试几乎不可能，因为区分度太差。一般就是用比较器、堆等结构去贪心。
+	5)笔试有可能考贪心；面试几乎不可能，因为区分度太差。
+	6)贪心一般就是用排序、堆等结构去贪心。
  */
 /*
 题意：给定一个由字符串组成的数组strs，必须把所有的字符串拼接起来，返回所有可能的拼接结果中，字典序最小的结果
@@ -31,8 +32,8 @@ public class Code05_LowestLexicography {
 		if (strs == null || strs.length == 0) {
 			return "";
 		}
-		TreeSet<String> ans = process(strs);
-		return ans.size() == 0 ? "" : ans.first();
+		TreeSet<String> ans = process(strs); // TreeSet<String>就是根据字符串的字段序来排的。还有String.compareTo方法就是在比较字典序
+		return ans.first(); // 最终返回first，就是字典序最小的
 	}
 
 	// strs中所有字符串全排列，返回所有可能的结果
@@ -45,11 +46,11 @@ public class Code05_LowestLexicography {
 		for (int i = 0; i < strs.length; i++) {
 			String first = strs[i];
 			// 移除当前字符
-			String[] nexts = removeIndexString(strs, i);
+			String[] nextStr = removeIndexString(strs, i);
 			// 移除我之后，跑后序结果
-			TreeSet<String> next = process(nexts);
+			TreeSet<String> nextAns = process(nextStr);
 			// 拼接移除我之后的后序结果。
-			for (String cur : next) {
+			for (String cur : nextAns) {
 				ans.add(first + cur);
 			}
 		}
@@ -146,6 +147,13 @@ public class Code05_LowestLexicography {
 			}
 		}
 		System.out.println("finish!");
+
+		// treeset测试
+		System.out.println("====treeSet测试====");
+		TreeSet<String> treeSet = new TreeSet<>();
+		treeSet.add("bbb");
+		treeSet.add("aaa");
+		System.out.println(treeSet.first());
 	}
 
 }
