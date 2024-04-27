@@ -37,13 +37,20 @@ public class Code01_IsCBT {
 			head = queue.poll();
 			Node l = head.left;
 			Node r = head.right;
-			if (
-				// 如果一个节点，有右无左，直接false
-				// 如果遇到了不双全的节点之后，又发现当前节点不是叶节点，false
-			    ((l == null && r != null) ||
-						(leaf && (l != null || r != null)))) {
+//			if (
+//			    ((l == null && r != null) ||
+//						(leaf && (l != null || r != null)))) {
+//				return false;
+//			}
+			// 如果一个节点，有右无左，直接false
+			if (l == null && r != null) {
 				return false;
 			}
+			// 如果遇到了不双全的节点之后，又发现当前节点不是叶节点，false
+			if (leaf && (l != null || r != null)) {
+				return false;
+			}
+
 			if (l != null) {
 				queue.add(l);
 			}
