@@ -67,6 +67,8 @@ public class Code04_IsFull {
 
 
 
+	// 第二种方法：自己写的
+	// 比较自然的想法
 	public static boolean isFull2(Node head) {
 		return process(head).isFull;
 	}

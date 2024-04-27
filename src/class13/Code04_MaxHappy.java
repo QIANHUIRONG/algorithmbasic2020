@@ -39,6 +39,8 @@ public class Code04_MaxHappy {
 	需要的信息：x来的最大happy；x不来的最大happy
 
 	O（N）
+
+	这个方法是在递归中多加了一个参数boolean up表示x节点来或者不来。建议看方法2
 	 */
 	public static int maxHappy1(Employee boss) {
 		if (boss == null) {
@@ -71,6 +73,11 @@ public class Code04_MaxHappy {
 		}
 	}
 
+	/**
+	 * 方法2：把来或者不来的信息都封装到了Info里面，更经典
+	 * @param head
+	 * @return
+	 */
 	public static int maxHappy2(Employee head) {
 		Info allInfo = process(head);
 		return Math.max(allInfo.no, allInfo.yes);
@@ -96,7 +103,6 @@ public class Code04_MaxHappy {
 			Info nextInfo = process(next);
 			no += Math.max(nextInfo.no, nextInfo.yes);
 			yes += nextInfo.no;
-
 		}
 		return new Info(no, yes);
 	}

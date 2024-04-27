@@ -5,8 +5,6 @@ import java.util.ArrayList;
 // 在线测试链接 : https://leetcode.com/problems/largest-bst-subtree
 // 给定一棵二叉树的头节点head，返回这颗二叉树中最大的二叉搜索子树的头节点
 // 1:18
-
-
 public class Code05_MaxSubBSTSize {
 
     // 提交时不要提交这个类
@@ -83,11 +81,11 @@ public class Code05_MaxSubBSTSize {
         boolean rightBST = rightInfo == null ? true : (rightInfo.maxBSTSize == rightInfo.allSize); // 判断右树是不是BST
         boolean leftMaxLessX = leftInfo == null ? true : (leftInfo.max < x.val); // 判断左最大<=x
         boolean rightMinMoreX = rightInfo == null ? true : (x.val < rightInfo.min); // x<=右最小
-        int leftSize = leftInfo == null ? 0 : leftInfo.allSize; // 左树的节点总数
-        int rightSize = rightInfo == null ? 0 : rightInfo.allSize; // 右树的节点总数
 
         // 计算我的最大搜索二叉子树大小
         if (leftBST && rightBST && leftMaxLessX && rightMinMoreX) { // 左右子树都是BST的情况下 && 左最大<=x<=右最小
+            int leftSize = leftInfo == null ? 0 : leftInfo.allSize; // 左树的节点总数
+            int rightSize = rightInfo == null ? 0 : rightInfo.allSize; // 右树的节点总数
             p3 = leftSize + rightSize + 1;
         }
         return new Info(Math.max(p1, Math.max(p2, p3)), allSize, max, min);
