@@ -46,13 +46,13 @@ public class Code03_NumberOfIslandsII {
 		private int[] help;
 		private final int row;
 		private final int col;
-		private int sets;
+		private int setCount;
 
 		// 初始化的时候都是‘0’，所以只设置长度，没有做其他的初始化，因为现在一个'1'也没有
 		public UnionFind1(int m, int n) {
 			row = m;
 			col = n;
-			sets = 0;
+			setCount = 0;
 			int len = row * col;
 			parent = new int[len];
 			size = new int[len];
@@ -94,7 +94,7 @@ public class Code03_NumberOfIslandsII {
 					size[fy] += size[fx];
 					parent[fx] = fy;
 				}
-				sets--;
+				setCount--;
 			}
 		}
 
@@ -104,7 +104,7 @@ public class Code03_NumberOfIslandsII {
 				// 初始化index
 				parent[index] = index;
 				size[index] = 1;
-				sets++;
+				setCount++;
 				// 上下左右合并
 				union(i - 1, j, i, j);
 				union(i + 1, j, i, j);
@@ -112,7 +112,7 @@ public class Code03_NumberOfIslandsII {
 				union(i, j + 1, i, j);
 			}
 			// 否则，就是重复初始化，不用管，不需要去动态合并
-			return sets;
+			return setCount;
 		}
 
 	}
