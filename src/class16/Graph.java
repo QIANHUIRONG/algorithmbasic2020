@@ -18,16 +18,16 @@ import java.util.HashSet;
 图的题目的难点：
 	不是算法难，而是图的表示方式有多种，你需要在不同的表示结构上都练一遍图的常见算法
 	所以我们要自己抽象出自己的图结构，遇到其他的图结构，写个转换器转换成自己的图结构
-	这里的统一结构：就是Node点集合、Edge边集、点集和边集构成的Graph图
+	这里的统一结构：就是Node对象、Edge对象、Node和Edge构成的Graph对象
  */
 public class Graph {
-	// 点集。key：用户给的整数；value：对应建出来的Node
-	public HashMap<Integer, Node> nodes;
-	// 边集
-	public HashSet<Edge> edges;
-	
-	public Graph() {
-		nodes = new HashMap<>();
-		edges = new HashSet<>();
-	}
+    // 点集。key：用户给的整数；value：对应建出来的Node
+    public HashMap<Integer, Node> nodes;
+    // 边集
+    public HashSet<Edge> edges;
+
+    public Graph() {
+        nodes = new HashMap<>();
+        edges = new HashSet<>();
+    }
 }

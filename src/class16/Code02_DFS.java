@@ -24,7 +24,7 @@ public class Code02_DFS {
 		System.out.println(node.value); // 入栈就打印
 		while (!stack.isEmpty()) {
 			Node cur = stack.pop();
-			for (Node next : cur.nexts) {
+			for (Node next : cur.nodes) {
 				if (!set.contains(next)) {
 					/*
 					当前弹出节点去枚举他的后代，没有进过栈的，先把父压回去，再把后代压回去

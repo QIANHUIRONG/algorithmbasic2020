@@ -12,13 +12,13 @@ public class Code03_PrintAllSubsquences {
 	 /*
 	 打印一个字符串的全部子序列：1小时00分
 	  */
-	public static List<String> subs(String s) {
-		char[] str = s.toCharArray();
-		String path = "";
-		List<String> ans = new ArrayList<>();
-		process1(str, 0, ans, path);
-		return ans;
-	}
+	 public static List<String> subs(String s) {
+		 char[] str = s.toCharArray();
+		 String path = "";
+		 List<String> ans = new ArrayList<>();
+		 process1(str, 0, ans, path);
+		 return ans;
+	 }
 
 	// str 固定参数
 	// 来到了str[index]字符，index是位置

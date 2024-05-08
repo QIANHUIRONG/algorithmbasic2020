@@ -76,7 +76,7 @@ public class Code06_UnionFind {
 			help[++j] = i;
 			i = father[i]; // 我来到我的父
 		}
-		for (int k = 0; k < j; k++) {
+		for (int k = 0; k <= j; k++) {
 			father[help[k]] = i;
 		}
 		return i;

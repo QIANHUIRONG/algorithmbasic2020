@@ -39,6 +39,8 @@ public class Code05_PrimNowCoder {
 				graph.get(A).add(new int[] { B, cost });
 				graph.get(B).add(new int[] { A, cost });
 			}
+
+			// prim算法
 			PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> a[1] - b[1]);
 			boolean[] visited = new boolean[n + 1];
 			for (int[] edge : graph.get(1)) {
@@ -59,8 +61,8 @@ public class Code05_PrimNowCoder {
 				}
 			}
 			out.println(ans);
-			out.flush();
 		}
+		out.flush();
 	}
 
 }

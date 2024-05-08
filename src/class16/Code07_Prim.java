@@ -68,11 +68,11 @@ public class Code07_Prim {
     /*
     指定了出发点的普利姆算法
      */
-    public static Set<Edge> primMSTHaveStart(Graph graph, Node start) {
+    public static Set<Edge> primMSTHaveStart(Node start) {
         // 1、小根堆。存放解锁的边
         PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
         // 2、集合，存放解锁的点
-        HashSet<Node> nodeSet = new HashSet<>();
+        Set<Node> nodeSet = new HashSet<>();
         Set<Edge> res = new HashSet<>(); // 依次挑选的的边在result里
         // 3、出发点，不由分说，进入点集合
         nodeSet.add(start);
@@ -89,7 +89,7 @@ public class Code07_Prim {
             if (!nodeSet.contains(toNode)) { // 不会形成环，就要这条边。对应的点收集到res
                 nodeSet.add(toNode);
                 res.add(edge);
-                // 5、点再去解锁边
+                // 6、点再去解锁边
                 for (Edge nextEdge : toNode.edges) {
                     priorityQueue.add(nextEdge);
                 }

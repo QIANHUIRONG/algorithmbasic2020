@@ -11,8 +11,11 @@ public class Code05_ReverseStackUsingRecursive {
 		if (stack.isEmpty()) {
 			return;
 		}
+		// 栈底元素拿出来
 		int i = f(stack);
+		// 反转剩下的元素
 		reverse(stack);
+		// 拿出来的栈底元素入栈
 		stack.push(i);
 	}
 
@@ -22,8 +25,10 @@ public class Code05_ReverseStackUsingRecursive {
 	public static int f(Stack<Integer> stack) {
 		int result = stack.pop();
 		if (stack.isEmpty()) {
+			// basecash：如果弹出result之后，栈为空，那么这个result就是要返回的移除掉的元素，直接return
 			return result;
 		} else {
+			// 普遍过程：拿到栈底元素，再把我自己的元素重新压回栈，返回栈底元素
 			int last = f(stack);
 			stack.push(result);
 			return last;
