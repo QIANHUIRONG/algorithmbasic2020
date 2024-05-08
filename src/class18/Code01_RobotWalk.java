@@ -1,7 +1,18 @@
 package class18;
 
+/**
+ * 时间：21。改动态规划：57
+ */
 public class Code01_RobotWalk {
 
+	/**
+	 * 暴力递归版本
+	 * @param N
+	 * @param start
+	 * @param aim
+	 * @param K
+	 * @return
+	 */
 	public static int ways1(int N, int start, int aim, int K) {
 		if (N < 2 || start < 1 || start > N || aim < 1 || aim > N || K < 1) {
 			return -1;
@@ -30,6 +41,14 @@ public class Code01_RobotWalk {
 		return process1(cur - 1, rest - 1, aim, N) + process1(cur + 1, rest - 1, aim, N);
 	}
 
+	/**
+	 * 记忆化搜索版本
+	 * @param N
+	 * @param start
+	 * @param aim
+	 * @param K
+	 * @return
+	 */
 	public static int ways2(int N, int start, int aim, int K) {
 		if (N < 2 || start < 1 || start > N || aim < 1 || aim > N || K < 1) {
 			return -1;
@@ -69,12 +88,23 @@ public class Code01_RobotWalk {
 
 	}
 
+	/**
+	 * 动态规划版本
+	 * 1.先看basecase
+	 * 2.看最终想要的，也就是最终返回的递归
+	 * 3.分析普遍位置怎么依赖的
+	 * @param N
+	 * @param start
+	 * @param aim
+	 * @param K
+	 * @return
+	 */
 	public static int ways3(int N, int start, int aim, int K) {
 		if (N < 2 || start < 1 || start > N || aim < 1 || aim > N || K < 1) {
 			return -1;
 		}
 		int[][] dp = new int[N + 1][K + 1];
-		dp[aim][0] = 1;
+		dp[aim][0] = 1; // 其他位置默认都是0
 		for (int rest = 1; rest <= K; rest++) {
 			dp[1][rest] = dp[2][rest - 1];
 			for (int cur = 2; cur < N; cur++) {
