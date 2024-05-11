@@ -13,13 +13,15 @@ public class Code01_Knapsack {
 		if (w == null || v == null || w.length != v.length || w.length == 0) {
 			return 0;
 		}
-		// 尝试函数！
 		return process(w, v, 0, bag);
 	}
 
 	// index 0~N
 	// rest 负~bag
 	public static int process(int[] w, int[] v, int index, int rest) {
+		// 设置无效解的basecase
+		// 你可以在basecase去拦住，告诉上游你这么调用是无效的
+		// 也可以上游自己控制，不产生无效解才调用递归。就会
 		if (rest < 0) {
 			return -1;
 		}

@@ -27,19 +27,19 @@ public class Code05_BobDie {
 	}
 
 	public static double livePosibility2(int row, int col, int k, int N, int M) {
-		long[][][] dp = new long[N][M][k + 1];
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < M; j++) {
+		long[][][] dp = new long[N + 1][M + 1][k + 1];
+		for (int i = 0; i <= N; i++) {
+			for (int j = 0; j <= M; j++) {
 				dp[i][j][0] = 1;
 			}
 		}
 		for (int rest = 1; rest <= k; rest++) {
-			for (int r = 0; r < N; r++) {
-				for (int c = 0; c < M; c++) {
-					dp[r][c][rest] = pick(dp, N, M, r - 1, c, rest - 1);
-					dp[r][c][rest] += pick(dp, N, M, r + 1, c, rest - 1);
-					dp[r][c][rest] += pick(dp, N, M, r, c - 1, rest - 1);
-					dp[r][c][rest] += pick(dp, N, M, r, c + 1, rest - 1);
+			for (int r = 0; r <= N; r++) {
+				for (int c = 0; c <= M; c++) {
+					dp[r][c][rest] = pick(dp, N + 1, M + 1, r - 1, c, rest - 1);
+					dp[r][c][rest] += pick(dp, N + 1, M + 1, r + 1, c, rest - 1);
+					dp[r][c][rest] += pick(dp, N + 1, M + 1, r, c - 1, rest - 1);
+					dp[r][c][rest] += pick(dp, N + 1, M + 1, r, c + 1, rest - 1);
 				}
 			}
 		}

@@ -8,6 +8,33 @@ import java.util.Map.Entry;
  */
 public class Code04_CoinsWaySameValueSamePapper {
 
+
+	/*
+		就是张数有限制的上一题。
+		arr = {1,2,1,1,2,1,2},先统计一下1元可以用4张；2元可以用3张，然后就和上一题没啥区别了
+		方法数就是：1+1+1+1；1+1+2；2+2共3种
+ 	*/
+	public static int coinsWay(int[] arr, int aim) {
+		if (arr == null || arr.length == 0 || aim < 0) {
+			return 0;
+		}
+		Info info = getInfo(arr);
+		return process(info.coins, info.zhangs, 0, aim);
+	}
+
+	// coins 面值数组，正数且去重
+	// zhangs 每种面值对应的张数
+	public static int process(int[] coins, int[] zhangs, int index, int rest) {
+		if (index == coins.length) {
+			return rest == 0 ? 1 : 0;
+		}
+		int ways = 0;
+		for (int zhang = 0; zhang * coins[index] <= rest && zhang <= zhangs[index]; zhang++) {
+			ways += process(coins, zhangs, index + 1, rest - (zhang * coins[index]));
+		}
+		return ways;
+	}
+
 	public static class Info {
 		public int[] coins;
 		public int[] zhangs;
@@ -38,27 +65,7 @@ public class Code04_CoinsWaySameValueSamePapper {
 		return new Info(coins, zhangs);
 	}
 
-	public static int coinsWay(int[] arr, int aim) {
-		if (arr == null || arr.length == 0 || aim < 0) {
-			return 0;
-		}
-		Info info = getInfo(arr);
-		return process(info.coins, info.zhangs, 0, aim);
-	}
-
-	// coins 面值数组，正数且去重
-	// zhangs 每种面值对应的张数
-	public static int process(int[] coins, int[] zhangs, int index, int rest) {
-		if (index == coins.length) {
-			return rest == 0 ? 1 : 0;
-		}
-		int ways = 0;
-		for (int zhang = 0; zhang * coins[index] <= rest && zhang <= zhangs[index]; zhang++) {
-			ways += process(coins, zhangs, index + 1, rest - (zhang * coins[index]));
-		}
-		return ways;
-	}
-
+	// 没有斜率优化的动态规划
 	public static int dp1(int[] arr, int aim) {
 		if (arr == null || arr.length == 0 || aim < 0) {
 			return 0;
@@ -81,6 +88,8 @@ public class Code04_CoinsWaySameValueSamePapper {
 		return dp[0][aim];
 	}
 
+
+	// 斜率优化后的动态规划
 	public static int dp2(int[] arr, int aim) {
 		if (arr == null || arr.length == 0 || aim < 0) {
 			return 0;

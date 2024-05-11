@@ -1,9 +1,14 @@
 package class20;
 
 // 时间：07
-// 测试链接：https://leetcode.com/problems/longest-palindromic-subsequence/
+// 测试链接：516 https://leetcode.com/problems/longest-palindromic-subsequence/
 public class Code01_PalindromeSubsequence {
 
+	/**
+	 * 暴力递归，方法一：范围尝试模型
+	 * @param s
+	 * @return
+	 */
 	public static int lpsl1(String s) {
 		if (s == null || s.length() == 0) {
 			return 0;
@@ -13,6 +18,10 @@ public class Code01_PalindromeSubsequence {
 	}
 
 	// str[L..R]最长回文子序列长度返回
+	// str[L..R]一定不包含L，也一定不包含R
+	// str[L..R]可能包含L，一定不包含R
+	// str[L..R]一定不包含R，可能包含L
+	// str[L..R]一定包含L，一定包含R
 	public static int f(char[] str, int L, int R) {
 		if (L == R) {
 			return 1;
@@ -27,6 +36,12 @@ public class Code01_PalindromeSubsequence {
 		return Math.max(Math.max(p1, p2), Math.max(p3, p4));
 	}
 
+	/**
+	 * 动态规划
+	 * 方法一：范围尝试模型
+	 * @param s
+	 * @return
+	 */
 	public static int lpsl2(String s) {
 		if (s == null || s.length() == 0) {
 			return 0;
@@ -50,6 +65,11 @@ public class Code01_PalindromeSubsequence {
 		return dp[0][N - 1];
 	}
 
+	/**
+	 * 方法二：利用最长公共子序列去求
+	 * @param s
+	 * @return
+	 */
 	public static int longestPalindromeSubseq1(String s) {
 		if (s == null || s.length() == 0) {
 			return 0;

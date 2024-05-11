@@ -10,6 +10,8 @@ public class Code02_CoinsWayEveryPaperDifferent {
 	}
 
 	// arr[index....] 组成正好rest这么多的钱，有几种方法
+	// 题解：
+	// 货币值相同，也认为每一张都是不同的，本质就是每个位置都不同，我就去尝试每一个位置要和不要两种情况就行
 	public static int process(int[] arr, int index, int rest) {
 		if (rest < 0) {
 			return 0;
@@ -22,14 +24,12 @@ public class Code02_CoinsWayEveryPaperDifferent {
 	}
 
 	public static int dp(int[] arr, int aim) {
-		if (aim == 0) {
-			return 1;
-		}
 		int N = arr.length;
 		int[][] dp = new int[N + 1][aim + 1];
 		dp[N][0] = 1;
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 0; rest <= aim; rest++) {
+				// rest - arr[index] 如果小于0，在递归中，basecase的 if (rest < 0) return 0 会返回0，所以这里就这么写
 				dp[index][rest] = dp[index + 1][rest] + (rest - arr[index] >= 0 ? dp[index + 1][rest - arr[index]] : 0);
 			}
 		}

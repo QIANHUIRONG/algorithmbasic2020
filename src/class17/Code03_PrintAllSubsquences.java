@@ -5,6 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 
 /*
+ 如果递归是需要收集List<String> ans的，是要在入参中带上，还是加在返回值上呢？么可以在入参中带上。我们先模仿，先不讨论哪种好
+ 如果递归需要之前递归做过的决定，比如这里的path，那么也在入参中带上。 -> 但是这样子好像无法处理成动态规划？
+
+ 如果需要收集List<String> ans的，递归函数的返回参数是void，那么就直接去跑递归，递归会帮你收集答案到ans中
+ 如果递归函数是有返回参数的情况，那么可能需要下游的递归返回给我结果，我才能处理当前层
+
 
  */
 public class Code03_PrintAllSubsquences {

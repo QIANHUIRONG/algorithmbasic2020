@@ -2,7 +2,8 @@ package class19;
 
 // 1：51
 // 这个问题leetcode上可以直接测
-// 链接：https://leetcode.com/problems/longest-common-subsequence/
+// 链接：1143：https://leetcode.com/problems/longest-common-subsequence/
+// 一个样本做行一个样本做列的样本对应模型
 public class Code04_LongestCommonSubsequence {
 
 	public static int longestCommonSubsequence1(String s1, String s2) {

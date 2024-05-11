@@ -11,7 +11,9 @@ public class 	Code02_MinCoinsNoLimit {
 
 	// arr[index...]面值，每种面值张数自由选择，
 	// 搞出rest正好这么多钱，返回最小张数
-	// 拿Integer.MAX_VALUE标记怎么都搞定不了
+	// Integer.MAX_VALUE标记：怎么都搞定不了
+	// 		和硬币找零专题第二题类似，第二题是每个面值可以使用无限张，要求方法数；本题是要求最少张数，递归把每种
+	//可行的方法张数抓一下，全局最小就是要求的。
 	public static int process(int[] arr, int index, int rest) {
 		if (index == arr.length) {
 			return rest == 0 ? 0 : Integer.MAX_VALUE;
@@ -27,6 +29,7 @@ public class 	Code02_MinCoinsNoLimit {
 		}
 	}
 
+	// 没有斜率优化的动态规划
 	public static int dp1(int[] arr, int aim) {
 		if (aim == 0) {
 			return 0;
@@ -52,6 +55,19 @@ public class 	Code02_MinCoinsNoLimit {
 		return dp[0][aim];
 	}
 
+	/*
+	假设当前来到9位置，arr[9] = 3元, rest = 14元，现在要求dp[9][14],表结构如下：
+		2	5	8	11	14 （rest）
+	9				y	x
+	10	a	b	c	d	e
+	（index）
+	 dp[index][rest]表示arr[index...]往后的货币自由选择，凑出rest元的最少张数
+	 x依赖于min(e,d + 1（还要多一张才能凑到rest元）,c + 2（还要多2张才能凑到rest元）,b + 3,a + 4);
+	 y依赖于min(d,c + 1,b + 2,a + 3);
+	 x = min(y + 1,e)
+	 即dp[index][rest] = min(dp[index][rest-arr[index]] + 1, dp[index+1][rest])
+	 */
+	// 有斜率优化的动态规划
 	public static int dp2(int[] arr, int aim) {
 		if (aim == 0) {
 			return 0;
