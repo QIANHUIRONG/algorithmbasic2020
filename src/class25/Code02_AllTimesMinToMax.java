@@ -5,6 +5,14 @@ import java.util.Stack;
 /*
 时间：52
 子数组：连续的
+O（N）
+ */
+/*
+1、必须以0位置的3做最小值，子数组扩到的最大范围，求一个答案；必须以1位置的4做最小值，子数组扩到的最大范围，求一个答案；客观上来说，答案一定以某个位置的数做最小值，答案比在其中
+2、子数组扩到最大范围：利用单调栈求左右两边离我最近比我小的；就是我扩不到的
+3、求一个范围上的累加和如何快：先预处理一个前缀累加和数组。sum[l...r] = sum[r] - sum[l - 1];
+4、相等的时候，不用有重复值版本的单调栈。错了就错了，最后一个能算对。
+5、时间复杂度：O(n)
  */
 public class Code02_AllTimesMinToMax {
 
@@ -25,26 +33,30 @@ public class Code02_AllTimesMinToMax {
 	}
 
 	public static int max2(int[] arr) {
-		int size = arr.length;
-		int[] sums = new int[size];
+		int n = arr.length;
+
+		// 1、预处理前缀累加和数组
+		int[] sums = new int[n];
 		sums[0] = arr[0];
-		for (int i = 1; i < size; i++) {
+		for (int i = 1; i < n; i++) {
 			sums[i] = sums[i - 1] + arr[i];
 		}
-		int max = Integer.MIN_VALUE;
+
+		int ans = Integer.MIN_VALUE;
 		Stack<Integer> stack = new Stack<Integer>();
-		for (int i = 0; i < size; i++) {
-			while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+		// 2、依次以每一个位置做子数组的最小值，求答案
+		for (int i = 0; i < n; i++) {
+			while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) { // 等于也结算！错了就错了，会有算对的时候
 				int j = stack.pop();
-				max = Math.max(max, (stack.isEmpty() ? sums[i - 1] : (sums[i - 1] - sums[stack.peek()])) * arr[j]);
+				ans = Math.max(ans, (stack.isEmpty() ? sums[i - 1] : (sums[i - 1] - sums[stack.peek()])) * arr[j]);
 			}
 			stack.push(i);
 		}
 		while (!stack.isEmpty()) {
 			int j = stack.pop();
-			max = Math.max(max, (stack.isEmpty() ? sums[size - 1] : (sums[size - 1] - sums[stack.peek()])) * arr[j]);
+			ans = Math.max(ans, (stack.isEmpty() ? sums[n - 1] : (sums[n - 1] - sums[stack.peek()])) * arr[j]);
 		}
-		return max;
+		return ans;
 	}
 
 	public static int[] gerenareRondomArray() {

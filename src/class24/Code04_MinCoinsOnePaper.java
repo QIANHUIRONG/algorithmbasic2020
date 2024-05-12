@@ -6,9 +6,15 @@ import java.util.LinkedList;
 
 /*
 时间：2：04
+1、法1：从左往右尝试模型，0位置要和不要2条路，1位置要和不要两条路，依次展开
+2、法2：收集面值数组和张数数组。接下来，0位置用1张的时候，展开；0位置用2张的时候展开...
+
  */
 public class Code04_MinCoinsOnePaper {
 
+	/*
+	方法1
+	 */
 	public static int minCoins(int[] arr, int aim) {
 		return process(arr, 0, aim);
 	}
@@ -53,6 +59,40 @@ public class Code04_MinCoinsOnePaper {
 		return dp[0][aim];
 	}
 
+
+	/*
+	方法2
+	 */
+	// dp2时间复杂度为：O(arr长度) + O(货币种数 * aim * 每种货币的平均张数)
+	public static int dp2(int[] arr, int aim) {
+		if (aim == 0) {
+			return 0;
+		}
+		// 得到info时间复杂度O(arr长度)
+		Info info = getInfo(arr);
+		int[] coins = info.coins;
+		int[] zhangs = info.zhangs;
+		int N = coins.length;
+		int[][] dp = new int[N + 1][aim + 1];
+		dp[N][0] = 0;
+		for (int j = 1; j <= aim; j++) {
+			dp[N][j] = Integer.MAX_VALUE;
+		}
+		// 这三层for循环，时间复杂度为O(货币种数 * aim * 每种货币的平均张数)
+		for (int index = N - 1; index >= 0; index--) {
+			for (int rest = 0; rest <= aim; rest++) {
+				dp[index][rest] = dp[index + 1][rest];
+				for (int zhang = 1; zhang * coins[index] <= aim && zhang <= zhangs[index]; zhang++) {
+					if (rest - zhang * coins[index] >= 0
+							&& dp[index + 1][rest - zhang * coins[index]] != Integer.MAX_VALUE) {
+						dp[index][rest] = Math.min(dp[index][rest], zhang + dp[index + 1][rest - zhang * coins[index]]);
+					}
+				}
+			}
+		}
+		return dp[0][aim];
+	}
+
 	public static class Info {
 		public int[] coins;
 		public int[] zhangs;
@@ -83,35 +123,6 @@ public class Code04_MinCoinsOnePaper {
 		return new Info(coins, zhangs);
 	}
 
-	// dp2时间复杂度为：O(arr长度) + O(货币种数 * aim * 每种货币的平均张数)
-	public static int dp2(int[] arr, int aim) {
-		if (aim == 0) {
-			return 0;
-		}
-		// 得到info时间复杂度O(arr长度)
-		Info info = getInfo(arr);
-		int[] coins = info.coins;
-		int[] zhangs = info.zhangs;
-		int N = coins.length;
-		int[][] dp = new int[N + 1][aim + 1];
-		dp[N][0] = 0;
-		for (int j = 1; j <= aim; j++) {
-			dp[N][j] = Integer.MAX_VALUE;
-		}
-		// 这三层for循环，时间复杂度为O(货币种数 * aim * 每种货币的平均张数)
-		for (int index = N - 1; index >= 0; index--) {
-			for (int rest = 0; rest <= aim; rest++) {
-				dp[index][rest] = dp[index + 1][rest];
-				for (int zhang = 1; zhang * coins[index] <= aim && zhang <= zhangs[index]; zhang++) {
-					if (rest - zhang * coins[index] >= 0
-							&& dp[index + 1][rest - zhang * coins[index]] != Integer.MAX_VALUE) {
-						dp[index][rest] = Math.min(dp[index][rest], zhang + dp[index + 1][rest - zhang * coins[index]]);
-					}
-				}
-			}
-		}
-		return dp[0][aim];
-	}
 
 	// dp3时间复杂度为：O(arr长度) + O(货币种数 * aim)
 	// 优化需要用到窗口内最小值的更新结构
