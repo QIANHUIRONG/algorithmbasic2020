@@ -42,9 +42,10 @@ public class Code02_AllLessNumSubArray {
 		int count = 0;
 		LinkedList<Integer> maxWindow = new LinkedList<>();
 		LinkedList<Integer> minWindow = new LinkedList<>();
-		int R = 0;
-		for (int L = 0; L < N; L++) {
-			while (R < N) {
+		int R = 0; // R是不回退的！l..r是达标的，那么内部所有子数组都是达标的。l=0,r扩到了10；接下来l=1，r不用从0开始扩，因为1-10一定是达标的，r只需要看能不能继续扩就行了
+		for (int L = 0; L < N; L++) { // 依次求以每一个位置作为子数组的开头，达标子数组的数量
+			// 窗口[L,R)
+			while (R < N) { // L每到一个位置，R就尽可能去扩到初次不达标
 				while (!maxWindow.isEmpty() && arr[maxWindow.peekLast()] <= arr[R]) {
 					maxWindow.pollLast();
 				}
@@ -54,12 +55,16 @@ public class Code02_AllLessNumSubArray {
 				}
 				minWindow.addLast(R);
 				if (arr[maxWindow.peekFirst()] - arr[minWindow.peekFirst()] > sum) {
-					break;
+					break; // 初次不达标，停！因为l..r不达标，那么l往左扩或者r往右扩肯定也不达标
 				} else {
 					R++;
 				}
 			}
+
+			// R是初次不达标的位置，那么此时以L位置开头的达标子数组就是R-L
 			count += R - L;
+
+			// 马上L要++了
 			if (maxWindow.peekFirst() == L) {
 				maxWindow.pollFirst();
 			}

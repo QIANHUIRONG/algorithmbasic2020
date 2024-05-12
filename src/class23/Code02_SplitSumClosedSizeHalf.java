@@ -5,6 +5,7 @@ package class23;
    */
 public class Code02_SplitSumClosedSizeHalf {
 
+	// 题解：上一题多加一个选定个数的参数
 	public static int right(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return 0;
@@ -13,9 +14,9 @@ public class Code02_SplitSumClosedSizeHalf {
 		for (int num : arr) {
 			sum += num;
 		}
-		if ((arr.length & 1) == 0) {
+		if ((arr.length % 2) == 0) { // 偶数
 			return process(arr, 0, arr.length / 2, sum / 2);
-		} else {
+		} else { // 技术
 			return Math.max(process(arr, 0, arr.length / 2, sum / 2), process(arr, 0, arr.length / 2 + 1, sum / 2));
 		}
 	}
@@ -49,18 +50,23 @@ public class Code02_SplitSumClosedSizeHalf {
 		}
 		sum /= 2;
 		int N = arr.length;
-		int M = (N + 1) / 2;
+		int M = (N + 1) / 2; // 向上取整！！
+
+		// i:0~N；picks:0~ M； rest: 0~sum
 		int[][][] dp = new int[N + 1][M + 1][sum + 1];
-		for (int i = 0; i <= N; i++) {
-			for (int j = 0; j <= M; j++) {
-				for (int k = 0; k <= sum; k++) {
-					dp[i][j][k] = -1;
+
+		// basecase：第N层
+		for (int picks = 0; picks <= M; picks++) {
+			for (int rest = 0; rest <= sum; rest++) {
+				if (picks == 0) {
+					dp[N][picks][rest] = 0;
+				} else {
+					dp[N][picks][rest] = -1;
 				}
 			}
 		}
-		for (int rest = 0; rest <= sum; rest++) {
-			dp[N][0][rest] = 0;
-		}
+
+		// 普遍位置
 		for (int i = N - 1; i >= 0; i--) {
 			for (int picks = 0; picks <= M; picks++) {
 				for (int rest = 0; rest <= sum; rest++) {

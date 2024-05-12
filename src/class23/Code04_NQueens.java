@@ -7,16 +7,22 @@ import java.util.List;
 /*
 时间：1：55
 时间复杂度：O(N^N)
-超级计算机会永n皇后问题来测试性能。
+超级计算机会用n皇后问题来测试性能。
  */
 // https://leetcode.cn/problems/n-queens/description/
 public class Code04_NQueens {
 
 
+	/**
+	 * 课堂上的N皇后
+	 * @param n
+	 * @return
+	 */
 	public static int num1(int n) {
 		if (n < 1) {
 			return 0;
 		}
+		// 轨迹信息数组 record[i]=j，表示i行皇后放在j列
 		int[] record = new int[n];
 		return process1(0, record, n);
 	}
@@ -42,7 +48,11 @@ public class Code04_NQueens {
 	}
 
 
-
+	/**
+	 * 用位运算优化的N皇后
+	 * @param n
+	 * @return
+	 */
 	// 请不要超过32皇后问题
 	public static int num2(int n) {
 		if (n < 1 || n > 32) {

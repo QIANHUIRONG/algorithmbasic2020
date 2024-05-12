@@ -5,6 +5,7 @@ package class23;
  */
 public class Code01_SplitSumClosed {
 
+	// 题解：其实就是改背包问题
 	public static int right(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return 0;
