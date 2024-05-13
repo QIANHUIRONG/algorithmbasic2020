@@ -2,6 +2,11 @@ package class27;
 
 import java.util.ArrayList;
 
+/*
+题意：1：59
+流程：2：01	序列化两棵树，看子树是不是在
+
+ */
 public class Code02_TreeEqual {
 
 	public static class TreeNode {
