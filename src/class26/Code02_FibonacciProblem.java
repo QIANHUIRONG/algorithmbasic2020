@@ -24,6 +24,10 @@ package class26;
 1、f(n) = f(n-1) + f(n-3),f(1) = 1 牛不会死， f(n-1):去年的牛；f(n-3):3年前的牛
 2、如果牛第5年死了，就是f(n) = f(n-1) + f(n-3) - f(n-5), 就是5阶问题
  */
+/*
+矩阵的乘法
+
+ */
 public class Code02_FibonacciProblem {
 
 	// 普通递归
@@ -65,7 +69,8 @@ public class Code02_FibonacciProblem {
 			return 1;
 		}
 		// 1、base矩阵
-		int[][] base = { 
+		int[][] base =
+				{
 				{ 1, 1 }, 
 				{ 1, 0 } 
 				};
@@ -79,19 +84,18 @@ public class Code02_FibonacciProblem {
 		return res[0][0] + res[1][0];
 	}
 
-	public static int[][] matrixPower(int[][] m, int p) {
-		int[][] res = new int[m.length][m[0].length];
+	public static int[][] matrixPower(int[][] m, int n) {
+		int[][] res = new int[m.length][m[0].length]; // 结果是第一个矩阵的行*第二个矩阵的列
 		for (int i = 0; i < res.length; i++) {
-			res[i][i] = 1;
+			res[i][i] = 1; // 单位矩阵
 		}
-		// res = 矩阵中的1
-		int[][] t = m;// 矩阵1次方
-		for (; p != 0; p >>= 1) {
-			if ((p & 1) != 0) { // 最末尾是1，就要累乘。乘完之后，右移
-				res = product(res, t);
+		while (n != 0) { // n已经看成二进制的形式
+			if ((n & 1) != 0) { // 最末尾是1，就要累乘。乘完之后，右移
+				res = product(res, m);
 			}
-			// t矩阵每次都跟自己乘。
-			t = product(t, t);
+			// 每次都跟自己乘
+			m = product(m, m);
+			n >>= 1;
 		}
 		return res;
 	}
@@ -100,12 +104,11 @@ public class Code02_FibonacciProblem {
 	public static int[][] product(int[][] a, int[][] b) {
 		int n = a.length;
 		int m = b[0].length;
-		int k = a[0].length; // a的列数同时也是b的行数
-		int[][] ans = new int[n][m];
+		int[][] ans = new int[n][m]; // a的行 * b的列
 		for(int i = 0 ; i < n; i++) {
 			for(int j = 0 ; j < m;j++) {
-				for(int c = 0; c < k; c++) {
-					ans[i][j] += a[i][c] * b[c][j];
+				for (int k = 0; k < a[0].length; k++) {
+					ans[i][j] += a[i][k] * b[k][j];
 				}
 			}
 		}
