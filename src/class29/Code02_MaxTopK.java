@@ -3,7 +3,22 @@ package class29;
 import java.util.Arrays;
 
 /*
+题意：
+给定一个无序数组arr中，长度为N，给定一个正数k，返回topK个最大的数
+不同的时间复杂度去实现：
+O(N*logN)
+O(N + K*logN);
+O(N + K*logK);
+ */
+/*
 时间：1：13
+方法1：排序
+方法2【1：15】：堆
+方法3【1：17】：无序数组中的第k小的数模型
+	 1.先求出无序数组第N-k小的数num
+	 2.再遍历原来的数组，大于num的就进ans[]数组
+	 3.最后没满的，用num补齐
+	 4.再对这k个数字排个序(O(K*logk))
  */
 public class Code02_MaxTopK {
 
@@ -36,17 +51,28 @@ public class Code02_MaxTopK {
 			heapify(arr, i, N);
 		}
 		// 只把前K个数放在arr末尾，然后收集，O(K*logN)
+//		int heapSize = N;
+//		swap(arr, 0, --heapSize);
+//		int count = 1;
+//		while (heapSize > 0 && count < k) {
+//			heapify(arr, 0, heapSize);
+//			swap(arr, 0, --heapSize);
+//			count++;
+//		}
+//		int[] ans = new int[k];
+//		for (int i = N - 1, j = 0; j < k; i--, j++) {
+//			ans[j] = arr[i];
+//		}
+//		return ans;
+
 		int heapSize = N;
-		swap(arr, 0, --heapSize);
-		int count = 1;
-		while (heapSize > 0 && count < k) {
-			heapify(arr, 0, heapSize);
-			swap(arr, 0, --heapSize);
-			count++;
-		}
 		int[] ans = new int[k];
-		for (int i = N - 1, j = 0; j < k; i--, j++) {
-			ans[j] = arr[i];
+		int i = 0;
+		while (k != 0) {
+			ans[i++] = arr[0];
+			swap(arr, 0, --heapSize);
+			heapify(arr, 0, heapSize);
+			k--;
 		}
 		return ans;
 	}
@@ -99,6 +125,7 @@ public class Code02_MaxTopK {
 		}
 		// O(k*logk)
 		Arrays.sort(ans);
+		// 题目要求返回由大到小，所有这里再反转一下
 		for (int L = 0, R = k - 1; L < R; L++, R--) {
 			swap(ans, L, R);
 		}

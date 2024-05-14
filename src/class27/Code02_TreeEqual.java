@@ -111,4 +111,38 @@ public class Code02_TreeEqual {
 		}
 	}
 
+
+	/*
+	方法2：递归
+	 */
+	public static boolean isSubtree2(TreeNode big, TreeNode small) {
+		if (small == null) {
+			return true;
+		}
+		if (big == null) {
+			return false;
+		}
+		if (isSameValueStructure(big, small)) {
+			return true;
+		}
+		return isSubtree2(big.left, small) || isSubtree2(big.right, small);
+	}
+
+	public static boolean isSameValueStructure(TreeNode head1, TreeNode head2) {
+		if (head1 == null && head2 != null) {
+			return false;
+		}
+		if (head1 != null && head2 == null) {
+			return false;
+		}
+		if (head1 == null && head2 == null) {
+			return true;
+		}
+		if (head1.val != head2.val) {
+			return false;
+		}
+		return isSameValueStructure(head1.left, head2.left)
+				&& isSameValueStructure(head1.right, head2.right);
+	}
+
 }

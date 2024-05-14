@@ -2,6 +2,13 @@ package class29;
 
 /*
 时间：1：21
+题意【1：21】
+流程【1：26】：
+	1-10号求直接进
+流程为什么对【1：29】
+做实验，code【1：39】
+应用【1：53】：游戏抽奖
+
  */
 public class Code03_ReservoirSampling {
 
