@@ -5,6 +5,8 @@ package class29;
 题意【1：21】
 流程【1：26】：
 	1-10号求直接进
+	后面的球，先用10/i(n/i)的概率决定要不要进袋子，n是容量，i是第几个的索引
+	如果要进了，袋子中1-10随机取一个丢了
 流程为什么对【1：29】
 做实验，code【1：39】
 应用【1：53】：游戏抽奖
@@ -13,9 +15,9 @@ package class29;
 public class Code03_ReservoirSampling {
 
 	public static class RandomBox {
-		private int[] bag;
-		private int N;
-		private int count;
+		private int[] bag; // 袋子
+		private int N; // 袋子的容量
+		private int count; // 现在有几个球近袋子了
 
 		public RandomBox(int capacity) {
 			bag = new int[capacity];
@@ -23,27 +25,33 @@ public class Code03_ReservoirSampling {
 			count = 0;
 		}
 
-		private int rand(int max) {
-			return (int) (Math.random() * max) + 1;
-		}
-
+		/**
+		 * 球来了，要等概率进入袋子
+		 * @param num
+		 */
 		public void add(int num) {
 			count++;
-			if (count <= N) {
+			if (count <= N) { // 还没到容量直接进
 				bag[count - 1] = num;
-			} else {
-				if (rand(count) <= N) {
+			} else { // 到容量了，先用N/i的概率决定要不要进袋子
+				if (rand(count) <= N) { // n/i，就是
 					bag[rand(N) - 1] = num;
 				}
 			}
 		}
 
+		// 返回此时袋子中的球
 		public int[] choices() {
 			int[] ans = new int[N];
 			for (int i = 0; i < N; i++) {
 				ans[i] = bag[i];
 			}
 			return ans;
+		}
+
+		// [1,max]随机返回1个
+		private int rand(int max) {
+			return 1 + (int) (Math.random() * max);
 		}
 
 	}
