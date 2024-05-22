@@ -47,6 +47,12 @@ public class Code04_DifferentBTNum {
 		return (b / a) / (N + 1);
 	}
 
+	/**
+	 * 最大公约数？？看完大厂刷题班会讲，再回来看看
+	 * @param m
+	 * @param n
+	 * @return
+	 */
 	public static long gcd(long m, long n) {
 		return n == 0 ? m : gcd(n, m % n);
 	}

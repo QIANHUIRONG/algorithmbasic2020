@@ -1,6 +1,10 @@
 // 不要拷贝包信息的内容
 package class39;
 
+/*
+没看。
+ */
+
 // 优化版本
 // 这是牛客的测试链接：
 // https://www.nowcoder.com/questionTerminal/d94bb2fa461d42bcb4c0f2b94f5d4281
@@ -8,6 +12,7 @@ package class39;
 // 这是输入输出处理效率很高的写法
 // 提交如下的代码，并把主类名改成"Main"
 // 可以直接通过
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
