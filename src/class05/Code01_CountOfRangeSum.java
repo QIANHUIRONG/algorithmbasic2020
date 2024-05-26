@@ -1,5 +1,25 @@
 package class05;
 
+
+/*
+ [题意]
+
+*/
+
+/*
+[时间]
+
+ */
+
+// 时复：
+// 空复：
+
+/*
+[思维导图]
+
+ */
+
+
 // 这道题直接在leetcode测评：
 // https://leetcode.com/problems/count-of-range-sum/
 public class Code01_CountOfRangeSum {
