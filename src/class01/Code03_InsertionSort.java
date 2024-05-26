@@ -2,21 +2,42 @@ package class01;
 
 import java.util.Arrays;
 
-public class Code03_InsertionSort {
 
-    /**
-     * 时间：45
-     * 时间复杂度：O（N^2)
+/*
+ [题意]
+
+*/
+/*
+[时间]
+流程：45
+code:
+随机函数：
+ */
+/*
+[思维导图]
+一、插入排序
+     * 时间复杂度：O（N^2) 有稳定性，相等的时候不往左边插入就行
      * 每遍历一趟，保证0-i有序；
      * 0-0有序，0-1有序，0-i有序，0...N-1有序；
-     * 每一次遍历，当前数都往左边看，比较当前数和左边的数，如果左边的数大，就把当前数往左插入。
+     * 每一次遍历，当前数都往左边看，比较当前数和左边的数，如果左边的数大，就把当前数往左插入。直到左边数不比当前数大。
+     （类似抓扑克牌，手里已经抓了一些牌了，又来了一张牌，从右往左一直看到当前排该去的位置）
      * 感觉和冒泡排序像，其实是天差地别的。冒泡排序即使是0，1，2，3，4这种优良的数据，还是得跑O(N^2)次
      * 但是这个数据状况，插入排序的时候第二个for循环arr[j] > arr[j + 1]都进不去，第二个for循环其实就是O（1）的，整个过程就看成O（N)的
      * <p>
      * 所以工程上在数据量非常小时，小到影响运行时间的不是时间复杂度，而是常熟时间，比如<60，就会使用插入排序。
-     *
-     * @param arr
-     */
+     在bfprt算法中，5个数据一组，每组排有序取中位数时，我们也喜欢用插入排序。
+
+二、随机函数
+    Math.random() -> [0,1) 所有的小数，等概率返回一个
+    Math.random() * N -> [0,N) 所有小数，等概率返回一个
+    (int)(Math.random() * N) -> [0,N-1] 所有的整数，等概率返回一个
+    (int)Math.randon() * (b - a + 1) -> [0, b-a] 所有的整数，等概率返回一个
+    a + (int)(Math.randon() * (b - a + 1)) -> [a,b]所有的整数，等概率返回一个
+
+ */
+
+public class Code03_InsertionSort {
+
     public static void insertionSort(int[] arr) {
         if (arr == null || arr.length < 2) {
             return;
@@ -25,7 +46,7 @@ public class Code03_InsertionSort {
         // 接着搞定0-1有序
         // 接着搞定0-2有序
         // ...
-        for (int i = 1; i < arr.length; i++) { // 0-i做到有序
+        for (int i = 0; i < arr.length; i++) { // 0-i做到有序
             for (int j = i - 1; j >= 0 && arr[j] > arr[j + 1]; j--) {
                 swap(arr, j, j + 1);
             }

@@ -2,10 +2,22 @@ package class01;
 
 import java.util.Arrays;
 
+/**
+ * 题意：略
+ */
+/*
+时间
+流程：
+code:
+ */
+/*
+【思维导图】
+* 每遍历一趟找出一个最小值，换到前面去
+* 时复：o(n^2) 没有稳定性
+ */
 public class Code01_SelectionSort {
 
 	/**
-	 * 每遍历一趟找出一个最小值，换到前面去
 	 * @param arr
 	 */
 	public static void selectionSort(int[] arr) {
@@ -15,7 +27,7 @@ public class Code01_SelectionSort {
 		// 0 ~ N-1  找到最小值，在哪，放到0位置上
 		// 1 ~ n-1  找到最小值，在哪，放到1 位置上
 		// 2 ~ n-1  找到最小值，在哪，放到2 位置上
-		for (int i = 0; i < arr.length - 1; i++) { // i是此轮找到的最小值要放的位置
+		for (int i = 0; i < arr.length; i++) { // i是此轮找到的最小值要放的位置
 			int minIndex = i;
 			for (int j = i + 1; j < arr.length; j++) { // i ~ N-1 上找最小值的下标 
 				minIndex = arr[j] < arr[minIndex] ? j : minIndex;

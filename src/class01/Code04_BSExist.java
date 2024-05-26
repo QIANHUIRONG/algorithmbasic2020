@@ -2,16 +2,29 @@ package class01;
 
 import java.util.Arrays;
 
+
+/*
+ [题意]
+
+*/
+/*
+[时间]
+流程：1:49
+code:
+ */
+// 时复：o(n*logn)
+/*
+[思维导图]
+1.找一个数，不需要全部的数看一遍，就是因为数据状况有规律，能二分
+
+2.while(l < r) 和 while(l <= r)
+这两种写法，啥时候写≤时候写<.我只能说都对你如果把你的大罗辑定成至少两个数的时候，你就有这种逻辑下的边界条件。如果你把
+你的逻辑定成至少一个数字我就能二分，那就有这种逻辑下的边界条件，写Code扣边界条件这个过程是必不可少
+的。
+算法是一个大的思想，怎么实现这个大的思想，八仙过海各显神通
+ */
 public class Code04_BSExist {
 
-	/**
-	 * 时间：1；49
-	 * 时间复杂度：O（logN)
-	 * 找一个数，都不会全部的数看一遍，就是因为数据状况有规律，能二分
-	 * @param arr
-	 * @param num
-	 * @return
-	 */
 	public static boolean exist(int[] arr, int num) {
 		if (arr == null || arr.length == 0) {
 			return false;

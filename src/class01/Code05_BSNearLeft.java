@@ -2,14 +2,26 @@ package class01;
 
 import java.util.Arrays;
 
+
+/*
+ [题意]
+在有序数组arr上，找满足>=value的最左位置
+*/
+/*
+[时间]
+流程：
+code:
+ */
+// 时复： o(n*logn)
+/*
+[思维导图]
+1.如果中点>=num,那就临时保存下，但是有可能左边还有更好的选择，继续二分
+ */
+
+
 public class Code05_BSNearLeft {
 
-	/**
-	 * 题意：在arr上，找满足>=value的最左位置
-	 * 如果中点>=num,那就临时保存下，但是有可能左边还有更好的选择，继续二分
-	 * @param arr
-	 * @return
-	 */
+
 	public static int nearestIndex(int[] arr, int num) {
 		if (arr == null || arr.length == 0) {
 			return -1;
