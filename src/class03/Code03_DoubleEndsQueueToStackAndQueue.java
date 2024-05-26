@@ -14,6 +14,11 @@ import java.util.Stack;
  * 	方法：queue.offer() / queue.add(); queue.poll();
  *
  */
+
+/**
+ * 深度优先遍历：用栈
+ * 广度优先遍历：用队列
+ */
 public class Code03_DoubleEndsQueueToStackAndQueue {
 
 
@@ -63,6 +68,53 @@ public class Code03_DoubleEndsQueueToStackAndQueue {
 		}
 	}
 
+	/*
+	用双端队列实现栈
+	 */
+	public static class MyStack<T> {
+		private DoubleEndsQueue<T> queue;
+
+		public MyStack() {
+			queue = new DoubleEndsQueue<T>();
+		}
+
+		// 栈就是头进头出
+		public void push(T value) {
+			queue.addFromHead(value);
+		}
+
+		public T pop() {
+			return queue.popFromHead();
+		}
+
+		public boolean isEmpty() {
+			return queue.isEmpty();
+		}
+
+	}
+
+	// 用双端队列实现队列
+	public static class MyQueue<T> {
+		private DoubleEndsQueue<T> queue;
+
+		public MyQueue() {
+			queue = new DoubleEndsQueue<T>();
+		}
+
+		// 队列就是头进尾出
+		public void push(T value) {
+			queue.addFromHead(value);
+		}
+
+		public T poll() {
+			return queue.popFromBottom();
+		}
+
+		public boolean isEmpty() {
+			return queue.isEmpty();
+		}
+
+	}
 
 
 	public static class NodeT<T> {
@@ -145,47 +197,7 @@ public class Code03_DoubleEndsQueueToStackAndQueue {
 
 	}
 
-	public static class MyStack<T> {
-		private DoubleEndsQueue<T> queue;
 
-		public MyStack() {
-			queue = new DoubleEndsQueue<T>();
-		}
-
-		public void push(T value) {
-			queue.addFromHead(value);
-		}
-
-		public T pop() {
-			return queue.popFromHead();
-		}
-
-		public boolean isEmpty() {
-			return queue.isEmpty();
-		}
-
-	}
-
-	public static class MyQueue<T> {
-		private DoubleEndsQueue<T> queue;
-
-		public MyQueue() {
-			queue = new DoubleEndsQueue<T>();
-		}
-
-		public void push(T value) {
-			queue.addFromHead(value);
-		}
-
-		public T poll() {
-			return queue.popFromBottom();
-		}
-
-		public boolean isEmpty() {
-			return queue.isEmpty();
-		}
-
-	}
 
 	public static boolean isEqual(Integer o1, Integer o2) {
 		if (o1 == null && o2 != null) {

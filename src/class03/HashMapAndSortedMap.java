@@ -1,5 +1,73 @@
 package class03;
 
+
+
+/*
+ [题意]
+
+*/
+
+/*
+[时间]
+哈希表：2：13
+有序表: 2：26
+
+ */
+
+// 时复：
+// 空复：
+
+/*
+[思维导图]
+一、哈希表
+1)哈希表在使用层面上可以理解为一种集合结构
+2)如果只有key，没有伴随数据value，可以使用HashSet结构
+3)如果既有key，又有伴随数据value，可以使用HashMap结构
+4)有无伴随数据，是HashMap和HashSet唯一的区别，实际结构是一回事
+5)使用哈希表增(put)、删(remove)、改(put)和查(get)的操作，可以认为时间复杂度为 O(1)，但是常数时间比较大
+6)放入哈希表的东西，如果是基础类型，内部按值传递，内存占用是这个东西的大小
+7)放入哈希表的东西，如果不是基础类型，内部按引用传递，内存占用是8字节
+
+
+2。java中只有值传递机制
+基础数据类型，无论是用不用装箱，在hash表中都是传递值。（本质就是调用方法，方法都是值传递，传的具体的数值）
+在调用其他方法时，传入String，String作为引用类型，传递的其实是引用值；但是在哈希表中，调用方法，传递的是String本身的内容
+
+	public static void main(String[] args) {
+		HashMap<String, String> map = new HashMap<>();
+		String str1 = "a";
+		String str2 = "a";
+		map.put(str1, "b");
+		System.out.println(map.containsKey(str2)); // true
+	}
+
+	public static void main(String[] args) {
+		String str = "aaa";
+		f(str);
+		System.out.println(str); // aaa
+	}
+
+	public static void f(String str) {
+		str = "bbb";
+	}
+
+
+二、有序表
+1.简介
+	时复O(logn), TreeMap是接口名，在java中实现类是红黑树。
+	其他类型的平衡二叉树也行，比如avl数、sb数、跳表
+
+2.方法。除了hash表本身有的方法，还有如下方法
+	firstKey()
+	lastKey()
+	floorKey() : <=
+	ceilingKey() : >=
+
+3.对于基础类型，还有String，不需要传入比较器；对于自定义类型，需要传入比较器。
+
+ */
+
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeMap;
@@ -124,5 +192,7 @@ public class HashMapAndSortedMap {
 		// O(logN)
 
 	}
+
+
 
 }

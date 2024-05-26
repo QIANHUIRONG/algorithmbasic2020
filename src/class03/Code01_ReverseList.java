@@ -2,9 +2,29 @@ package class03;
 
 import java.util.ArrayList;
 import java.util.List;
+/*
+ [题意]
+ 反转链表
 
+*/
+
+/*
+[时间]
+
+ */
+
+// 时复：o(n)
+// 空复：o(1)
+
+/*
+[思维导图]
+
+ */
 public class Code01_ReverseList {
 
+	/**
+	 * 单向链表表示方法
+	 */
 	public static class Node {
 		public int value;
 		public Node next;
@@ -14,6 +34,9 @@ public class Code01_ReverseList {
 		}
 	}
 
+	/**
+	 * 双向链表表示方法
+	 */
 	public static class DoubleNode {
 		public int value;
 		public DoubleNode last;
@@ -38,6 +61,7 @@ public class Code01_ReverseList {
 			pre = head;
 			head = next;
 		}
+		// 最终新的链表头是pre
 		return pre;
 	}
 

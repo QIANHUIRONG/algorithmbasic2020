@@ -4,6 +4,27 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+/*
+ [题意]
+ 只使用队列实现栈结构
+
+*/
+
+/*
+[时间]
+
+ */
+
+// 时复：
+// 空复：
+
+/*
+[思维导图]
+1.准备2个队列，一个queue，一个help，
+	1.入队时，直接入queue
+	2.出队时，queue导出队列里只剩一个数的时候停止，然后取出这个元素返回，就实现了先进先出
+2.导完之后，queue和help要互换角色
+ */
 public class Code07_TwoQueueImplementStack {
 
 	public static class TwoQueueStack {
