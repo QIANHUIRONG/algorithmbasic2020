@@ -10,6 +10,10 @@ package class04;
 /*
 [时间]
 
+非递归实现归并排序流程：1：28
+非递归方式时间复杂度估计：1：35
+code: 36
+
  */
 
 // 时复：o(logn), 有稳定性。相等的时候先拷贝左边就行
@@ -28,7 +32,8 @@ package class04;
 	2.merge的过程中，左指针p1不回退，右指针p2也不回退，单独merge过程是o(n)的
 
 3.时复：
-	1.递归用master公式可以得到o(n*logn)。递归是：T(N) = 2 * T(N / 2) + O(N), 根据master公式，可得，O(N * logN)
+	1.递归用master公式可以得到o(n*logn)。
+递归是：T(N) = 2 * T(N / 2) + O(N), a = 2, b = 2, d = 1, log(b,a) = 1 = d, 时复 = o(n^1 * logn)
 	2.改成迭代可以直接看出o(n*logn)
 
 3.为什么比O(n^2)的排序好？
@@ -38,6 +43,16 @@ package class04;
 当你左侧跟右侧merge的过程中，左组数之间是根本没有比较的，要比较是左组某一个指针对右组某一个指针在比较
 你们此时比较行为也没有浪费，变成了你们共同的一个排好序的结果，所以比较行为每一次都变成结果在传递，
 所以复杂度是O(N*logN)
+
+
+4.非递归实现归并排序
+	1.设计变量步长，步长为1：左组1个，右组1个去merge；
+	2.然后步长*=2, 左组2个，右组2个去merge
+	3.... 直到步长>=整个数组长度，就停止
+
+	4.步长的变化次数：logn次，每次调整步长遍历一遍去merge o(n), 总体o(n*logn)
+	5.如果左组都凑不够，那就不用merge了；如果右组凑不够，不够也行，去merge
+
 
  */
 
@@ -90,17 +105,20 @@ public class Code01_MergeSort {
 			return;
 		}
 		int N = arr.length;
-		// 步长
+		// 步长。先左组1个右组1个去merge；再左组2个右组2个merge
 		int mergeSize = 1;
 		while (mergeSize < N) { // log N
 			// 当前左组的，第一个位置
 			int L = 0;
 			while (L < N) {
-				int M = L + mergeSize - 1;
-				if (M >= N) {
+				int M = L + mergeSize - 1; // 中间的位置
+				if (M >= N) { // 左组都不够，直接跳出循环
 					break;
 				}
-				int R = Math.min(M + mergeSize, N - 1);
+
+				// 到此有左组，右组无论多少，都会去merge
+
+				int R = Math.min(M + mergeSize, N - 1); // R如果够的话就是M + mergeSize，如果不够，就是N-1
 				merge(arr, L, M, R);
 				L = R + 1;
 			}

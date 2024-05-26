@@ -1,10 +1,29 @@
 package class04;
 
-/**
- * 总结一下：
- * 1、查询某个数右边有多少个数比我大，从左往右merge
- * 2、查询某个数右边有多少个数比我小，从右往左merge
- * merge的过程都是经典的由小到大。
+
+
+/*
+ [题意]
+一个数组中，任何一个左边的数大于右边的数，就是1个逆序对，求所有的逆序对个数
+*/
+
+/*
+[时间]
+
+ */
+
+// 时复：
+// 空复：
+
+/*
+[思维导图]
+1.从右往左Merge,左组跟右组谁大拷贝谁，左组大拷贝，产生逆序对。右组大，拷贝不产生逆序对
+2.相等的时候先拷贝右边的
+
+总结一下：
+1、查询某个数右边有多少个数比我大，从左往右merge。相等先拷贝右边
+2、查询某个数右边有多少个数比我小，从右往左merge。相等先拷贝右边
+merge的过程都是经典的由小到大。
  */
 public class Code03_ReversePair {
 
@@ -24,7 +43,7 @@ public class Code03_ReversePair {
 			return 0;
 		}
 		// l < r
-		int mid = l + ((r - l) >> 1);
+		int mid = (l + r) / 2;
 		return process(arr, l, mid) + process(arr, mid + 1, r) + merge(arr, l, mid, r);
 	}
 
