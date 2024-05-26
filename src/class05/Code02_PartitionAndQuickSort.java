@@ -1,5 +1,34 @@
 package class05;
 
+
+
+/*
+ [题意]
+一个数组中，给定X,做到：
+<x的整体放在左边，=的整体放在中间，>的整体放在右边：
+要求时复O(n), 空复O(1)
+
+*/
+
+/*
+[时间]
+
+ */
+
+// 时复：
+// 空复：
+
+/*
+[思维导图]
+1.划分小于区less = -1、等于区、大于区more = N
+遍历，有3种情况：
+1)当前数<目标，当前数跟小于区的下一个数交换，小于区向右扩，当前数跳到下一个
+2)当前数=目标，当前数直接跳下一个
+3)当前数>目标，当前数跟大于区的前一个数交换，大于区向左扩，当前数停在原地不动
+
+2.当前数和大于区撞上的时候停
+ */
+
 public class Code02_PartitionAndQuickSort {
 
 	public static void swap(int[] arr, int i, int j) {
@@ -8,7 +37,7 @@ public class Code02_PartitionAndQuickSort {
 		arr[j] = tmp;
 	}
 
-	// 掌握下面的就行
+	// 这个不用看，掌握下面的
 	// arr[L..R]上，以arr[R]位置的数做划分值
 	// <= X > X
 	// <= X X
@@ -32,7 +61,7 @@ public class Code02_PartitionAndQuickSort {
 	}
 
 	// 掌握！！
-	// arr[L...R] 玩荷兰国旗问题的划分，以arr[R]做划分值
+	// arr[L...R] 玩荷兰国旗问题的划分，以arr[R]做划分值，返回等于区边界
 	// <arr[R] ==arr[R] > arr[R]
 	public static int[] netherlandsFlag(int[] arr, int L, int R) {
 		if (L > R) { // L...R L>R
@@ -43,17 +72,17 @@ public class Code02_PartitionAndQuickSort {
 		}
 		int less = L - 1; // < 区 右边界
 		int more = R; // > 区 左边界
-		int index = L;
-		while (index < more) { // 当前位置，不能和 >区的左边界撞上
-			if (arr[index] == arr[R]) {
-				index++;
-			} else if (arr[index] < arr[R]) {
+		int cur = L;
+		while (cur < more) { // 当前位置，不能和 >区的左边界撞上
+			if (arr[cur] == arr[R]) {
+				cur++;
+			} else if (arr[cur] < arr[R]) {
 //				swap(arr, less + 1, index);
 //				less++;
 //				index++;						
-				swap(arr, index++, ++less);
+				swap(arr, cur++, ++less);
 			} else { // >
-				swap(arr, index, --more);
+				swap(arr, cur, --more);
 			}
 		}
 		swap(arr, more, R); // <[R]   =[R]   >[R]
@@ -62,7 +91,7 @@ public class Code02_PartitionAndQuickSort {
 
 
 	/**
-	 * 快排1.0 快排去看code03就行。
+	 * 快排1.0 快排去看code03就行。Code03_QuickSortRecursiveAndUnrecursive
 	 * @param arr
 	 */
 	public static void quickSort1(int[] arr) {

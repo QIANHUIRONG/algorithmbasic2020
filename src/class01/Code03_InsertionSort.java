@@ -33,6 +33,7 @@ code:
     (int)(Math.random() * N) -> [0,N-1] 所有的整数，等概率返回一个
     (int)Math.randon() * (b - a + 1) -> [0, b-a] 所有的整数，等概率返回一个
     a + (int)(Math.randon() * (b - a + 1)) -> [a,b]所有的整数，等概率返回一个
+    (int)Math.random() * (n+1) -> [0-n]所有整数，等概率返回1个
 
  */
 

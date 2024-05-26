@@ -4,6 +4,33 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+
+/*
+ [题意]
+ 快速排序
+*/
+
+/*
+[时间]
+
+ */
+
+// 时复：o(n*logn), 没有稳定性。因为partition过程没有稳定性。比如(4,4,4,2,1) 用1划分，第一个4命中大于区，要和2交换。
+// 空复：o(logn)
+
+/*
+[思维导图]
+1.随机选一个数做划分值，调用荷兰国旗
+2.等于区不用动，继续去小于区和大于区递归
+3.复杂度：
+	1.如果划分值打得好，靠近中间，T(n) = 2 * T(n/2) + o(n), 根据master公式 o(n*logn)
+	2.如果划分值大的不好，每次都选了最大的数, T(n) = T(n-1)+T(n-2) + T(n-3)... 等差数列，那么就是o(n^2)
+	3.而我现在用随机数是划分，最差情况和最好情况都是1/n的概率，数学上声明了时间复杂度是o(n*logn)!
+	4.空间复杂度也是收敛到o(logn)
+
+4.快排迭代版本
+
+ */
 public class Code03_QuickSortRecursiveAndUnrecursive {
 
 	// 荷兰国旗问题
@@ -46,13 +73,14 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 
 	public static void process(int[] arr, int L, int R) {
 		/*
-		是需要这个大于号的。比如partiton完之后是2 2 2 3 4, partiton[0]是1，partition[1]是2，
+		是需要这个大于号的。比如partiton完之后是2 2 2 3 4, equalArea[0]是0，equalArea[1]是2，
 		那么process(arr, L, equalArea[0] - 1)就是process(arr, 0, -1)
 		也可以调用下游递归的时候，如果l<r才去调用也行。
 		 */
 		if (L >= R) {
 			return;
 		}
+		// [L,R]上随机一个整数：L + (int) (Math.random() * (R - L + 1))
 		swap(arr, L + (int) (Math.random() * (R - L + 1)), R);
 		int[] equalArea = netherlandsFlag(arr, L, R);
 		process(arr, L, equalArea[0] - 1);
@@ -74,12 +102,13 @@ public class Code03_QuickSortRecursiveAndUnrecursive {
 		}
 	}
 
-	// 快排3.0 非递归版本 用栈来执行
+	// 快排3.0 非递归版本 用栈来执行。掌握这个就行了
 	public static void quickSort2(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return;
 		}
 		int N = arr.length;
+		// (int) (Math.random() * N) ： 0-n-1等概率随机
 		swap(arr, (int) (Math.random() * N), N - 1);
 		int[] equalArea = netherlandsFlag(arr, 0, N - 1);
 		Stack<Op> stack = new Stack<>();
