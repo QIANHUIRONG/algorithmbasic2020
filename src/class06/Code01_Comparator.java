@@ -5,6 +5,36 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.TreeMap;
 
+
+/*
+ [题意]
+
+*/
+
+/*
+[时间]
+
+ */
+
+// 时复：
+// 空复：
+
+/*
+[思维导图]
+1.implements Comparator<T>, 重写
+		@Override
+		public int compare(T o1,T o2) {}
+2.规则：
+	// 返回负数的时候，认为第一个参数应该排在前面
+	// 返回正数的时候，认为第二个参数应该排在前面
+	// 返回0的时候，认为无所谓谁放前面
+
+3.对于整数来说，从小到大：o1.id - o2.id
+
+4.可以使用lambda表达式
+	例如：	TreeMap<Student, String> treeMap = new TreeMap<>(o1, o2) -> (o1.id - o2.id));
+
+ */
 public class Code01_Comparator {
 
 	public static class Student {
@@ -19,11 +49,7 @@ public class Code01_Comparator {
 		}
 	}
 
-	// 任何比较器：
-	// compare方法里，遵循一个统一的规范：
-	// 返回负数的时候，认为第一个参数应该排在前面
-	// 返回正数的时候，认为第二个参数应该排在前面
-	// 返回0的时候，认为无所谓谁放前面
+
 	public static class IdShengAgeJiangOrder implements Comparator<Student> {
 
 		// 根据id从小到大，但是如果id一样，按照年龄从大到小
