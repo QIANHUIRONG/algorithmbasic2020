@@ -5,6 +5,24 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+/*
+ [题意]
+ 等第三轮把。。。
+*/
+
+/*
+[时间]
+
+ */
+
+// 时复：
+// 空复：
+
+/*
+[思维导图]
+
+ */
+
 public class Code02_EveryStepShowBoss {
 
 	public static class Customer {
