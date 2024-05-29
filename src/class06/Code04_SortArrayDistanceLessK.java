@@ -3,19 +3,35 @@ package class06;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
+/*
+ [题意]
+已知一个几乎有序的数组。几乎有序是指，如果把数组排好顺序的话，每个元素移动的距离一定<=k，并且k相对于数组长度来说是比较小的。
+请选择一个合适的排序策略，对这个数组进行排序。
+*/
+
+/*
+[时间]
+
+ */
+
+// 时复：O(N*log k),一共弹出N个数，小根堆每一次调整log k，会比直接排序O(N*logN)好
+// 空复：
+
+/*
+[思维导图]
+1.假如K是5，原始数组中0~5的原始数字，其中最小值一定是0位置，只有下标0~5的数能去0位置，5再往后都不可能来到0位置
+2.k是多少，就把前k+1个数先放入小根堆里，每次单出最小值，然后放入一个新数
+ */
+
 public class Code04_SortArrayDistanceLessK {
 
-	/**
-	 * 已知一个几乎有序的数组。几乎有序是指，如果把数组排好顺序的话，每个元素移动的距离一定<=k，并且k相对于数组长度来说是比较小的。
-	 * 请选择一个合适的排序策略，对这个数组进行排序。
-	 */
-	// 时间复杂度：O(N*log k),一共弹出N个数，小根堆每一次调整log k，会比直接排序O(N*logN)好
 	public static void sortedArrDistanceLessK(int[] arr, int k) {
 		if (k == 0) {
 			return;
 		}
 		PriorityQueue<Integer> heap = new PriorityQueue<>();
 		int i = 0;
+		// 移动距离<=k，k+1个元素移动k步就到0位置，所以初始要入k+1个元素
 		while (i <= Math.min(arr.length - 1, k)) {
 			heap.add(arr[i++]);
 		}
