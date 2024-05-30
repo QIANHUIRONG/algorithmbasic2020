@@ -1,5 +1,6 @@
 package class09;
 
+// 笔记看语雀，很全！！！
 public class Code03_SmallerEqualBigger {
 
 	public static class Node {

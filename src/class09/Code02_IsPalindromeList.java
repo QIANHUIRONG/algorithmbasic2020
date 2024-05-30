@@ -2,6 +2,12 @@ package class09;
 
 import java.util.Stack;
 
+/*
+ [题意]
+ 判断一个链表是否是回文结构
+
+*/
+// 笔记看语雀，很全！！！
 public class Code02_IsPalindromeList {
 
     public static class Node {
@@ -16,9 +22,6 @@ public class Code02_IsPalindromeList {
     /**
      * 方法1：使用容器的做法
      * O（n）的空间复杂度
-     *
-     * @param head
-     * @return
      */
     public static boolean isPalindrome1(Node head) {
         Stack<Node> stack = new Stack<Node>();
@@ -69,9 +72,6 @@ public class Code02_IsPalindromeList {
     /**
      * 方法3：最优解。
      * 时间复杂度O（N), 空间复杂度O（1）
-     *
-     * @param head
-     * @return
      */
     public static boolean isPalindrome3(Node head) {
         if (head == null || head.next == null) {
@@ -80,7 +80,7 @@ public class Code02_IsPalindromeList {
         if (head.next.next == null) {
             return head.value == head.next.value;
         }
-        // 1.快慢指针求中点
+        // 1.快慢指针求上中点
         Node slow = head.next;
         Node fast = head.next.next;
         while (fast.next != null && fast.next.next != null) {
@@ -113,8 +113,10 @@ public class Code02_IsPalindromeList {
         }
 
         // 4.恢复链表
-        cur = pre.next;
-        pre.next = null;
+//        cur = pre.next;
+//        pre.next = null;
+        cur = pre;
+        pre = null;
         while (cur != null) {
             next = cur.next;
             cur.next = pre;
@@ -134,140 +136,155 @@ public class Code02_IsPalindromeList {
     }
 
     public static void main(String[] args) {
-
         Node head = null;
-        printLinkedList(head);
-        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
-            System.out.println("nice");
-        } else {
-            System.out.println("fuck");
-        }
-//		System.out.print(isPalindrome1(head) + " | ");
-//		System.out.print(isPalindrome2(head) + " | ");
-//		System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        System.out.println("=========================");
-
-        head = new Node(1);
-        printLinkedList(head);
-//		System.out.print(isPalindrome1(head) + " | ");
-//		System.out.print(isPalindrome2(head) + " | ");
-//		System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
-            System.out.println("nice");
-        } else {
-            System.out.println("fuck");
-        }
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(2);
-        printLinkedList(head);
-//		System.out.print(isPalindrome1(head) + " | ");
-//		System.out.print(isPalindrome2(head) + " | ");
-//		System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
-            System.out.println("nice");
-        } else {
-            System.out.println("fuck");
-        }
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(1);
-        printLinkedList(head);
-//		System.out.print(isPalindrome1(head) + " | ");
-//		System.out.print(isPalindrome2(head) + " | ");
-//		System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
-            System.out.println("nice");
-        } else {
-            System.out.println("fuck");
-        }
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(2);
-        head.next.next = new Node(3);
-        printLinkedList(head);
-//		System.out.print(isPalindrome1(head) + " | ");
-//		System.out.print(isPalindrome2(head) + " | ");
-//		System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
-            System.out.println("nice");
-        } else {
-            System.out.println("fuck");
-        }
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(2);
-        head.next.next = new Node(1);
-        printLinkedList(head);
-//		System.out.print(isPalindrome1(head) + " | ");
-//		System.out.print(isPalindrome2(head) + " | ");
-//		System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
-            System.out.println("nice");
-        } else {
-            System.out.println("fuck");
-        }
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(2);
-        head.next.next = new Node(3);
-        head.next.next.next = new Node(1);
-        printLinkedList(head);
-//		System.out.print(isPalindrome1(head) + " | ");
-//		System.out.print(isPalindrome2(head) + " | ");
-//		System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
-            System.out.println("nice");
-        } else {
-            System.out.println("fuck");
-        }
-        System.out.println("=========================");
-
-        head = new Node(1);
-        head.next = new Node(2);
-        head.next.next = new Node(2);
-        head.next.next.next = new Node(1);
-        printLinkedList(head);
-//		System.out.print(isPalindrome1(head) + " | ");
-//		System.out.print(isPalindrome2(head) + " | ");
-//		System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
-            System.out.println("nice");
-        } else {
-            System.out.println("fuck");
-        }
-        System.out.println("=========================");
-
         head = new Node(1);
         head.next = new Node(2);
         head.next.next = new Node(3);
         head.next.next.next = new Node(2);
         head.next.next.next.next = new Node(1);
         printLinkedList(head);
-//		System.out.print(isPalindrome1(head) + " | ");
-//		System.out.print(isPalindrome2(head) + " | ");
-//		System.out.println(isPalindrome3(head) + " | ");
-        printLinkedList(head);
-        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
-            System.out.println("nice");
-        } else {
-            System.out.println("fuck");
-        }
-        System.out.println("=========================");
 
+        isPalindrome3(head);
+        printLinkedList(head);
     }
+
+//    public static void main(String[] args) {
+//
+//        Node head = null;
+//        printLinkedList(head);
+//        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
+//            System.out.println("nice");
+//        } else {
+//            System.out.println("fuck");
+//        }
+////		System.out.print(isPalindrome1(head) + " | ");
+////		System.out.print(isPalindrome2(head) + " | ");
+////		System.out.println(isPalindrome3(head) + " | ");
+//        printLinkedList(head);
+//        System.out.println("=========================");
+//
+//        head = new Node(1);
+//        printLinkedList(head);
+////		System.out.print(isPalindrome1(head) + " | ");
+////		System.out.print(isPalindrome2(head) + " | ");
+////		System.out.println(isPalindrome3(head) + " | ");
+//        printLinkedList(head);
+//        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
+//            System.out.println("nice");
+//        } else {
+//            System.out.println("fuck");
+//        }
+//        System.out.println("=========================");
+//
+//        head = new Node(1);
+//        head.next = new Node(2);
+//        printLinkedList(head);
+////		System.out.print(isPalindrome1(head) + " | ");
+////		System.out.print(isPalindrome2(head) + " | ");
+////		System.out.println(isPalindrome3(head) + " | ");
+//        printLinkedList(head);
+//        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
+//            System.out.println("nice");
+//        } else {
+//            System.out.println("fuck");
+//        }
+//        System.out.println("=========================");
+//
+//        head = new Node(1);
+//        head.next = new Node(1);
+//        printLinkedList(head);
+////		System.out.print(isPalindrome1(head) + " | ");
+////		System.out.print(isPalindrome2(head) + " | ");
+////		System.out.println(isPalindrome3(head) + " | ");
+//        printLinkedList(head);
+//        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
+//            System.out.println("nice");
+//        } else {
+//            System.out.println("fuck");
+//        }
+//        System.out.println("=========================");
+//
+//        head = new Node(1);
+//        head.next = new Node(2);
+//        head.next.next = new Node(3);
+//        printLinkedList(head);
+////		System.out.print(isPalindrome1(head) + " | ");
+////		System.out.print(isPalindrome2(head) + " | ");
+////		System.out.println(isPalindrome3(head) + " | ");
+//        printLinkedList(head);
+//        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
+//            System.out.println("nice");
+//        } else {
+//            System.out.println("fuck");
+//        }
+//        System.out.println("=========================");
+//
+//        head = new Node(1);
+//        head.next = new Node(2);
+//        head.next.next = new Node(1);
+//        printLinkedList(head);
+////		System.out.print(isPalindrome1(head) + " | ");
+////		System.out.print(isPalindrome2(head) + " | ");
+////		System.out.println(isPalindrome3(head) + " | ");
+//        printLinkedList(head);
+//        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
+//            System.out.println("nice");
+//        } else {
+//            System.out.println("fuck");
+//        }
+//        System.out.println("=========================");
+//
+//        head = new Node(1);
+//        head.next = new Node(2);
+//        head.next.next = new Node(3);
+//        head.next.next.next = new Node(1);
+//        printLinkedList(head);
+////		System.out.print(isPalindrome1(head) + " | ");
+////		System.out.print(isPalindrome2(head) + " | ");
+////		System.out.println(isPalindrome3(head) + " | ");
+//        printLinkedList(head);
+//        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
+//            System.out.println("nice");
+//        } else {
+//            System.out.println("fuck");
+//        }
+//        System.out.println("=========================");
+//
+//        head = new Node(1);
+//        head.next = new Node(2);
+//        head.next.next = new Node(2);
+//        head.next.next.next = new Node(1);
+//        printLinkedList(head);
+////		System.out.print(isPalindrome1(head) + " | ");
+////		System.out.print(isPalindrome2(head) + " | ");
+////		System.out.println(isPalindrome3(head) + " | ");
+//        printLinkedList(head);
+//        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
+//            System.out.println("nice");
+//        } else {
+//            System.out.println("fuck");
+//        }
+//        System.out.println("=========================");
+//
+//        head = new Node(1);
+//        head.next = new Node(2);
+//        head.next.next = new Node(3);
+//        head.next.next.next = new Node(2);
+//        head.next.next.next.next = new Node(1);
+//        printLinkedList(head);
+////		System.out.print(isPalindrome1(head) + " | ");
+////		System.out.print(isPalindrome2(head) + " | ");
+////		System.out.println(isPalindrome3(head) + " | ");
+//        printLinkedList(head);
+//        if (isPalindrome1(head) == isPalindrome2(head) && isPalindrome1(head) == isPalindrome3(head)) {
+//            System.out.println("nice");
+//        } else {
+//            System.out.println("fuck");
+//        }
+//        System.out.println("=========================");
+//
+//    }
+
+
 
 }

@@ -2,6 +2,8 @@ package class09;
 
 import java.util.ArrayList;
 
+
+// 笔记看语雀，很全！！！
 public class Code01_LinkedListMid {
 
 	public static class Node {
@@ -14,7 +16,7 @@ public class Code01_LinkedListMid {
 	}
 
 	// head 头
-	// 奇数返回中间；
+	// 奇数返回中点；
 	// 偶数返回上中点
 	// 这个是最常用的！
 	public static Node midOrUpMidNode(Node head) {
