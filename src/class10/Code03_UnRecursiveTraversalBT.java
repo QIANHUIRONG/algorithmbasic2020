@@ -2,6 +2,10 @@ package class10;
 
 import java.util.Stack;
 
+/**
+ * 题意：
+ * 非递归实现三序遍历
+ */
 public class Code03_UnRecursiveTraversalBT {
 
 	public static class Node {
@@ -33,6 +37,32 @@ public class Code03_UnRecursiveTraversalBT {
 		}
 		System.out.println();
 	}
+
+	// 后序
+	public static void pos1(Node head) {
+		System.out.print("pos-order: ");
+		if (head != null) {
+			Stack<Node> s1 = new Stack<Node>();
+			Stack<Node> s2 = new Stack<Node>();
+			s1.push(head);
+			while (!s1.isEmpty()) {
+				head = s1.pop(); // 头 右 左
+				s2.push(head);
+				if (head.left != null) {
+					s1.push(head.left);
+				}
+				if (head.right != null) {
+					s1.push(head.right);
+				}
+			}
+			// 左 右 头
+			while (!s2.isEmpty()) {
+				System.out.print(s2.pop().value + " ");
+			}
+		}
+		System.out.println();
+	}
+
 
 	// 中序 1：48
 	/**
@@ -86,30 +116,6 @@ public class Code03_UnRecursiveTraversalBT {
 		System.out.println();
 	}
 
-	// 后序
-	public static void pos1(Node head) {
-		System.out.print("pos-order: ");
-		if (head != null) {
-			Stack<Node> s1 = new Stack<Node>();
-			Stack<Node> s2 = new Stack<Node>();
-			s1.push(head);
-			while (!s1.isEmpty()) {
-				head = s1.pop(); // 头 右 左
-				s2.push(head);
-				if (head.left != null) {
-					s1.push(head.left);
-				}
-				if (head.right != null) {
-					s1.push(head.right);
-				}
-			}
-			// 左 右 头
-			while (!s2.isEmpty()) {
-				System.out.print(s2.pop().value + " ");
-			}
-		}
-		System.out.println();
-	}
 
 	// 后序：只使用1个栈
 	public static void pos2(Node h) {

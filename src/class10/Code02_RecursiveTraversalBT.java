@@ -1,6 +1,12 @@
 package class10;
 
-// 有笔记，语雀
+
+/**
+ * 题意：
+ * 二叉树的三序遍历，递归版本
+ */
+
+// 笔记看语雀，很全！！！
 public class Code02_RecursiveTraversalBT {
 
 	public static class Node {

@@ -14,6 +14,8 @@ package class10;
  * 找到入环节点：9 （容器方法：11；不用容器方法：14 code：25）
  *
  */
+
+// 笔记看语雀，很全！！！
 public class Code01_FindFirstIntersectNode {
 
 	public static class Node {
