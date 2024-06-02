@@ -1,5 +1,10 @@
 package class09;
 
+/*
+ [题意]
+	将单向链表按某值划分成左边小、中间相等、右边大的形式
+*/
+
 // 笔记看语雀，很全！！！
 public class Code03_SmallerEqualBigger {
 
@@ -14,6 +19,7 @@ public class Code03_SmallerEqualBigger {
 
 	/**
 	 * 方法1：使用容器
+	 * 放到数组中玩partition
 	 * 时间复杂度：O（n), 空间复杂度：O(N)
 	 * @param head
 	 * @param pivot
@@ -24,11 +30,13 @@ public class Code03_SmallerEqualBigger {
 			return head;
 		}
 		Node cur = head;
+		// 先看有多少个节点
 		int i = 0;
 		while (cur != null) {
 			i++;
 			cur = cur.next;
 		}
+		// 放到数组中
 		Node[] nodeArr = new Node[i];
 		i = 0;
 		cur = head;
@@ -36,11 +44,13 @@ public class Code03_SmallerEqualBigger {
 			nodeArr[i] = cur;
 			cur = cur.next;
 		}
+		// 玩partition
 		arrPartition(nodeArr, pivot);
+		// 重新组装
 		for (i = 1; i != nodeArr.length; i++) {
 			nodeArr[i - 1].next = nodeArr[i];
 		}
-		nodeArr[i - 1].next = null;
+		nodeArr[i - 1].next = null; // 最后一个节点的next指针指向null，不然人家原本可能有指向的
 		return nodeArr[0];
 	}
 
@@ -81,10 +91,9 @@ public class Code03_SmallerEqualBigger {
 		Node mH = null; // big head
 		Node mT = null; // big tail
 		Node next = null; // save next node
-		// every node distributed to three lists
 		while (head != null) {
 			next = head.next;
-			head.next = null;
+			head.next = null; // 锻连
 			if (head.value < pivot) {
 				if (sH == null) {
 					sH = head;

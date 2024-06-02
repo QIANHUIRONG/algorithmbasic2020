@@ -2,6 +2,10 @@ package class09;
 
 import java.util.HashMap;
 
+/**
+ * 题意：
+ * 复制带有random指针的链表
+ */
 // 测试链接 : https://leetcode.com/problems/copy-list-with-random-pointer/
 // 笔记看语雀，很全！！！
 public class Code04_CopyListWithRandom {
@@ -55,6 +59,7 @@ public class Code04_CopyListWithRandom {
 		}
 		Node cur = head;
 		Node next = null;
+		// 生成克隆节点
 		// 1 -> 2 -> 3 -> null
 		// 1 -> 1' -> 2 -> 2' -> 3 -> 3'
 		while (cur != null) {
