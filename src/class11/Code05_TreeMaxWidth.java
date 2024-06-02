@@ -4,7 +4,21 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
-// 求二叉树的最宽的层有多少节点：1：26
+
+/*
+题意：
+求二叉树最宽的层有多少个节点
+ */
+
+/*
+时间
+1：26
+ */
+
+/*
+思维导图：
+	按层遍历时，直接遍历一整层。就可以拿到每一个层的宽度
+ */
 public class Code05_TreeMaxWidth {
 
 	public static class Node {
@@ -94,7 +108,7 @@ public class Code05_TreeMaxWidth {
 		}
 		Queue<Node> queue = new LinkedList<>();
 		queue.add(head);
-		int max = 0;
+		int ans = 0;
 		while (!queue.isEmpty()) {
 			int size = queue.size();
 			int curLevelNodes = 0;
@@ -109,9 +123,9 @@ public class Code05_TreeMaxWidth {
 					queue.add(cur.right);
 				}
 			}
-			max = Math.max(max, curLevelNodes);
+			ans = Math.max(ans, curLevelNodes);
 		}
-		return max;
+		return ans;
 	}
 
 	// for test

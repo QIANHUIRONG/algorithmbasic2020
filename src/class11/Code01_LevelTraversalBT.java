@@ -3,12 +3,19 @@ package class11;
 import java.util.LinkedList;
 import java.util.Queue;
 
-// 按照层级遍历二叉树
+
 /*
- *      ①入队列
- * 		②遍历 出队列
- *      ②有左入左，有右入右
+题意：
+按照层级遍历二叉树
  */
+
+/*
+题解：
+1.宽度优先遍历->队列
+2.从队列里弹出一个节点cur,弹出就打印
+3.cur有左孩子就把左孩子入队列，有右孩子就把右孩子入队列
+ */
+
 public class Code01_LevelTraversalBT {
 
 	public static class Node {

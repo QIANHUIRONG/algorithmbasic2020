@@ -1,6 +1,7 @@
 package class11;
 
-// 打印二叉树的福利函数：1：22
+// 打印二叉树的福利函数：1：
+// 左神原话：面试不考了，了解就行
 public class Code04_PrintBinaryTree {
 
 	public static class Node {
