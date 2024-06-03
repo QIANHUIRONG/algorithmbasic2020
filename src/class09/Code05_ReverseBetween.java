@@ -2,11 +2,17 @@ package class09;
 
 /*
 题目
+给你单链表的头指针 head 和两个整数 left 和 right ，其中 left <= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
+
+https://leetcode.cn/problems/reverse-linked-list-ii/description/
  */
 /*
  */
 /*
 题解：
+    1.剥离出要反转的区域（需要遍历找到left节点的上一个节点，left节点；right节点；right节点的下一个节点）
+    2.将待反转的区域反转
+    3.重新链接
 
  */
 /*
