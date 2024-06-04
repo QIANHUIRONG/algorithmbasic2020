@@ -4,11 +4,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-/**
+
+/*
+题意：
  * 给定一棵二叉树的头节点head,任何两个节点之间都存在距离
  * 返回整棵二叉树的最大距离
- * 时间：59
  */
+/*
+时间：59
+ */
+
+/*
+思维导图
+方法一：暴力枚举，任何两个节点都拽出来，N^2对
+
+方法二：二叉树递归套路
+以X为头的整棵树，我如何求出它的最大距离？需要向左右树要什么信息？
+ 1、以X为头的整棵树，最大距离与X无关（最大距离没有经过X）：Math.max(左树的最大距离，右树的最大距离）
+ 2、与X有关（最大距离经过了X）：左树高度 + 右树高度 + 1
+ 需要的信息：最大距离、高度；
+ */
+
 
 public class Code06_MaxDistance {
 
@@ -106,13 +122,6 @@ public class Code06_MaxDistance {
 
 	/**
 	 * 方法二：递归套路
-	 *
-	 * 1、与X无关（最大距离没有经过X）：Math.max(左树的最大距离，右树的最大距离）
-	 * 2、与X有关（最大距离经过了X）：左树高度 + 右树高度 + 1
-	 *
-	 * 需要的信息：最大距离、高度；
-	 * @param head
-	 * @return
 	 */
 	public static int maxDistance2(Node head) {
 		return process(head).maxDistance;

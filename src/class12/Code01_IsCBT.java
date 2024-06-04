@@ -3,6 +3,22 @@ package class12;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/*
+题意：
+判断二叉树是不是完全二叉树
+ */
+
+/*
+时间：
+方法一：7：00
+ */
+
+/*
+思维导图
+ 方法一：玩一个按层遍历，遍历过程中2个原则：
+ 	①如果一个节点，有右无左，直接false
+ 	②第一次遇到左右孩子不双全的节点，那么接下来的所有节点都必须是叶子节点；
+ */
 public class Code01_IsCBT {
 
 	public static class Node {
@@ -16,13 +32,7 @@ public class Code01_IsCBT {
 	}
 
 	/**
-	 * 方法一：7：00
-	 * 1、玩一个按层遍历，遍历过程中2个原则：
-	 * 	①如果一个节点，有右无左，直接false
-	 * 	②第一次遇到左右孩子不双全的节点，那么接下来的所有节点都必须是叶子节点；
-	 *
-	 * @param head
-	 * @return
+	 * 方法一
 	 */
 	public static boolean isCBT1(Node head) {
 		if (head == null) {

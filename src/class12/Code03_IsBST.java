@@ -4,11 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// 判断是否是搜索二叉树：36
+/*
+题意：
+判断是否是搜索二叉树
+ */
+
+/*
+时间：36
+ */
 
 /**
- * 搜索二叉树：任何一颗树都是左树的最大值比当前值小；右树的最小值比当前值大
+ * [思维导图]
+ * 搜索二叉树定义：任何一颗树都是左树的最大值比当前值小；右树的最小值比当前值大
  * 经典的搜索二叉树是没有重复值的。
+ *
+ * 方法一：中序遍历，收集遍历的结果，然后看是不是递增的
+ *
+ *
+ * 方法二：二叉树递归套路
+ * 以X为头的整棵树如果是满二叉树，需要左右子树满足什么条件？需要向左右子树要什么信息？
+ * 以X为头的树是搜索二叉树，那么必须满足：
+ * 1)X左树是BST
+ * 2)X右树是BST
+ * 3)X左树最大值max<X
+ * 4)X右树最小值min>X
+ *
+ * 左右树要求的信息不一样，左树要最大值，右树要最小值，求全集！
+ * 所以，需要的信息：是否是搜索二叉树；最大值；最小值
+ *
  */
 public class Code03_IsBST {
 
@@ -25,9 +48,6 @@ public class Code03_IsBST {
     /**
      * 方法一：中序遍历，然后看是不是递增的。
      * 这个方法也掌握下，在递归中收集ans
-     *
-     * @param head
-     * @return
      */
     public static boolean isBST1(Node head) {
         if (head == null) {
@@ -56,13 +76,6 @@ public class Code03_IsBST {
 
     /**
      * 方法二：二叉树的递归套路
-     * 1)X左树是BST
-     * 2)X右树是BST
-     * 3)X左树最大值max<X
-     * 4)X右树最小值min>X
-     *
-     * @param head
-     * @return
      */
     public static boolean isBST2(Node head) {
         if (head == null) {

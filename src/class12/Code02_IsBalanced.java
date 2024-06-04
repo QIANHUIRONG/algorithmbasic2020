@@ -1,10 +1,23 @@
 package class12;
 
 
-// 是否是平衡二叉树：20	coding:26
+/*
+题意：是否是平衡二叉树
+ */
+/*
+时间：
+20
+coding:26
+ */
 /**
- * 平衡二叉树：子树都是平衡二叉树；左右子树高度差不超过1
- * 需要向左右子树要的信息：是否是平衡二叉树；高度
+ * [思维导图]
+ * 二叉树递归套路：
+ * 递归套路的本质：找左树要信息、找右树要信息；整合出我的信息。即左右头-->后序遍历！时间复杂度O（N），就是最优解
+ *
+ * 1.平衡二叉树的定义：在一个二叉树中，每一颗子树，左树的高度和右树的高度差不超过1。每颗子树都是平衡二叉树
+ * 2.递归套路思考，以X为头的整棵树如果是满二叉树，需要左右子树满足什么条件？需要向左右子树要什么信息？
+ *	需要向左右子树要的信息：是否是平衡二叉树；高度
+ *
  */
 public class Code02_IsBalanced {
 
@@ -20,8 +33,6 @@ public class Code02_IsBalanced {
 
 	/**
 	 * 方法一：常规方法：略
-	 * @param head
-	 * @return
 	 */
 	public static boolean isBalanced1(Node head) {
 		boolean[] ans = new boolean[1];
@@ -43,10 +54,7 @@ public class Code02_IsBalanced {
 	}
 
 	/**
-	 * 方法二：二叉树的递归套路
-	 * 递归套路的本质：找左树要信息、找右树要信息；整合出我的信息。即左右头-->后序遍历！时间复杂度O（N），就是最优解
-	 * @param head
-	 * @return
+	 * 方法二、二叉树递归套路
 	 */
 	public static boolean isBalanced2(Node head) {
 		return process(head).isBalanced;
