@@ -3,8 +3,9 @@ package class13;
 import java.util.ArrayList;
 import java.util.List;
 /*
-员工信息的定义如下:
+题意：
 
+员工信息的定义如下:
 class Employee {
     public int happy; // 这名员工可以带来的快乐值
     List<Employee> subordinates; // 这名员工有哪些直接下级
@@ -17,6 +18,19 @@ class Employee {
 2.派对的整体快乐值是所有到场员工快乐值的累加
 3.你的目标是让派对的整体快乐值尽量大
 给定一棵多叉树的头节点boss，请返回派对的最大快乐值。
+ */
+
+/*
+时间
+ */
+
+/*
+思维导图
+	以X为头的整棵树，获得的最大快乐值是多少？
+	X来：来的情况下，x的直接下属a,b,c不来的整棵树的最大快乐值全部累加
+	X不来：下属a，b，c爱来不来。x获得的最大快乐值 = Max(a来，a不来） + Max(b来，b不来） + max(c来，c不来）
+
+	需要的信息：x来的最大happy；x不来的最大happy
  */
 public class Code04_MaxHappy {
 
@@ -32,14 +46,6 @@ public class Code04_MaxHappy {
 	}
 
 	/*
-	以X为头的整棵树，获得的最大快乐值是多少？
-	X来：来的情况下，x的直接下属a,b,c不来的整棵树的最大快乐值全部累加
-	X不来：下属a，b，c爱来不来。Max(a来，a不来） + Max(b来，b不来） + max(c来，c不来）
-
-	需要的信息：x来的最大happy；x不来的最大happy
-
-	O（N）
-
 	这个方法是在递归中多加了一个参数boolean up表示x节点来或者不来。建议看方法2
 	 */
 	public static int maxHappy1(Employee boss) {
@@ -75,8 +81,7 @@ public class Code04_MaxHappy {
 
 	/**
 	 * 方法2：把来或者不来的信息都封装到了Info里面，更经典
-	 * @param head
-	 * @return
+	 * o(N),先所有的子树，在到我，本质还是后序遍历
 	 */
 	public static int maxHappy2(Employee head) {
 		Info allInfo = process(head);

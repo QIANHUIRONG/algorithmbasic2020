@@ -3,8 +3,35 @@ package class13;
 import java.util.LinkedList;
 import java.util.Queue;
 
-// 测试链接 : https://leetcode.com/problems/check-completeness-of-a-binary-tree/
 
+
+/*
+题意：判断一棵二叉树是不是完全二叉树
+// 测试链接 : https://leetcode.com/problems/check-completeness-of-a-binary-tree/
+ */
+/*
+时间：
+ */
+/*
+思维导图
+1.完全二叉树定义：一颗二叉树要吗是满的，要吗从左往右正在变满的过程中
+
+方法一：按层遍历。在day12 Code01_IsCBT讲解过
+
+方法二：方法二：二叉树递归套路
+    1.以X为头的整棵树是不是完全二叉树，可能性怎么组织，要向左右子树要什么信息？
+        四种情况是完全二叉树：
+            1、左满 && 右满 && 左高 == 右高
+            2、左完全 && 右满 && 左高 = 右高+1
+            3、左满 && 右满 && 左高 == 右高 + 1
+            4、左满 && 右完全 && 左高==右高
+        除去这4种情况，都不是CBT
+
+        需要的信息：
+        是否是满
+        是否是完全
+        高度
+ */
 public class Code01_IsCBT {
 
     // 不要提交这个类
@@ -19,13 +46,7 @@ public class Code01_IsCBT {
     }
 
     /**
-     * 方法一：7：00
-     * 1、玩一个按层遍历，遍历过程中2个原则：
-     * ①如果一个节点，有右无左，直接false
-     * ②第一次遇到左右孩子不双全的节点，那么接下来的所有节点都必须是叶子节点；
-     *
-     * @param head
-     * @return
+     * 方法一：按层遍历。在day12 Code01_IsCBT讲解过
      */
     public static boolean isCompleteTree1(TreeNode head) {
         if (head == null) {
@@ -63,17 +84,7 @@ public class Code01_IsCBT {
 
     /*
     方法二：二叉树递归套路
-    四种情况是完全二叉树：
-        1、左满 && 右满 && 左高 == 右高
-        2、左完全 && 右满 && 左高 = 右高+1
-        3、左满 && 右满 && 左高 == 右高 + 1
-        4、左满 && 右完全 && 左高==右高
-    除去这4种情况，都不是CBT
 
-    需要的信息：
-    是否是满
-    是否是完全
-    高度
      */
     public static boolean isCompleteTree2(TreeNode head) {
         return process(head).isCBT;

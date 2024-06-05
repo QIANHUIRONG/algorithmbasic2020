@@ -1,32 +1,45 @@
 package class13;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.TreeSet;
+import java.util.*;
 
 /*
 贪心算法
 	定义：
 	1)最自然智慧的算法
 	2)用一种局部最功利的标准，总是做出在当前看来是最好的选择。如果得到了最优解，说明贪心策略有效；否则贪心策略无效；
-	3)难点在于证明局部最功利的标准可以得到全局最优解-> 写一个暴力解，用对数器证明。
+	3)难点在于证明局部最功利的标准可以得到全局最优解-> 不用管证明，很多证明是数学领域的知识，写一个暴力解，用对数器证明。
 	4)对于贪心算法的学习主要以增加阅历和经验为主
 	5)笔试有可能考贪心；面试几乎不可能，因为区分度太差。
 	6)贪心一般就是用排序、堆等结构去贪心。
  */
 /*
 题意：给定一个由字符串组成的数组strs，必须把所有的字符串拼接起来，返回所有可能的拼接结果中，字典序最小的结果
-	两个字符串，放到字典中，谁先放在前面，谁的字典序就最小
 
-题解：两个字符串a、b。(a+b) <= (b+a), a在前；否则b在前；
+*/
 
-证明：不用管证明。用暴力法当对数期
+
+/*
+时间：
+贪心算法介绍：1：11
+题意：1：21
+code：1：50
+暴力code：1：51
+ */
+
+/*
+思维导图
+方法一：暴力法：穷举拼接所有可能的字符串，
+
+方法二：贪心
+	1.两个字符串，放到字典中，谁先放在前面，谁的字典序就最小
+	2.两个字符串a、b。(a+b) <= (b+a), a在前；否则b在前；
+	3.证明：不用管证明。用暴力法当对数期
 
  */
 public class Code05_LowestLexicography {
 
 	/**
-	 * 方法一：暴力方法：穷举拼接所有可能的字符串，
+	 * 方法一：暴力方法：穷举拼接所有可能的字符串拼接结果。课堂上讲解的暴力方法
 	 */
 	public static String lowestString1(String[] strs) {
 		if (strs == null || strs.length == 0) {
@@ -56,6 +69,51 @@ public class Code05_LowestLexicography {
 		}
 		return ans;
 	}
+
+
+	/*
+	一个更经典的暴力方法
+	本质就是收集字符串数组的全排列，然后再一个个比较
+	 */
+	public static String lowestString3(String[] strs) {
+		if (strs == null || strs.length == 0) {
+			return "";
+		}
+
+		List<String> rest = new ArrayList<>();
+		for (String str : strs) {
+			rest.add(str);
+		}
+
+		List<String> ans = new ArrayList<>();
+		String path = "";
+
+		process2(rest, path, ans);
+
+
+		String lowest = ans.get(0);
+		for (int i = 1; i < ans.size(); i++) {
+			if (ans.get(i).compareTo(lowest) < 0) {
+				lowest = ans.get(i);
+			}
+		}
+		return lowest;
+	}
+
+	public static void process2(List<String> rest, String path, List<String> ans) {
+		if (rest.isEmpty()) {
+			ans.add(path);
+		} else {
+			for (int i = 0 ; i < rest.size(); i++) {
+				String cur = rest.get(i);
+				rest.remove(i);
+				process2(rest, path + cur, ans);
+				rest.add(i, cur);
+			}
+		}
+	}
+
+
 
 	// {"abc", "cks", "bct"}
 	// 0 1 2
@@ -89,7 +147,7 @@ public class Code05_LowestLexicography {
 	}
 
 	public static class MyComparator implements Comparator<String> {
-		// 两个字符串a、b。(a+b) <= (b+a), a在前；否则b在前；
+		// 两个字符串a、b。(a+b) <= (b+a), a拼接上b的askii码 <= b拼接上a的askii码, a在前；否则b在前；
 		/*
 		字符串的compareTo()方法用于比较两个字符串的字典顺序。
 		如果字符串a按字典顺序应该排在字符串b的前面，则返回负数。
@@ -98,7 +156,7 @@ public class Code05_LowestLexicography {
 		 */
 		@Override
 		public int compare(String a, String b) {
-			return (a + b).compareTo(b + a);
+			return (a + b).compareTo(b + a); // 就是在比较askii码
 		}
 	}
 
@@ -131,6 +189,17 @@ public class Code05_LowestLexicography {
 	}
 
 	public static void main(String[] args) {
+//
+//		String[] strs = new String[3];
+//		strs[0] = "a";
+//		strs[1] = "b";
+//		strs[2] = "c";
+//
+//		String[] arr2 = copyStringArray(strs);
+//		System.out.println(lowestString1(strs));
+//		System.out.println(lowestString3(strs));
+
+
 		int arrLen = 6;
 		int strLen = 5;
 		int testTimes = 10000;
@@ -138,7 +207,9 @@ public class Code05_LowestLexicography {
 		for (int i = 0; i < testTimes; i++) {
 			String[] arr1 = generateRandomStringArray(arrLen, strLen);
 			String[] arr2 = copyStringArray(arr1);
-			if (!lowestString1(arr1).equals(lowestString2(arr2))) {
+			String[] arr3 = copyStringArray(arr1);
+			String[] arr4 = copyStringArray(arr1);
+			if (!lowestString1(arr1).equals(lowestString2(arr2)) || !lowestString1(arr1).equals(lowestString3(arr3))) {
 				for (String str : arr1) {
 					System.out.print(str + ",");
 				}

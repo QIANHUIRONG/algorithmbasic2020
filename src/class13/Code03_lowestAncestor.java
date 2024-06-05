@@ -6,8 +6,33 @@ import java.util.HashSet;
 
 /*
 题意：给定一棵二叉树的头节点head，和另外两个节点a和b。返回a和b的最低公共祖先
-题解：
-什么是最低公共祖先：两个节点都往上跑，头结点碰上的最初汇聚点
+ */
+/*
+时间：
+
+ */
+
+/*
+思维导图
+1.什么是最低公共祖先：两个节点都往上跑，头结点碰上的最初汇聚点
+
+方法一：生成parentMap表
+    1、遍历二叉树，生成map记录每个节点的父节点
+    2、x遍历找父节点，加入set,然后y找父，每到一个节点检查是不是在set里，第一次找到的就是最低公共祖先
+    复杂度：O（N）
+
+方法二：递归套路
+    与X无关：
+        X不是最低汇聚点：左树有答案 || 右树有答案 || x树上a、b不全
+    与X有关：
+        X就是最低汇聚点：
+            左树发现a b中一个，右树发现另一个
+            X本身是a,左树或右树发现b
+            X本身是b,左树或右树发现a
+
+    需要的信息：
+        发现a否？发现b否？最低公共祖先是谁？
+
  */
 public class Code03_lowestAncestor {
 
@@ -52,6 +77,9 @@ public class Code03_lowestAncestor {
     }
 
     public static void fillParentMap(Node head, HashMap<Node, Node> parentMap) {
+        if (head == null) {
+            return;
+        }
         if (head.left != null) {
             // 左孩子不为空，就收集到容器中
             parentMap.put(head.left, head);
@@ -66,16 +94,7 @@ public class Code03_lowestAncestor {
 
     /*
     方法二：递归套路
-    与X无关：
-        X不是最低汇聚点：左树有答案 || 右树有答案 || x树上a、b不全
-    与X有关：
-        X就是最低汇聚点：
-            左树发现a b中一个，右树发现另一个
-            X本身是a,左树或右树发现b
-            X本身是b,左树或右树发现a
 
-    需要的信息：
-        发现a否？发现b否？最低公共祖先是谁？
      */
     public static Node lowestAncestor2(Node head, Node a, Node b) {
         return process(head, a, b).ans;

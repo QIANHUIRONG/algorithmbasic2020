@@ -77,7 +77,7 @@ public class Code01_IsCBT {
 
 	/**
 	 * 方法二、二叉树的递归套路。
-	 * 在day13讲解。
+	 * 在day13讲解。看day13 Code01_IsCBT
 	 * @param head
 	 * @return
 	 */

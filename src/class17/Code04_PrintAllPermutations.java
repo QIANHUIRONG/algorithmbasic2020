@@ -4,8 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-题目：打印字符串的全排列 1:14
+题目：打印字符串的全排列
 permutation 英/ˌpɜːmjuˈteɪʃn/ 排列
+ */
+/*
+时间：
+方法一：
+流程：1:14
+code：1：16
+恢复现场：1：24
+
+方法二：好一点的递归：1：27
+ */
+/*
+思维导图
+思路一：
+1.全排列：说白了就是所有的字符都得要，只不过顺序可以不一样
+2.a b c d, 0位置是4个字符选1个，1位置是剩下的3个字符选一个... 如果我们所有的分支都摊开，收集所有的结果，这个问题就解了
+
+思路二：
+
 
  */
 public class Code04_PrintAllPermutations {
@@ -13,9 +31,6 @@ public class Code04_PrintAllPermutations {
     /**
      * 一个比较差的实现。（可变参数差）。不过比较符合自然智慧
      * 下面有比较好的实现
-     *
-     * @param s
-     * @return
      */
     public static List<String> permutation1(String s) {
         List<String> ans = new ArrayList<>();
@@ -34,14 +49,53 @@ public class Code04_PrintAllPermutations {
 
     public static void f(ArrayList<Character> rest, String path, List<String> ans) {
         if (rest.isEmpty()) {
-            ans.add(path);
+            ans.add(path); // 已经没办法做决定了，收集答案，这个答案就是你之前做过的决定
         } else {
             int N = rest.size();
-            for (int i = 0; i < N; i++) {
-                char cur = rest.get(i);
-                rest.remove(i);
-                f(rest, path + cur, ans);
+            for (int i = 0; i < N; i++) { // 当前集合中，每一个字符都可以做当前字符
+                char cur = rest.get(i); // 当前字符
+                rest.remove(i); // 当前字符用了，就从集合中移除
+                f(rest, path + cur, ans); // 我当前的决定要加到path中
+                // 恢复现场
+                // 解释一下：比如a b c, 第一个字符选了a，那么接下来就b c去跑递归收集答案；收集完之后，第二个字符选了b，那么接下来应该是 a c去跑递归收集答案。如果这里不恢复现场，接下来就只剩c去跑递归了。
+                // 我的递归需要我数据的原始时刻
                 rest.add(i, cur);
+            }
+        }
+    }
+
+
+    public static List<String> permutation4(String s) {
+        List<String> ans = new ArrayList<>();
+        if (s == null || s.length() == 0) {
+            return ans;
+        }
+        char[] str = s.toCharArray();
+        ArrayList<Character> rest = new ArrayList<Character>();
+        for (char cha : str) {
+            rest.add(cha);
+        }
+        String path = "";
+        boolean[] used = new boolean[str.length];
+        f(rest, path, ans);
+        return ans;
+    }
+    /**
+     上面的方法，涉及到了遍历list删除元素，这个是有危险的；
+     找gpt改了一版，用一张表标记i号元素用过没有
+     本质上，i位置的元素用过了，去跑深度递归的时候，i位置的元素移除的本质就是不让再使用，那我们用个表标记就行了 --> 还有问题。。还没看
+     */
+    public static void f2(ArrayList<Character> rest, String path, List<String> ans, boolean[] used) {
+        if (rest.isEmpty()) {
+            ans.add(path); // 已经没办法做决定了，收集答案，这个答案就是你之前做过的决定
+        } else {
+            int N = rest.size();
+            for (int i = 0; i < N; i++) { // 当前集合中，每一个字符都可以做当前字符
+                if (!used[i]) {
+                    used[i] = true;
+                    f(rest, path + rest.get(i), ans); // 我当前的决定要加到path中
+                    used[i] = false;
+                }
             }
         }
     }
@@ -119,7 +173,7 @@ public class Code04_PrintAllPermutations {
     }
 
     public static void main(String[] args) {
-        String s = "acc";
+        String s = "abc";
         List<String> ans1 = permutation1(s);
         for (String str : ans1) {
             System.out.println(str);
@@ -132,6 +186,12 @@ public class Code04_PrintAllPermutations {
         System.out.println("=======");
         List<String> ans3 = permutation3(s);
         for (String str : ans3) {
+            System.out.println(str);
+        }
+
+        List<String> ans4 = permutation4(s);
+
+        for (String str : ans4) {
             System.out.println(str);
         }
 

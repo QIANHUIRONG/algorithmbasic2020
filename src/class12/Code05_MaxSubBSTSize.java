@@ -99,8 +99,8 @@ public class Code05_MaxSubBSTSize {
         int p3 = -1; // 我的最大搜索二叉子树大小
         boolean leftBST = leftInfo == null ? true : (leftInfo.maxBSTSize == leftInfo.allSize); // 判断左树是不是BST
         boolean rightBST = rightInfo == null ? true : (rightInfo.maxBSTSize == rightInfo.allSize); // 判断右树是不是BST
-        boolean leftMaxLessX = leftInfo == null ? true : (leftInfo.max < x.val); // 判断左最大<=x
-        boolean rightMinMoreX = rightInfo == null ? true : (x.val < rightInfo.min); // x<=右最小
+        boolean leftMaxLessX = leftInfo == null ? true : (leftInfo.max < x.val); // 判断左最大<x
+        boolean rightMinMoreX = rightInfo == null ? true : (x.val < rightInfo.min); // x<右最小
 
         // 计算我的最大搜索二叉子树大小
         if (leftBST && rightBST && leftMaxLessX && rightMinMoreX) { // 左右子树都是BST的情况下 && 左最大<=x<=右最小
