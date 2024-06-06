@@ -59,6 +59,7 @@ public class Code05_LowestLexicography {
 		for (int i = 0; i < strs.length; i++) {
 			String first = strs[i];
 			// 移除当前字符
+			// 每次都造了一个新数组去跑后序的递归。这样原始的strs不变，就没有恢复现场的操作了
 			String[] nextStr = removeIndexString(strs, i);
 			// 移除我之后，跑后序结果
 			TreeSet<String> nextAns = process(nextStr);

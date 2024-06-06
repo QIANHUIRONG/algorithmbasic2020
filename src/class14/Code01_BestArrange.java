@@ -3,7 +3,25 @@ package class14;
 import java.util.Arrays;
 import java.util.Comparator;
 
-// 会议室能容纳的最多宣讲场次
+
+/*
+题意：
+会议室能容纳的最多宣讲场次
+ */
+
+/*
+时间：
+ */
+
+/*
+题解：
+方法一：纯暴力
+process(Program[] programs, int done, int timeLine) ：目前来到timeLine的时间点，已经安排了done多的会议，剩下的会议programs可以自由安排，返回能安排的最多会议数量
+
+方法二：贪心
+按照会议结束时间早，先安排
+
+ */
 public class Code01_BestArrange {
 
     public static class Program {
@@ -32,21 +50,29 @@ public class Code01_BestArrange {
     // timeLine目前来到的时间点是什么
 
     // 目前来到timeLine的时间点，已经安排了done多的会议，剩下的会议programs可以自由安排
-    // 返回能安排的最多会议数量
+    // 返回整体能安排的最多会议数量
     public static int process(Program[] programs, int done, int timeLine) {
-        if (programs.length == 0) {
+        if (programs.length == 0) { // 如果没有剩余的会议可以安排，返回已安排的会议数量
             return done;
         }
-        // 还剩下会议
-        int max = done;
-        // 当前安排的会议是什么会，每一个都枚举
+
+        // 初始化最大会议安排数为 Integer.MIN_VALUE
+        int max = Integer.MIN_VALUE;
+
+        // 遍历剩余的每一个会议
         for (int i = 0; i < programs.length; i++) {
+            // 如果当前会议的开始时间不早于当前时间线
             if (programs[i].start >= timeLine) {
+                // 创建一个新的数组，排除当前会议，递归处理剩余会议
                 Program[] next = copyButExcept(programs, i);
+                // 更新最大安排会议数
                 max = Math.max(max, process(next, done + 1, programs[i].end));
             }
         }
-        return max;
+
+        // 如果 max 仍为 Integer.MIN_VALUE，说明没有找到符合条件的会议，返回 done
+        // 否则，返回最大安排会议数。此时max一定是大于done的，因为至少选了一个会议
+        return max == Integer.MIN_VALUE ? done : max;
     }
 
     public static Program[] copyButExcept(Program[] programs, int i) {
@@ -68,16 +94,16 @@ public class Code01_BestArrange {
     public static int bestArrange2(Program[] programs) {
         Arrays.sort(programs, new ProgramComparator());
         int timeLine = 0;
-        int result = 0;
+        int done = 0;
         // 依次遍历每一个会议，结束时间早的会议先遍历
         for (int i = 0; i < programs.length; i++) {
             // 当前会议的开始时间必须在timeLine之后
             if (programs[i].start >= timeLine) {
-                result++;
+                done++;
                 timeLine = programs[i].end;
             }
         }
-        return result;
+        return done;
     }
 
     public static class ProgramComparator implements Comparator<Program> {

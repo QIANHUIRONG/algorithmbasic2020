@@ -2,6 +2,45 @@ package class14;
 
 import java.util.HashSet;
 
+
+/*
+题意：
+    点亮str中所有需要点亮的位置至少需要几盏灯
+        给定一个字符串str，只由‘X’和‘.’两种字符构成。
+        ‘X’表示墙，不能放灯，也不需要点亮
+        ‘.’表示居民点，可以放灯，需要点亮
+        如果灯放在i位置，可以让i-1，i和i+1三个位置被点亮
+        返回如果点亮str中所有需要点亮的位置，至少需要几盏灯
+ */
+
+/*
+ 时间：1：14
+ */
+
+
+/*
+思维导图
+方法一：暴力递归
+process(char[] str, int index, HashSet<Integer> lights) {}
+1.
+str[index....]位置，自由选择放灯还是不放灯
+str[0..index-1]位置呢？已经做完决定了，那些放了灯的位置，存在lights里
+要求选出能照亮所有.的方案，并且在这些有效的方案中，返回最少需要几个灯
+2.basecase：如果遍历到字符串的末尾，检查所有居民点是否都能被点亮，如果不能返回最大值表示方案无效，否则返回当前灯的数量。
+3.普遍过程：计算在当前位置放灯或不放灯的情况下，能点亮所有居民点的最小灯数。遍历字符串，递归计算当前放灯和不放灯两种情况下的最小值，返回这两种情况中的最小值。
+
+
+方法二：贪心
+    1.i位置是x，不用放灯，直接去i+1位置；
+        i位置是.
+            如果i+1位置是x，i位置一定要放灯，灯++，i=i+2
+            如果i+1位置是.
+                如果i+2位置是x，i位置或者i+1位置要放1个灯，灯++，i=i+3
+                如果i+2位置是. 灯放在i+1, 直接照亮i,i+1,i+2,灯++，i=i+3;
+    2.顺序遍历一遍：O（N）
+
+ */
+
 /*
 面试中，题目描述不清楚怎么办：Argue
 很多题目扭转做笔试的时候，包括面试出题的时候是不是模棱两可，含含糊糊对吧，就这种情况
@@ -11,22 +50,12 @@ import java.util.HashSet;
 然后你你在那想，那你能想清楚吗？你有东西没澄清，你想清楚什么.面试官就觉得，这回白面了，
 本来想让你发问把问题问清楚，你含湖地方把它搞清楚，结果你在哪儿闷头想.笔试，的时候他故意说得很绕。你一定要理清主线，之后再做整个题
  */
-// 点亮str中所有需要点亮的位置至少需要几盏灯
-// 时间：1：14
-/*
-给定一个字符串str，只由‘X’和‘.’两种字符构成。
-‘X’表示墙，不能放灯，也不需要点亮
-‘.’表示居民点，可以放灯，需要点亮
-如果灯放在i位置，可以让i-1，i和i+1三个位置被点亮
-返回如果点亮str中所有需要点亮的位置，至少需要几盏灯
- */
+
+
 public class Code04_Light {
 
     /**
      * 方法一：暴力递归
-     *
-     * @param road
-     * @return
      */
     public static int minLight1(String road) {
         if (road == null || road.length() == 0) {
@@ -38,26 +67,28 @@ public class Code04_Light {
     // str[index....]位置，自由选择放灯还是不放灯
     // str[0..index-1]位置呢？已经做完决定了，那些放了灯的位置，存在lights里
     // 要求选出能照亮所有.的方案，并且在这些有效的方案中，返回最少需要几个灯
+    // basecase：如果遍历到字符串的末尾，检查所有居民点是否都能被点亮，如果不能返回最大值表示方案无效，否则返回当前灯的数量。
+    // 普遍过程：计算在当前位置放灯或不放灯的情况下，能点亮所有居民点的最小灯数。遍历字符串，递归计算当前放灯和不放灯两种情况下的最小值，返回这两种情况中的最小值。
     public static int process(char[] str, int index, HashSet<Integer> lights) {
         if (index == str.length) { // 结束的时候
             for (int i = 0; i < str.length; i++) {
                 if (str[i] != 'X') { // 当前位置是点的话
-                    if (!lights.contains(i - 1) && !lights.contains(i) && !lights.contains(i + 1)) {
+                    if (!lights.contains(i - 1) && !lights.contains(i) && !lights.contains(i + 1)) { // 检查当前位置及其相邻位置是否有灯，如果都没有，返回最大值表示方案无效
                         return Integer.MAX_VALUE;
                     }
                 }
             }
             return lights.size();
-        } else { // str还没结束
-            // i X .
-            int no = process(str, index + 1, lights);
+        } else {
+
             int yes = Integer.MAX_VALUE;
-            if (str[index] == '.') {
+            if (str[index] == '.') { // 如果当前位置是居民点，才能放灯
                 lights.add(index);
-                yes = process(str, index + 1, lights);
-                lights.remove(index);
+                yes = process(str, index + 1, lights); // index放灯的情况，后序最少需要几盏灯
+                lights.remove(index); // 清除现场。如果不清除，对于int no = process()来说就不对了，因为no是没有放灯的情况。
             }
-            return Math.min(no, yes);
+            int no = process(str, index + 1, lights); // index位置不放灯的情况，后序最少需要几盏灯，递归处理下一个位置
+            return Math.min(no, yes);// 返回放灯和不放灯两种情况中的最小值
         }
     }
 
