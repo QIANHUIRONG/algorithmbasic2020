@@ -4,7 +4,10 @@ import java.util.*;
 
 public class Code01_BFS {
 
-    // 从node出发，进行宽度优先遍历
+    /*
+     题意：
+        从node出发，进行图的宽度优先遍历
+     */
 	/*
 	BFS——队列；
 	不同于二叉树，图里必须有一个set才能完成宽度优先扁历->因为二叉树没有环的问题
@@ -14,8 +17,8 @@ public class Code01_BFS {
         if (start == null) {
             return;
         }
-        Queue<Node> queue = new LinkedList<>();
-        Set<Node> set = new HashSet<>();
+        Queue<Node> queue = new LinkedList<>(); // 宽度优先遍历需要的队列
+        Set<Node> set = new HashSet<>(); // 图的遍历需要的set
         queue.add(start);
         set.add(start);
         while (!queue.isEmpty()) {
