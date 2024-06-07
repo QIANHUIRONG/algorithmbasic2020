@@ -55,6 +55,7 @@ import java.util.List;
 /*
 时间：
 1：32
+如果m和n贼大，k很小，如何优化：1：46
  */
 /*
 时间复杂度：
@@ -68,8 +69,16 @@ import java.util.List;
 	4.int connect(i, j)方法，[i][j]位置来了一个陆地，如果没有初始化，先初始化，然后请你把上下左右的陆地都连起来，返回岛屿数量，主函数遍历positions对数，收集每一次的答案。
 	5.用size[i]是否等于0来标记i有没有被初始化，size[i]=0,从来没被初始化；size[i]=1,初始化过！正常情况：union的时候，小挂大，挂完之后，size[小的]清0；现在的情况：不清0，用size[i]是否等于0来标记是否初始化过
  */
+/*
+如果m和n贼大，k很小，如何优化？
+	1.不用数组实现的并查集了，用哈希表实现的并查集，就不用初始化一个m*n的数组空间了
+	2.
+ */
 public class Code03_NumberOfIslandsII {
 
+	/*
+	常规解法：用数组实现的并查集
+	 */
 	public static List<Integer> numIslands21(int m, int n, int[][] positions) {
 		UnionFind1 uf = new UnionFind1(m, n);
 		List<Integer> ans = new ArrayList<>(); // 收集每一次的答案
@@ -107,7 +116,7 @@ public class Code03_NumberOfIslandsII {
 		[i][j]位置来了一个陆地，请你把上下左右的陆地都连起来，返回岛屿数量
 		 */
 		public int connect(int i, int j) {
-			int index = index(i, j);
+			int index = index(i, j); // 二维转一维
 			if (size[index] == 0) { // 表示从来没有被初始化过，此时才需要初始化
 				// 初始化index
 				parent[index] = index;
@@ -167,7 +176,10 @@ public class Code03_NumberOfIslandsII {
 
 	}
 
-	// 课上讲的如果m*n比较大，会经历很重的初始化，而k比较小，怎么优化的方法
+	/*
+	课上讲的如果m*n比较大，会经历很重的初始化，而k比较小，怎么优化的方法
+	就是用hashMap实现的并查集
+	 */
 	public static List<Integer> numIslands22(int m, int n, int[][] positions) {
 		UnionFind2 uf = new UnionFind2();
 		List<Integer> ans = new ArrayList<>();
@@ -184,6 +196,7 @@ public class Code03_NumberOfIslandsII {
 		private int sets;
 
 		public UnionFind2() {
+			// 用哈希表，构造器就不用初始化一个m*n的数组了
 			parent = new HashMap<>();
 			size = new HashMap<>();
 			help = new ArrayList<>();
@@ -203,15 +216,15 @@ public class Code03_NumberOfIslandsII {
 		}
 
 		private void union(String s1, String s2) {
-			if (parent.containsKey(s1) && parent.containsKey(s2)) {
-				String f1 = find(s1);
-				String f2 = find(s2);
+			if (parent.containsKey(s1) && parent.containsKey(s2)) { // s1，s2两个都有
+				String f1 = find(s1); // 找到s1的代表节点
+				String f2 = find(s2); // 找到s2的代表节点
 				if (!f1.equals(f2)) {
 					int size1 = size.get(f1);
 					int size2 = size.get(f2);
 					String big = size1 >= size2 ? f1 : f2;
 					String small = big == f1 ? f2 : f1;
-					parent.put(small, big);
+					parent.put(small, big); // 小挂大
 					size.put(big, size1 + size2);
 					sets--;
 				}
@@ -219,8 +232,8 @@ public class Code03_NumberOfIslandsII {
 		}
 
 		public int connect(int r, int c) {
-			String key = String.valueOf(r) + "_" + String.valueOf(c);
-			if (!parent.containsKey(key)) {
+			String key = String.valueOf(r) + "_" + String.valueOf(c); // 用这种方式，来二维转一维，唯一的表示一对position
+			if (!parent.containsKey(key)) { // 没有初始化过，就去连接上下左右
 				parent.put(key, key);
 				size.put(key, 1);
 				sets++;
