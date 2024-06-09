@@ -22,13 +22,13 @@ import java.util.HashMap;
 思维导图
 1.  方法二：如果X点它所走过的最大深度大于Y，在拓扑排序中，X排在前面，所以我就需要算每个点能走过的最大深度
 
-2. process(DirectedGraphNode cur, HashMap<DirectedGraphNode, Record> map) {}:当前来到cur节点，请返回cur点所到之处，所有的点次！
-3.basecase：如果cur没有邻居了，就返回1个点次
-4.普遍流程：当前节点累加上所有邻居的点次+1，就是我的点次
+2. process(DirectedGraphNode cur, HashMap<DirectedGraphNode, Record> map) {}:当前来到cur节点，请返回cur点最深的节点
+3.basecase：如果cur没有邻居了，就返回1个深度
+4.普遍流程：当前节点求所有邻居节点的深度的最大值，+1，加上我的深度
 
 
  */
-public class Code05_TopologicalOrderDFS2 {
+public class Code06_TopologicalOrderDFS2 {
 
 	// 不要提交这个类
 	public static class DirectedGraphNode {
@@ -70,11 +70,11 @@ public class Code05_TopologicalOrderDFS2 {
 			map.put(cur, ans);
 			return ans;
 		} else {
-			int follow = 1;
+			int follow = 0;
 			for (DirectedGraphNode next : cur.neighbors) {
 				follow = Math.max(follow, process(next, map).deep); // 这里是最各个邻居的最大深度了，方法一是累加所有的节点
 			}
-			Record ans = new Record(cur, follow );
+			Record ans = new Record(cur, follow + 1);
 			map.put(cur, ans);
 			return ans;
 		}

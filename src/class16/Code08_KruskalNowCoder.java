@@ -10,7 +10,7 @@ package class16;
 import java.io.*;
 import java.util.Arrays;
 
-public class Code04_KruskalNowCoder {
+public class Code08_KruskalNowCoder {
 
     public static int MAXM = 100001;
 

@@ -3,11 +3,24 @@ package class16;
 import java.util.*;
 
 //undirected graph only
-public class Code06_Kruskal {
+public class Code07_Kruskal {
+
+    /*
+    题意：
+    克鲁斯卡尔算法
+
+     */
+    /*
+    时间：1：29
+    code：1：37
+     */
+    /*
+      时间复杂度：N*log(N),n是边
+     */
 
     /*
     最小生成树算法：1、克鲁斯卡尔算法；2、普利姆算法
-    定义：在不影响所有点都连通的情况下，所有边的权值累加最小。
+    最小生成树定义：在不影响所有点都连通的情况下，所有边的权值累加最小。
     提到最小生成树一般都是无向图。当然有向图也可以，但是需要给出发点。
      */
 	/*
@@ -19,11 +32,13 @@ public class Code06_Kruskal {
 		4)如果当前的边进入最小生成树的集合中会形成环，就不要当前边
 		5)考察完所有边之后，最小生成树的集合也得到了
 
-	一句话：把所有的边，根据权值由小到大排序，如果当前边不会形成环就要当前边会形成环就不要当前边
+	一句话：把所有的边，根据权值由小到大排序，如果当前边不会形成环就要当前边会形成环就不要当前边。其实就是贪心
 	怎么检查有无环：并查集！
 		一开始所有的点都是单独的集合，选了那条边，就把边的from和to节点合并到一个集合。
 	 */
-    // 时间复杂度：N*log(N),n是边
+
+    // 用了18分钟
+
     public static Set<Edge> kruskalMST(Graph graph) {
         UnionFind unionFind = new UnionFind();
         // 1、初始化并查集。一开始所有的点都是单独的集合
@@ -32,19 +47,19 @@ public class Code06_Kruskal {
         // 2、所有边入小根堆，每次弹出边最小的。
         // 其实这里放到数组中，排序一下就行
         PriorityQueue<Edge> heap = new PriorityQueue<>(new EdgeComparator());
-        for (Edge edge : graph.edges) {
+        for (Edge edge : graph.edges) { // n*log(n)，n是边的数量
             heap.add(edge);
         }
-        Set<Edge> result = new HashSet<>();
+        Set<Edge> ans = new HashSet<>();
         while (!heap.isEmpty()) {
-            Edge edge = heap.poll();
+            Edge edge = heap.poll(); // log(n)
             // 3、如果加入这条边不会形成环，就确定要这条边
-            if (!unionFind.isSameSet(edge.from, edge.to)) {
-                result.add(edge);
+            if (!unionFind.isSameSet(edge.from, edge.to)) { // o(1)
+                ans.add(edge);
                 unionFind.union(edge.from, edge.to);
             }
         }
-        return result;
+        return ans;
     }
 
 

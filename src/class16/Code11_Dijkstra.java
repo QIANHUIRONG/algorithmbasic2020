@@ -3,23 +3,51 @@ package class16;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
+import java.util.PriorityQueue;
 
 /*
-迪杰斯特拉算法：1：57。加强堆优化：day17，03
-算法描述：给定一个出发点A，出发点A能够到的了的点（到不了的点距离是正无穷），最短距离是多少？
-经典的迪杰斯特拉：没有负数的边
+题意：
+算法描述：给定一个出发点A，返回A点到其他所有节点的距离是多少？（如果到不了返回正无穷）
+
  */
 /*
-每次都没有锁定的点中，选一个此时A点到达距离最短的点X，X去解锁边，看能不能更新那些没有被锁定的点的距离成更短
+时间：
+    迪杰斯特拉算法：1：57。
+    流程：2：06
+    code：2：15
+    这个方法为什么不好？2:23
+    加强堆优化：day17，03
+
+ */
+/*
+思维导图：
+一、定义，要求：
+    1.迪杰斯特拉（Dijkstra）算法是一种用于计算单源最短路径的经典算法。它通常用于图论中的加权图，以找到从起始节点到所有其他节点的最短路径。
+    2.经典的迪杰斯特拉算法要求没有负数的边
+
+二、流程:
+    1.初始化：将起始节点的距离设为0，其余节点的距离设为无穷大。将所有节点标记为未访问状态。
+    2.选择当前节点：从未访问的节点中选择一个距离最小的节点作为当前节点。
+    3.更新邻居节点的距离：对于当前节点的每个未访问的邻居节点，如果通过当前节点到该邻居节点的距离小于当前记录的距离，则更新该邻居节点的距离。
+    4.标记已访问：将当前节点标记为已访问。
+    5.重复：重复步骤2到4，直到所有节点都被访问过或者所有未访问节点的距离都是无穷大。
+
+
+三、这个方法为什么不好?
+    1.这个方法为什么不好？从未访问的节点中选择一个距离最小的节点作为当前节点，是遍历hash表去选择
+
+流程:
+以下是该算法的基本步骤：
+
  */
 // no negative weight
-public class Code08_Dijkstra {
+public class Code11_Dijkstra {
 
     /*
     未用加强堆优化版本：
      */
     public static HashMap<Node, Integer> dijkstra1(Node start) {
-        // 1、距离表。从开始节点出发到每个节点的最短距离
+        // 1、距离表。从开始节点出发到每个节点的最短距离，最终返回这个距离表。
         HashMap<Node, Integer> distanceMap = new HashMap<>();
         distanceMap.put(start, 0);
         // 2、已经锁定的点。也就是已经求出答案的点
@@ -48,13 +76,13 @@ public class Code08_Dijkstra {
     /*
     这个方法现在就是遍历，可以用加强堆优化
      */
-    public static Node getMinDistanceAndUnselectedNode(HashMap<Node, Integer> distanceMap, HashSet<Node> touchedNodes) {
+    public static Node getMinDistanceAndUnselectedNode(HashMap<Node, Integer> distanceMap, HashSet<Node> selectedNodes) {
         Node minNode = null; // 距离最短的点
         int minDistance = Integer.MAX_VALUE;
         for (Entry<Node, Integer> entry : distanceMap.entrySet()) {
             Node node = entry.getKey();
             int distance = entry.getValue();
-            if (!touchedNodes.contains(node) && distance < minDistance) {
+            if (!selectedNodes.contains(node) && distance < minDistance) {
                 minNode = node;
                 minDistance = distance;
             }
@@ -174,5 +202,47 @@ public class Code08_Dijkstra {
         }
         return result;
     }
+
+
+    /*
+    参考GPT实现的dijkstra
+     */
+    /*
+    时间复杂度：
+    1.初始化距离表：需要对每个节点设置初始距离，这需要 O(V) 时间，其中 𝑉 是图中的节点数。
+    2.主循环：执行n次，n最差是节点的个数；每次从堆中获取一个node，需要logN，共n*logn
+    3.对于每个节点，遍历其所有邻居节点并更新距离。这部分操作的时间复杂度与节点的度数（该节点的邻居数量）成正比。在最坏情况下，
+    所有边都可能被检查一次，总共需要O(E)时间，E是图的边数量；每次都要更新堆，logN, 所以这部分：E*logN
+    总共：n*logn + E*logN
+     */
+    public static HashMap<Node, Integer> dijkstra3(Graph graph, Node head) {
+        // 1.初始化
+        HashMap<Node, Integer> distanceMap = new HashMap<>();
+        distanceMap.put(head, 0);
+        for (Node node : graph.nodes.values()) { // 初始化，到自己的距离是0，到其他节点都认为是无穷
+            distanceMap.put(node, Integer.MAX_VALUE);
+        }
+
+        PriorityQueue<NodeRecord> heap = new PriorityQueue<>((o1, o2) -> o1.distance - o2.distance); // 存放当前已经遍历到的节点，封装成NodeRecord，按照距离组织的小根堆
+        heap.add(new NodeRecord(head, 0));
+
+        // 2.从未访问的节点中选择一个距离最小的节点作为当前节点
+        while (!heap.isEmpty()) {
+            NodeRecord nodeRecode = heap.poll();
+            Integer distance = distanceMap.get(nodeRecode.node);
+
+            // 更新邻居节点的距离
+            for (Edge edge : nodeRecode.node.edges) {
+                int newDistance = distance + edge.weight;
+                if (newDistance < distanceMap.get(edge.to)) {
+                    heap.add(new NodeRecord(edge.to, newDistance));
+                }
+            }
+        }
+        return distanceMap;
+    }
+
+
+
 
 }

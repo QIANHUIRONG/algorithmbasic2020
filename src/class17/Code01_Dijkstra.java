@@ -5,6 +5,18 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 
 // no negative weight
+
+/*
+题意：
+迪杰斯特拉 加强堆优化
+ */
+/*
+时间：
+题意：4
+加强堆优化：9
+code：15
+
+ */
 public class Code01_Dijkstra {
 
 	public static HashMap<Node, Integer> dijkstra1(Node from) {
@@ -77,15 +89,15 @@ public class Code01_Dijkstra {
 		// 有一个点叫node，现在发现了一个从源节点出发到达node的距离为distance
 		// 判断要不要更新，如果需要的话，就更新
 		public void addOrUpdateOrIgnore(Node node, int distance) {
-			if (inHeap(node)) { // update
+			if (inHeap(node)) { // 如果在堆上，就是update
 				distanceMap.put(node, Math.min(distanceMap.get(node), distance));
-				insertHeapify(node, heapIndexMap.get(node));
+				heapInsert(node, heapIndexMap.get(node)); // 只需要heapInsert，因为距离只会变小，只需要网上做堆的调整
 			}
-			if (!isEntered(node)) { // add
-				nodes[size] = node;
+			if (!isEntered(node)) { // 如果没有进来过，就是新增
+				nodes[size] = node; // 先初始化
 				heapIndexMap.put(node, size);
 				distanceMap.put(node, distance);
-				insertHeapify(node, size++);
+				heapInsert(node, size++); // 玩一次heapInsert
 			}
 			// ignore
 		}
@@ -93,7 +105,7 @@ public class Code01_Dijkstra {
 		public NodeRecord pop() {
 			NodeRecord nodeRecord = new NodeRecord(nodes[0], distanceMap.get(nodes[0]));
 			swap(0, size - 1); // 0 > size - 1    size - 1 > 0
-			heapIndexMap.put(nodes[size - 1], -1);
+			heapIndexMap.put(nodes[size - 1], -1); // 不删除，值改为-1
 			distanceMap.remove(nodes[size - 1]);
 			// free C++同学还要把原本堆顶节点析构，对java同学不必
 			nodes[size - 1] = null;
@@ -101,7 +113,7 @@ public class Code01_Dijkstra {
 			return nodeRecord;
 		}
 
-		private void insertHeapify(Node node, int index) {
+		private void heapInsert(Node node, int index) {
 			while (distanceMap.get(nodes[index]) < distanceMap.get(nodes[(index - 1) / 2])) {
 				swap(index, (index - 1) / 2);
 				index = (index - 1) / 2;
@@ -124,15 +136,18 @@ public class Code01_Dijkstra {
 			}
 		}
 
+		// 是不是进来过。元素弹出了，不会从heapIndexMap remove，而是置为-1，表示这个节点曾经进来过
 		private boolean isEntered(Node node) {
 			return heapIndexMap.containsKey(node);
 		}
 
+		// 是不是还在堆上。必须进来过，并且不是-1，就是还没出去
 		private boolean inHeap(Node node) {
 			return isEntered(node) && heapIndexMap.get(node) != -1;
 		}
 
 		private void swap(int index1, int index2) {
+			// 反向索引表要同步换
 			heapIndexMap.put(nodes[index1], index2);
 			heapIndexMap.put(nodes[index2], index1);
 			Node tmp = nodes[index1];
@@ -144,8 +159,8 @@ public class Code01_Dijkstra {
 	// 改进后的dijkstra算法
 	// 从head出发，所有head能到达的节点，生成到达每个节点的最小路径记录并返回
 	public static HashMap<Node, Integer> dijkstra2(Node head, int size) {
-		NodeHeap nodeHeap = new NodeHeap(size);
-		nodeHeap.addOrUpdateOrIgnore(head, 0);
+		NodeHeap nodeHeap = new NodeHeap(size); // 先生成一个堆，图有几个点，堆大小就搞多大
+		nodeHeap.addOrUpdateOrIgnore(head, 0); // 如果节点从来没有生成过，就是add；如果是堆中已经有的，就是update；如果是之前已经访问过的，就是ignore
 		HashMap<Node, Integer> result = new HashMap<>();
 		while (!nodeHeap.isEmpty()) {
 			NodeRecord record = nodeHeap.pop();

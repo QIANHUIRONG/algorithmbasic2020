@@ -15,7 +15,7 @@ import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Code03_TopologicalOrderBFS2 {
+public class Code04_TopologicalOrderBFS2 {
 
 	public static int MAXN = 200001;
 

@@ -15,7 +15,7 @@ import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-public class Code05_PrimNowCoder {
+public class Code10_PrimNowCoder {
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

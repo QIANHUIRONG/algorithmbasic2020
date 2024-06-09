@@ -35,7 +35,7 @@ import java.util.HashMap;
 	为什么这里没有写转换类：如果是新手，可以写转换器，转换成我们熟悉的结构去玩；
 	如果是老手，就来啥结构玩啥结构，这里也是对这种方式进行练习
  */
-public class Code04_TopologicalOrderDFS1 {
+public class Code05_TopologicalOrderDFS1 {
 
     // 不要提交这个类
     // 本题的图结构。当前这个节点的value，当前这个节点的邻居节点。可以理解成邻接表法
@@ -84,11 +84,11 @@ public class Code04_TopologicalOrderDFS1 {
             return ans;
         } else {
             // cur的点次之前没算过！
-            long nodes = 1;
+            long nodes = 0;
             for (DirectedGraphNode next : cur.neighbors) {
                 nodes += process(next, map).nodes; // 累加上所有直接邻居的点次，就是我的点次
             }
-            Record ans = new Record(cur, nodes);
+            Record ans = new Record(cur, nodes + 1);
             map.put(cur, ans); // 放到缓存中
             return ans;
         }
