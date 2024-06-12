@@ -4,10 +4,41 @@ import java.util.HashSet;
 import java.util.Stack;
 
 /*
+题意：汉诺塔问题
+有三根杆（A、B、C），其中A杆上有若干大小不同且自上而下按大小排列的圆盘。
+每次只能移动一个圆盘，并且任何时候都不能将较大的圆盘放在较小的圆盘上。
+目标是将所有圆盘从A杆移动到C杆，且保持原有顺序。
+打印这个过程
+ */
+/*
 时间：37
  */
+/*
+思维导图
+1. 1-N-1个圆盘从左边移到中间
+2. 第N个圆盘从左边移动到右边
+3. 1-N-1个圆盘从中间移动到右边
+
+方法一：用6个递归去搞；leftToRight(int n)
+方法二：用增加参数的形式，来使得递归表示出更多含义 func(int N, String from, String to, String other)
+方法三：迭代版本
+ */
+/*
+做递归要有黑盒思维：
+输入什么，达到什么效果，限制条件，basecase规定好，
+接下来就是黑盒怎么使用的问题
+比如说你要做一个递归函数，你就规定好这个黑盒，这个函数它满足什么样的条件。条件包括显示的条件和隐藏的条件潜台词，
+就当你这个F函数它的含义固定了，你就把它作黑盒来用。
+对于这个黑盒来说，最重要的是它的含义。输入什么，达到什么效果，遵循什么样的限制条件，规定好，basecase想好规定好，
+(basecase就是什么时候就不用再分解问题了，直接就能出来规定好)，接下来就想我怎么用这个黑盒
+就得设计基于函数不要太失于细节。先把黑盒规定好，接下来就是这个黑盒怎么用问题。
+ */
+
 public class Code02_Hanoi {
 
+	/*
+	方法一：用6个递归去搞
+	 */
 	public static void hanoi1(int n) {
 		leftToRight(n);
 	}
@@ -74,6 +105,9 @@ public class Code02_Hanoi {
 		midToLeft(n - 1);
 	}
 
+	/*
+	方法二：用增加参数的形式，来使得递归表示出更多含义
+	 */
 	public static void hanoi2(int n) {
 		if (n > 0) {
 			func(n, "left", "right", "mid");
@@ -104,6 +138,7 @@ public class Code02_Hanoi {
 		}
 	}
 
+	// GPT也是这么写的
 	// 之前的迭代版本，很多同学表示看不懂
 	// 所以我换了一个更容易理解的版本
 	// 看注释吧！好懂！
@@ -157,6 +192,16 @@ public class Code02_Hanoi {
 		}
 	}
 
+
+
+
+
+
+
+
+
+
+
 	public static void main(String[] args) {
 		int n = 3;
 		hanoi1(n);
@@ -164,6 +209,7 @@ public class Code02_Hanoi {
 		hanoi2(n);
 		System.out.println("============");
 		hanoi3(n);
+
 	}
 
 }

@@ -21,8 +21,19 @@ code：1：16
 思路一：
 1.全排列：说白了就是所有的字符都得要，只不过顺序可以不一样
 2.a b c d, 0位置是4个字符选1个，1位置是剩下的3个字符选一个... 如果我们所有的分支都摊开，收集所有的结果，这个问题就解了
+3.f(ArrayList<Character> rest, String path, List<String> ans) 还有rest字符可以选，之前做过的决定在path里面，如果都选完了，收集到ans中
+  basecase：如果rest为空，已经没有字符可以选了，收集答案
+  普遍过程：遍历rest字符，每个字符都可以选作当前字符
+4.如果你的算法需要原始时刻，不要忘了恢复现场！！！
+
 
 思路二：
+1.全排列是指将字符串中的所有字符进行排列，生成所有可能的顺序。
+第一种思路的这样：0位置从n个的字符选1个，1位置从剩下的n-1个字符选一个...
+也可以这么想：0位置和后面的每个位置换一下，就是0位置从n个的字符选1个；然后来到1位置，和后面的每个位置换一下，就是1位置从n-1个字符选1个
+2.g1(char[] str, int index, List<String> ans) {}：当前来到index位置，index之前的位置已经选好了，请你通过交换的方式将index之后的位置选好，返回全排列的结果
+3.basecase：当index来到字符串结尾，收集一种全排列结果
+4.普遍过程：从index到字符串结尾，每一个位置都尝试交换，然后跑深度优先遍历
 
 
  */
@@ -104,9 +115,6 @@ public class Code04_PrintAllPermutations {
      * 一个比较好的递归。
      * 用交换模拟了全排列
      * 如果你的算法需要原始时刻，不要忘了恢复现场！！！
-     *
-     * @param s
-     * @return
      */
     public static List<String> permutation2(String s) {
         List<String> ans = new ArrayList<>();
@@ -118,6 +126,7 @@ public class Code04_PrintAllPermutations {
         return ans;
     }
 
+    // 当前来到index位置，index之前的位置已经选好了，请你通过交换的方式将index之后的位置选好，返回全排列的结果
     public static void g1(char[] str, int index, List<String> ans) {
         if (index == str.length) {
             ans.add(String.valueOf(str));
