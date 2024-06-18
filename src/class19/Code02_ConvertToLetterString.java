@@ -1,7 +1,28 @@
 package class19;
 
 /*
+题意：
+规定1和A对应、2和B对应、3和C对应...
+那么一个数字字符串比如"111”就可以转化为:
+"AAA"、"KA"和"AK"
+给定一个只有数字字符组成的字符串str，返回有多少种转化结果
+ */
+/*
 时间：46
+题解：49
+basecase：52
+ */
+/*
+思维导图
+[从左到右尝试模型]
+1.
+	process(char[] str, int i) {}：str[i...]去转化，返回有多少种有效的转化方法。i之前的转化方法不用过问
+	basecase：if (i == str.length)：str这个数字字符串没有字符的时候，可以转化为空字符串，返回1种方法
+	普遍流程：
+		如果当前i位置的字符是'0', 0开头根本没办法转化，说明之前做的决定错了，返回0种方法；
+		可能性一，i单转
+		如果i和i+1的数字格式<27,就有可能性二：i和i+1一起转
+
  */
 public class Code02_ConvertToLetterString {
 
@@ -17,6 +38,10 @@ public class Code02_ConvertToLetterString {
 	// str[0..i-1]转化无需过问
 	// str[i.....]去转化，返回有多少种转化方法
 	public static int process(char[] str, int i) {
+		//basecase
+		//两种解释：
+		//1.str这个数字字符串没有字符的时候，转化为空字符串，返回1种方法
+		//2.找到了一种有效的转换，是0...i-1已经转化完的部分
 		if (i == str.length) {
 			return 1;
 		}
@@ -27,6 +52,7 @@ public class Code02_ConvertToLetterString {
 		// str[i] != '0'
 		// 可能性一，i单转
 		int ways = process(str, i + 1);
+		// 可能性二：i和i+1一起转
 		if (i + 1 < str.length && (str[i] - '0') * 10 + str[i + 1] - '0' < 27) {
 			ways += process(str, i + 2);
 		}

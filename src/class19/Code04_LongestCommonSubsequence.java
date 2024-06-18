@@ -1,9 +1,37 @@
 package class19;
 
-// 1：51
+/*
+题意：
+两个字符串的最长公共子序列问题
 // 这个问题leetcode上可以直接测
 // 链接：1143：https://leetcode.com/problems/longest-common-subsequence/
-// 一个样本做行一个样本做列的样本对应模型
+ */
+
+/*
+时间：
+ 1：51
+ */
+
+/*
+思维导图：
+[一个样本做行一个样本做列的样本对应模型]
+1.样本对应模型应往往就过论当前的结尾该如何组织可能性这是一个经验
+1.
+	process1(char[] str1, char[] str2, int i, int j) {}, str1从0-i的前缀字符串，和str2从0-j前缀字符串最长公共子序列多长
+	basecase：
+		if (i == 0 && j == 0)，str1,str2都只剩一个字符了，那如果字符相等，公共子序列长度就是1，不相等就是0
+		if (i == 0),如果str1只剩1个字符了，如果str1[i]=str2[j], 最长公共子序列就是1，否则process(i, j - 1)继续找
+		if (j == 0) 同理
+	普遍流程：
+	// a) 最长公共子序列，一定不以str1[i]字符结尾、也一定不以str2[j]字符结尾
+	// b) 最长公共子序列，可能以str1[i]字符结尾、但是一定不以str2[j]字符结尾
+	// c) 最长公共子序列，一定不以str1[i]字符结尾、但是可能以str2[j]字符结尾
+	// d) 最长公共子序列，必须以str1[i]字符结尾、也必须以str2[j]字符结尾
+	4种情况求max
+
+
+
+ */
 public class Code04_LongestCommonSubsequence {
 
 	public static int longestCommonSubsequence1(String s1, String s2) {
