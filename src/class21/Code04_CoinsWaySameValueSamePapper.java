@@ -4,7 +4,17 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 /*
+题意：
+货币数组组成面值的方法数-同值无差别张数限定
+ */
+/*
 时间：1：29
+ */
+/*
+思维导图：
+		就是张数有限制的上一题。
+		arr = {1,2,1,1,2,1,2},先统计一下1元可以用4张；2元可以用3张，然后就和上一题没啥区别了
+		方法数就是：1+1+1+1；1+1+2；2+2共3种
  */
 public class Code04_CoinsWaySameValueSamePapper {
 

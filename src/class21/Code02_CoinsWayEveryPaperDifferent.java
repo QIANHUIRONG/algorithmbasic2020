@@ -1,7 +1,26 @@
 package class21;
 
 /*
+题意：货币数组组成面值的方法数-同值认为不同
+arr是货币数组，其中的值都是正数。再给定一个正数aim。
+每个值都认为是一张货币，
+即便是值相同的货币也认为每一张都是不同的，
+返回组成aim的方法数
+例如：arr = {1,1,1}，aim = 2
+第0个和第1个能组成2，第1个和第2个能组成2，第0个和第2个能组成2
+一共就3种方法，所以返回3
+ */
+/*
 时间：46
+ */
+/*
+思维导图：
+[从左到右尝试模型]
+1.
+	process(int[] arr, int index, int rest) {}：index之后的货币自由选择，返回组成正好rest这么多的钱，有几种方法
+	basecase:if (index == arr.length), 选完了，如果rest=0，返回1种方法否则返回0种
+	普遍流程：当前位置要和不要两种情况，累加
+
  */
 public class Code02_CoinsWayEveryPaperDifferent {
 
@@ -9,11 +28,11 @@ public class Code02_CoinsWayEveryPaperDifferent {
 		return process(arr, 0, aim);
 	}
 
-	// arr[index....] 组成正好rest这么多的钱，有几种方法
+	// index之后的货币自由选择，返回组成正好rest这么多的钱，有几种方法
 	// 题解：
 	// 货币值相同，也认为每一张都是不同的，本质就是每个位置都不同，我就去尝试每一个位置要和不要两种情况就行
 	public static int process(int[] arr, int index, int rest) {
-		if (rest < 0) {
+		if (rest < 0) { // 设置无效解
 			return 0;
 		}
 		if (index == arr.length) { // 没钱了！
