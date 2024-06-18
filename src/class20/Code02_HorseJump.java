@@ -1,22 +1,40 @@
 package class20;
 
+/*
+题意：
+请同学们自行搜索或者想象一个象棋的棋盘，
+然后把整个棋盘放入第一象限，棋盘的最左下角是(0,0)位置
+那么整个棋盘就是横坐标上9条线、纵坐标上10条线的区域
+给你三个 参数 x，y，k
+返回“马”从(0,0)位置出发，必须走k步
+最后落在(x,y)上的方法数有多少种?
+ */
 // 时间：59
+/*
+思维导图：
+1.其实就是机器人必须走K步，最终能来到P位置的方法有多少种的二维形式
+2.
+	process(int x, int y, int rest, int a, int b) {}，当前来到的位置是（x,y）， 还剩下rest步需要跳，跳完rest步，正好跳到a，b的方法数是多少？
+	basecase：
+		if (rest == 0) ，没有步数了，看当前位置是不是目标位置，如果是返回1种方法，叫做之前做过的决定
+		如果跳越界了，无效解，直接返回0种方法
+	普遍流程：当前位置可以往8个方法跳，8个方向的方法数累加
+3.可变参数有3个，是一张3维表，经过观察发现，process只会依赖rest-1，还是很容易就可以改成严格表结构的dp
+4.如果位置依赖特别复杂，就不改严格动态规划，用傻缓存就行了
+ */
 public class Code02_HorseJump {
 
-	// 当前来到的位置是（x,y）
-	// 还剩下rest步需要跳
-	// 跳完rest步，正好跳到a，b的方法数是多少？
-	// 10 * 9
+	// 棋盘大小：10 * 9
 	public static int jump(int a, int b, int k) {
 		return process(0, 0, k, a, b);
 	}
 
 	public static int process(int x, int y, int rest, int a, int b) {
-		if (x < 0 || x > 9 || y < 0 || y > 8) {
-			return 0;
-		}
 		if (rest == 0) {
 			return (x == a && y == b) ? 1 : 0;
+		}
+		if (x < 0 || x > 9 || y < 0 || y > 8) {
+			return 0;
 		}
 		int ways = process(x + 2, y + 1, rest - 1, a, b);
 		ways += process(x + 1, y + 2, rest - 1, a, b);
