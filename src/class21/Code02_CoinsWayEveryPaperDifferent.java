@@ -21,6 +21,8 @@ arr是货币数组，其中的值都是正数。再给定一个正数aim。
 	basecase:if (index == arr.length), 选完了，如果rest=0，返回1种方法否则返回0种
 	普遍流程：当前位置要和不要两种情况，累加
 
+2.dp
+
  */
 public class Code02_CoinsWayEveryPaperDifferent {
 

@@ -1,11 +1,30 @@
 package class23;
 
 /*
+题意：正数数组分割为累加和接近的两个集合
+给定一个正数数组arr，
+请把arr中所有的数分成两个集合，尽量让两个集合的累加和接近
+返回：
+最接近的情况下，较小集合的累加和
+ */
+/*
 时间：08
+ */
+/*
+思维导图：
+[从左到右的尝试模型]
+1.题解：其实就是改背包问题。总和不要超过累加和/2（向下取整），最接近是多少
+2.
+	process(int[] arr, int i, int rest) {}：arr[i...]可以自由选择，请返回累加和尽量接近rest，但不能超过rest的情况下，最接近的累加和是多少？（背包问题是求=rest）
+	basecase：i来到了arr的结尾，没得选了，返回最接近rest的累加和就是0
+	普遍流程：
+		1.可能性一：不要i位置的数
+		2.可能性二：如果要了i位置的数，不会超过rest，就有可能性二
+		两种求max，就是最接近rest的
+3.dp
  */
 public class Code01_SplitSumClosed {
 
-	// 题解：其实就是改背包问题
 	public static int right(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return 0;

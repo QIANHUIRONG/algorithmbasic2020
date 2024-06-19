@@ -22,6 +22,7 @@ weights[i]和values[i]分别代表 i号物品的重量和价值。
 	从index.往后及其所有的货物可以自由选择，做的选择不能超过背包容量，返回最大价值
 	basecase：index来到结尾时候，已经没有货物可以选了，最大价值返回0
 	普遍过程：当前index号货物要和不要两种情况，求max
+2.dp
 
  */
 public class Code01_Knapsack {
