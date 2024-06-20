@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 /*
+题意：单调栈
+一种特别设计的栈结构，为了解决如下的问题：
+给定一个可能含有重复值的数组arr，i位置的数一定存在如下两个信息
+1）arr[i]的左侧离i最近并且小于(或者大于)arr[i]的数在哪？
+2）arr[i]的右侧离i最近并且小于(或者大于)arr[i]的数在哪？
+ */
+/*
 时间：5
 ②暴力法：O(n^2)
 ③单调栈：O（N)
@@ -53,11 +60,11 @@ import java.util.Stack;
  */
 
 /*
-1、求一个数组中，每个位置，左边离我最近的比我小的；右边离我最近的比我小的；
+1、求一个数组中，每个位置，左边离我最近的比我小的在哪；右边离我最近的比我小的在哪；
 2、暴力解：来到每个位置，左边遍历求一下，右边遍历求一下，求一个位置就是O(N), 求所有位置就是O(N^2)
 3、单调栈：可以做到求一个位置O(1),求所有位置就是O（N）。每个数字最多入栈1次，出栈1次。
 4、准备一个栈，栈底到栈顶严格由小到大；
-5、遍历到数据某个值，比栈顶元素小，弹出栈顶元素，它右边离它最近比它小的就是当前让我弹出的数；它左边离它最近比它小是就是它压着的数；
+5、遍历到数据某个值，比栈顶元素小，弹出栈顶元素，此时就可以结算栈顶元素，它右边离它最近比它小的就是当前让我弹出的数；它左边离它最近比它小是就是它压着的数；
 6、遍历完了数组，单独弹出栈，它右边离它最近比它小的就是-1，它左边离它最近比它小是就是它压着的数；
 7、有重复值，栈中放一个List<Integer>。结算时结算整个链表，右边离它最近比它小的就是让我弹出的数；左边离它最近比它小是就是它压着的链表的最后一个值；
  */
@@ -66,6 +73,7 @@ public class Code01_MonotonousStack {
 	// 无重复值版本
 	// arr = [ 3, 1, 2, 3]
 	//         0  1  2  3
+	// 返回：
 	//  [
 	//     0 : [-1,  1]
 	//     1 : [-1, -1]
@@ -99,24 +107,26 @@ public class Code01_MonotonousStack {
 	// 有重复值版本
 	public static int[][] getNearLess(int[] arr) {
 		int[][] res = new int[arr.length][2];
-		Stack<List<Integer>> stack = new Stack<>();
+		Stack<List<Integer>> stack = new Stack<>(); // 栈中存放的是一个list！
+		// 1.遍历结算
 		for (int i = 0; i < arr.length; i++) { // i -> arr[i] 进栈
 			while (!stack.isEmpty() && arr[stack.peek().get(0)] > arr[i]) {
-				List<Integer> popIs = stack.pop();
-				int leftLessIndex = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() - 1);
-				for (Integer popi : popIs) {
+				List<Integer> popIs = stack.pop(); // 结算整个链表
+				int leftLessIndex = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() - 1); // 左边离它最近比它小是就是它压着的链表的最后一个值；
+				for (Integer popi : popIs) { // 结算整个链表
 					res[popi][0] = leftLessIndex;
 					res[popi][1] = i;
 				}
 			}
-			if (!stack.isEmpty() && arr[stack.peek().get(0)] == arr[i]) {
+			if (!stack.isEmpty() && arr[stack.peek().get(0)] == arr[i]) { // 如果栈中已经有我这个元素了，直接添加到链表的结尾
 				stack.peek().add(Integer.valueOf(i));
-			} else {
+			} else { // 栈中没有我这个元素，需要初始化链表
 				ArrayList<Integer> list = new ArrayList<>();
 				list.add(i);
 				stack.push(list);
 			}
 		}
+		// 2.单独结算
 		while (!stack.isEmpty()) {
 			List<Integer> popIs = stack.pop();
 			int leftLessIndex = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() - 1);
