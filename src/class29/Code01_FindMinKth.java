@@ -4,16 +4,10 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /*
-题目：在一个无序数组中求第k小的数
-本题经典到用快排的方式都不新鲜了；笔试，工作用快排的方式就行，面试就可以聊一聊bfprt
-
+题意：在一个无序数组中求第k小的数
+ */
+/*
 题意：4
-快排思路：
-	无序数组中随机选一个数去做荷兰国旗问题，如果等于区命中了，就直接返回；
-	否则要么在小于区继续递归下去，要么在大于区继续递归下去；两边只会走一边
-	时间复杂度O(N)， (快排O(N*logN)是因为两边都要走)
-	如果把快排改成迭代版本，可以做到时间复杂度O(n)，空间复杂度o(1)!!这无疑是最优解！
-
 bfprt：
 	1.题意【24】
 	2.面试聊的时候可以装
@@ -21,20 +15,31 @@ bfprt：
 	4.证明至少淘汰3/10N【40】
 	5.时间复杂度【50】
 	6.code[1:05]
-时间复杂度：快排方法和bfprt算法都是O（N)
  */
-
+// 时间复杂度：快排方法和bfprt算法都是O（N)
 /*
-	 利用bfprt算法，时间复杂度O(N)
+思维导图：
+
+本题经典到用快排的方式都不新鲜了；笔试，工作用快排的方式就行，面试就可以聊一聊bfprt
+
+一、快速排序
+快排思路：
+	1.无序数组中随机选一个数去做荷兰国旗问题，如果等于区命中了，就直接返回；
+	2.否则要么在小于区继续递归下去，要么在大于区继续递归下去；两边只会走一边
+	3.时间复杂度O(N)， (快排O(N*logN)是因为两边都要走)
+	4.如果把快排改成迭代版本，可以做到时间复杂度O(n)，空间复杂度o(1)!!这无疑是最优解！
+
+二、bfprt
+	总览：
 	 改写快排的方式是每次随机取一个数去做荷兰国旗划分，从概率上证明时间复杂度O(N);
 	 而bfprt算法就是很讲究的取一个数去做荷兰国旗划分，保证每次至少淘汰3/10N规模，从而达到时间复杂度O(N)
 
-	思路：
+	流程：
 	 1.5个数一组，每组去排序，拿每个组的中位数组成新数组m[]
 	 2.递归调用bfprt，得到m[]数组的中位数,这个中位数就是我们要找的天选之子p
-	 3.拿着这个p去做荷兰国旗划分
+	 3.拿着这个p去做荷兰国旗划分，接下来的流程和快速排序改法一样
 
-	 这个p每次至少能淘汰3/10N的规模，证明如下：
+	 4.这个p每次至少能淘汰3/10N的规模，证明如下：
 	 我们想要求小于区最大规模是多大，不太好求，可以先去求大于区最小规模是多少：
 	 假设这是原数组，每一行分成一组,每一组都已经从小到大排好，m[]数组是中间竖的[a,b,c,d,e],真名天子是c;
 	[o o a o o
@@ -47,21 +52,21 @@ c > d、e; 也就是这个中位数在m中>N/10;
 	 对应回原数组中，d 又 > f、g ; e 又 > h、i;所以c至少会大于f,g,d,h,i,e = 3N/10
 	 综上所述，选出来的这个真命天子大于区至少3N/10,所以留下来的小于区最多7N/10;
 
-	 时间复杂度：
-	 1.每5个一组,O(1)
-	 2.每组去排序，每组O(1),共O(N/5) = O(N)
-	 3.取排完序的每一组的中位数得到中位数数组m O(N)
-	 4.求中位数的中位数,T(N/5)
-	 5.拿着真命天子去荷兰国旗，O(N)
-	 6.递归每次至少淘汰T(3N/10),最多剩T(7N/10)
-	 所以T(N) = T(N/5) + T(7N/10) + O(N)
-	 -->数学上证明了这个递归式时间复杂度就是O(N)
+	 5.时间复杂度：
+		 1.每5个一组,O(1)
+		 2.每组去排序，每组O(1),共O(N/5) = O(N)
+		 3.取排完序的每一组的中位数得到中位数数组m O(N)
+		 4.求中位数的中位数,T(N/5)
+		 5.拿着真命天子去荷兰国旗，O(N)
+		 6.递归每次至少淘汰T(3N/10),最多剩T(7N/10)
+		 所以T(N) = T(N/5) + T(7N/10) + O(N)
+		 -->数学上证明了这个递归式时间复杂度就是O(N)
 
-	 为什么是5个一组？
+	 5.为什么是5个一组？
 	 人家bfprt就是5个人，他们就是喜欢5个一组，你喜欢的话4个一组，7个一组都行，递推式可能略有不同，
 但是时间复杂度都是O(N)
 
-	 bfprt启发了一种思想，我去选一个数确保每次规避最差的情况，而不用依靠概率去运行。
+	 6.bfprt启发了一种思想，我去选一个数确保每次规避最差的情况，而不用依靠概率去运行。
 
 
 	 */
@@ -76,7 +81,9 @@ public class Code01_FindMinKth {
 
 	}
 
-	// 利用大根堆，时间复杂度O(N*logK)。不用看
+	/*
+	 利用大根堆，时间复杂度O(N*logK)。不用看
+	 */
 	public static int minKth1(int[] arr, int k) {
 		PriorityQueue<Integer> maxHeap = new PriorityQueue<>(new MaxHeapComparator());
 		for (int i = 0; i < k; i++) {
@@ -91,7 +98,9 @@ public class Code01_FindMinKth {
 		return maxHeap.peek();
 	}
 
-	// 改写快排，时间复杂度O(N)
+	/*
+	 改写快排，时间复杂度O(N)
+	 */
 	// k >= 1
 	public static int minKth2(int[] array, int k) {
 		int[] arr = copyArray(array);
@@ -104,24 +113,21 @@ public class Code01_FindMinKth {
 		return process2(arr, 0, arr.length - 1, k - 1);
 	}
 
-	public static int[] copyArray(int[] arr) {
-		int[] ans = new int[arr.length];
-		for (int i = 0; i != ans.length; i++) {
-			ans[i] = arr[i];
-		}
-		return ans;
-	}
-
 	// arr 第k小的数
 	// process2(arr, 0, N-1, k-1)
 	// arr[L..R]  范围上，如果排序的话(不是真的去排序)，找位于index的数
 	// index [L..R]
 	public static int process2(int[] arr, int L, int R, int index) {
-		if (L == R) { // L = =R ==INDEX
+		// 在快排中是写的if (L >= R), 这里只写了L==R
+		// 因为快排中，是需要这个大于号的。比如partiton完之后是2 2 2 3 4, equalArea[0]是0，equalArea[1]是2，
+		// 那么process(arr, L, equalArea[0] - 1)就是process(arr, 0, -1)
+		// 但是在bfprt算法中，不会有去调用process(arr, 0, -1)的时候，因为我是去找index位置的数，是一定有的。
+		// 如果你为了算法的统一，写成if (L >= R)也可以，只不过不会有这种情况
+		if (L == R) {
 			return arr[L];
 		}
 		// 不止一个数  L +  [0, R -L]
-		int pivot = arr[L + (int) (Math.random() * (R - L + 1))];
+		int pivot = arr[L + (int) (Math.random() * (R - L + 1))]; // a + (int)(Math.random() * (b - a + 1)) -> [a,b]所有的整数，等概率返回一个
 		int[] range = partition(arr, L, R, pivot);
 		if (index >= range[0] && index <= range[1]) {
 			return arr[index];
@@ -132,35 +138,10 @@ public class Code01_FindMinKth {
 		}
 	}
 
-	/*
-	 经典的荷兰国旗问题
-	 快排中的荷兰国旗，是直接拿最后一个元素做划分值去做荷兰国旗；
-	 而本题因为bfprt直接选了一个划分值，所以直接给你划分值去划分。
-	 */
-	public static int[] partition(int[] arr, int L, int R, int pivot) {
-		int less = L - 1;
-		int more = R + 1;
-		int cur = L;
-		while (cur < more) {
-			if (arr[cur] < pivot) {
-				swap(arr, ++less, cur++);
-			} else if (arr[cur] > pivot) {
-				swap(arr, cur, --more);
-			} else {
-				cur++;
-			}
-		}
-		return new int[] { less + 1, more - 1 };
-	}
 
-	public static void swap(int[] arr, int i1, int i2) {
-		int tmp = arr[i1];
-		arr[i1] = arr[i2];
-		arr[i2] = tmp;
-	}
 
 	/*
-	快排的迭代版本。时间复杂度O(n)，空间复杂度o(1)
+	快排的迭代版本。时间复杂度O(n)，空间复杂度o(1)!!!!，这个才是时复和空复双重最优
 	 */
 	public static int minKth4(int[] array, int k) {
 		int[] arr = copyArray(array);
@@ -215,12 +196,13 @@ public class Code01_FindMinKth {
 
 	// arr[L...R]  五个数一组
 	// 每个小组内部排序
-	// 每个小组中位数领出来，组成marr
+	// 每个小组中位数领出来，组成marr,中位数数组
 	// marr中的中位数，返回
 	public static int bfprt(int[] arr, int L, int R) {
 		int size = R - L + 1;
 		int offset = size % 5 == 0 ? 0 : 1;
-		int[] mArr = new int[size / 5 + offset];
+		int[] mArr = new int[size / 5 + offset]; // 每个小组中位数领出来，组成marr
+
 		for (int team = 0; team < mArr.length; team++) { // 遍历原数组，每5个一组
 			int teamFirst = L + team * 5;
 			// 每一组排好序后返回中位数
@@ -229,6 +211,41 @@ public class Code01_FindMinKth {
 		// marr中，找到中位数
 		// marr(0, marr.len - 1,  mArr.length / 2 )
 		return process3(mArr, 0, mArr.length - 1, mArr.length / 2);
+	}
+
+	/*
+ 经典的荷兰国旗问题
+ 快排中的荷兰国旗，是直接拿最后一个元素做划分值去做荷兰国旗；
+ 而本题因为bfprt直接选了一个划分值，所以直接给你划分值去划分。
+ */
+	public static int[] partition(int[] arr, int L, int R, int pivot) {
+		int less = L - 1;
+		int more = R + 1;
+		int cur = L;
+		while (cur < more) {
+			if (arr[cur] < pivot) {
+				swap(arr, ++less, cur++);
+			} else if (arr[cur] > pivot) {
+				swap(arr, cur, --more);
+			} else {
+				cur++;
+			}
+		}
+		return new int[] { less + 1, more - 1 };
+	}
+
+	public static int[] copyArray(int[] arr) {
+		int[] ans = new int[arr.length];
+		for (int i = 0; i != ans.length; i++) {
+			ans[i] = arr[i];
+		}
+		return ans;
+	}
+
+	public static void swap(int[] arr, int i1, int i2) {
+		int tmp = arr[i1];
+		arr[i1] = arr[i2];
+		arr[i2] = tmp;
 	}
 
 	public static int getMedian(int[] arr, int L, int R) {

@@ -1,15 +1,20 @@
 package class28;
 
 /*
-时间：1：37
+题意：字符串变为回文需要添加的最少字符
+给定一个字符串, 让它整体变回文字符串, 只能在后面添加字符, 最短加多少个
  */
 /*
+时间：
 1.题意：[1:37]
 流程；必须包含最后1个字符的情况下，最长回文子串多长
-
-2.题目变了【1：45】：要求返回最长回文串是啥？
-(#串 - 1) / 2 = 原始串结尾的位置
  */
+
+/*
+思维导图：
+1.其实就是要求包含最后1个字符的情况下的回文半径，比如abcac,那么再把ab反转补充到后面就行了，abcacbaf
+ */
+
 public class Code02_AddShortestEnd {
 
 	public static String shortestEnd(String s) {
@@ -44,18 +49,20 @@ public class Code02_AddShortestEnd {
 //			res[res.length - 1 - i] = str[i * 2 + 1];
 //		}
 //		return String.valueOf(res);
+		
 		// abc123321， 那么maxContainsEnd=7， originalAns=6，接下来就是把abc反转一下返回。
 		int originalAns = maxContainsEnd - 1; // 对应原始串的回文直径
 		char[] chs = s.toCharArray();
+		
 		int end = s.length() - 1 - originalAns;
-		char[] res = new char[end + 1];
+		char[] ans = new char[end + 1];
 		int start = 0;
-		while (start != res.length) {
-			res[start] = chs[end];
+		while (start != ans.length) {
+			ans[start] = chs[end];
 			start++;
 			end--;
 		}
-		return String.valueOf(res);
+		return String.valueOf(ans);
 	}
 
 	public static char[] manacherString(String str) {
