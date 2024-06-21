@@ -1,5 +1,10 @@
 package class26;
 
+import java.util.Stack;
+/*
+题意：子数组最小值的累加和
+给定一个数组arr，返回所有子数组最小值的累加和
+ */
 // 测试链接：https://leetcode.cn/problems/sum-of-subarray-minimums/
 // subArrayMinSum1是暴力解
 // subArrayMinSum2是最优解的思路
@@ -7,15 +12,18 @@ package class26;
 // Leetcode上不要提交subArrayMinSum1、subArrayMinSum2方法，因为没有考虑取摸
 // Leetcode上只提交sumSubarrayMins方法，时间复杂度O(N)，可以直接通过
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
 
 /*
+时间：
+ */
+/*
+思维导图：
 1、以i位置的数字作为子数组的最小值，所有子数组的数量 * i。每个位置都这么求，累加
 2、以10位置的7做最小值，扩出来的范围[6,14]。那么6-14中有多少子数组以7做最小值？6-10，6-11，6-12，6-13，6-14；7-10，7-11，7-12，7-13，7-14...。总共 (10-6 + 1) * (14-10 + 1) = 25;
 3、抽象化：i位置，左边离我最近比我小的x，右边离我最近比我小的y，那么产生的答案：(i - x ) * (y - i) * x
 4、（20：00）相等时：7位置是3，12位置也是3，那么求7位置时，是算全的，但是求12位置时，开始下标从8开始！所以我就需要得到：我左边离我最近小于等于我的；右边离我最近严格小于我的；
+经典的单调栈代码是Code01_MonotonousStack，是没有重复值的版本，找到左右两边离我最近的严格比我小的；而如果数组有重复值，那么求出来的结果就是：我左边离我最近小于等于我的；右边离我最近严格小于我的！！！
+
  */
 public class Code01_SumOfSubarrayMinimums {
 
@@ -86,56 +94,15 @@ public class Code01_SumOfSubarrayMinimums {
 	 * @return
 	 */
 	public static int sumSubarrayMins(int[] arr) {
-//		// left[i] = x : arr[i]左边，离arr[i]最近，<=arr[i]，位置在x。
-//		int[] left = nearLessEqualLeft(arr);
-//		// right[i] = y : arr[i]右边，离arr[i]最近，< arr[i],的数，位置在y
-//		int[] right = nearLessRight(arr);
-
-
-		List<int[]> list = nearLessEqualLeftAndNearLessRight(arr); // 自己搞的方法
-		int[] left = list.get(0);
-		int[] right = list.get(1);
-
+		int[][] list = nearLessEqualLeftAndNearLessRight2(arr);
 		long ans = 0;
 		for (int i = 0; i < arr.length; i++) {
-			long start = i - left[i];
-			long end = right[i] - i;
+			long start = i - list[i][0];
+			long end = list[i][1] - i;
 			ans += start * end * (long) arr[i];
-			ans %= 1000000007; // 题目要求的，结果太大了，要%= 1000000007
+			ans %= 1000000007;
 		}
 		return (int) ans;
-	}
-
-	// 找左边离我最近，小于等于我的
-	public static int[] nearLessEqualLeft(int[] arr) {
-//		int N = arr.length;
-//		int[] left = new int[N];
-//		Stack<Integer> stack = new Stack<>();
-//		for (int i = N - 1; i >= 0; i--) {
-//			while (!stack.isEmpty() && arr[i] <= arr[stack.peek()]) {
-//				left[stack.pop()] = i;
-//			}
-//			stack.push(i);
-//		}
-//		while (!stack.isEmpty()) {
-//			left[stack.pop()] = -1;
-//		}
-//		return left;
-		int n = arr.length;
-		int[] left = new int[n];
-		Stack<Integer> stack = new Stack<>();
-		for (int i = 0; i < n; i++) {
-			// arr[i]严格小于栈顶，才会弹出栈顶结算；
-			// 如果arr[i]等于栈顶，栈顶不会弹出。
-			while (!stack.isEmpty() && arr[i] < arr[stack.peek()]) {
-				left[stack.pop()] = stack.isEmpty() ? -1 : stack.peek();
-			}
-			stack.push(i);
-		}
-		while (!stack.isEmpty()) {
-			left[stack.pop()] = stack.isEmpty() ? -1 : stack.peek();
-		}
-		return left;
 	}
 
 
@@ -145,28 +112,28 @@ public class Code01_SumOfSubarrayMinimums {
 	 * @param arr
 	 * @return
 	 */
-	public static List<int[]> nearLessEqualLeftAndNearLessRight(int[] arr) {
+	public static int[][] nearLessEqualLeftAndNearLessRight2(int[] arr) {
 		int n = arr.length;
-		int[] left = new int[n];
-		int[] right = new int[n];
+		int[][] ans = new int[n][2];
 		Stack<Integer> stack = new Stack<>();
 		for (int i = 0; i < n; i++) {
+			// 这里会发现和单调栈Code01_MonotonousStack的代码一样
+			// 解释一下，如果有重复值，那么经典的Code01_MonotonousStack代码，执行的结果就是：找左边离我最近，小于等于我的；找到右边离我最近，严格小于我的
+			// 为什么？因为我遍历到7位置的2，要去结算栈顶的5位置的4，因为arr[i] < arr[stack.peek()]，是严格小于才结算栈顶的，所以右边一定是严格小于我的；
+			// 左边呢？如果相等的时候，不结算，所以就有可能出现栈中是 3->2, 4->2], 等到5位置的1来的时候，会结算4->2, 此时4->2左边就是小于等于我的，离我最近的
 			while (!stack.isEmpty() && arr[i] < arr[stack.peek()]) {
 				int cur = stack.pop();
 				// 结算左边：如果arr[7] = 3, 栈顶是5->3, 此时不会弹出栈顶结算，会直接放入栈中。就是7->3; 5->3。因为5->3一定要等着将来7->3结算时，作为7->3左边离他最近且小于等于它
-				left[cur] = stack.isEmpty() ? -1 : stack.peek();
-				right[cur] = i; // 这里arr[i]严格小于arr[stack.peek]], 所以结算右边一定对
+				ans[cur][0] = stack.isEmpty() ? -1 : stack.peek();
+				ans[cur][1] = i; // 这里arr[i]严格小于arr[stack.peek]], 所以结算右边一定对
 			}
 			stack.push(i);
 		}
 		while (!stack.isEmpty()) {
 			int cur = stack.pop();
-			left[cur] = stack.isEmpty() ? -1 : stack.peek();
-			right[cur] = n;
+			ans[cur][0] = stack.isEmpty() ? -1 : stack.peek();
+			ans[cur][1] = n;
 		}
-		List<int[]> ans = new ArrayList<>();
-		ans.add(left);
-		ans.add(right);
 		return ans;
 	}
 
