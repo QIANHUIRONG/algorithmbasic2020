@@ -1,5 +1,22 @@
 package class31;
 
+/*
+题意：
+实现线段树
+ */
+/*
+时间：
+	线段树解决的问题：5
+ */
+/*
+思维导图：线段树
+一、线段树解决的问题：区间上的添加、更新，查询累加和问题
+比如add(1,200,3), 把1-200的数统一加上3
+update(1,200,3), 把1-200的数统一更新成3
+query(1,200)，查询1-200的累加和
+如果遍历去做是o(n), 线段树能做到o(logn)
+
+ */
 public class Code01_SegmentTree {
 
 	public static class SegmentTree {

@@ -1,9 +1,12 @@
 package class30;
 
+/*
+题意：二叉树的最小深度
+给定一棵二叉树的头节点head
+求以head为头的树中，最小深度是多少？
 // 本题测试链接 : https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/
-// 时间：1：23
-// 方法一：二叉树的递归套路
-// 方法二：Morris的版本
+ */
+
 
 
 /*
@@ -16,13 +19,24 @@ morris遍历改法【1：27】
 	正确发现叶子节点【1：36】
 code【1：49】
 
-二叉树递归套路，morris总结【1：50】
+二叉树递归套路，morris总结【1：50】最
 
-面试的时候，思考的东西要念出来，絮絮叨叨的，
+
 
  */
 
 /*
+// 方法一：二叉树的递归套路
+ p(TreeNode x) {}，当前来到x节点，返回以x为头的整棵树，最小深度是多少
+ basecase：if(x.left == null && x.right == null)，没有孩子了，返回1
+ 普遍流程：
+ 	可能性一：最小深度来自左子树
+ 	可能性一：最小深度来自右子树
+ 	二者求min+1，我自己的高度
+
+
+
+// 方法二：Morris的版本
 导图整理的笔记：
 一、怎么知道当前节点在第几层
 
@@ -37,6 +51,8 @@ code【1：49】
 四、如果判断是否能改morris
 	X节点为头的信息：如果严格需要左树，右树收集信息，才能整合出自己的信息，不用想morris，因为递归序很强，任何节点都可以回到自己3次；而morris有些只能回到1次，有些2次,用二叉树递归讨论
 	如果不严格要求左树，右树的完整信息，可能只需要左树的信息或者右树的信息，Morris遍历就是最优解
+
+五、面试的时候，思考的东西要念出来，絮絮叨叨的，
  */
 public class Code02_MinDepth {
 
@@ -73,7 +89,7 @@ public class Code02_MinDepth {
 		if (x.right != null) {
 			rightH = p(x.right);
 		}
-		return 1 + Math.min(leftH, rightH);
+		return 1 + Math.min(leftH, rightH); // 左右子树的深度，求min
 	}
 
 	/**
