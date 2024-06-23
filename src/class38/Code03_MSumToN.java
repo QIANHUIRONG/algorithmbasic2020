@@ -20,18 +20,23 @@ public class Code03_MSumToN {
 
 	public static boolean isMSum2(int num) {
 //		
-//		return num == (num & (~num + 1));
+//		return num != (num & (~num + 1));
 //		
-//		return num == (num & (-num));
+		return num != (num & (-num));
 //		
 //		
-		return (num & (num - 1)) != 0;
+//		return (num & (num - 1)) != 0;
 	}
 
 	public static void main(String[] args) {
 		for (int num = 1; num < 200; num++) {
 			System.out.println(num + " : " + isMSum1(num));
 		}
+		System.out.println("---------------------------------");
+		for (int num = 1; num < 200; num++) {
+			System.out.println(num + " : " + isMSum2(num));
+		}
+
 		System.out.println("test begin");
 		for (int num = 1; num < 5000; num++) {
 			if (isMSum1(num) != isMSum2(num)) {
