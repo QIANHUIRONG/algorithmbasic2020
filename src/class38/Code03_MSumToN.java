@@ -44,13 +44,13 @@ public class Code03_MSumToN {
 			// 如果1开始都不行，继续从2开始
 			int sum = i;
 			for (int j = i + 1; j <= num; j++) {
-				if (sum + j > num) { // 要试出num，如果超过了就break，返回false
+				sum += j;
+				if (sum  > num) { // 要试出num，如果超过了就break，返回false
 					break;
 				}
-				if (sum + j == num) {
+				if (sum  == num) {
 					return true;
 				}
-				sum += j;
 			}
 		}
 		return false;
@@ -60,8 +60,8 @@ public class Code03_MSumToN {
 	// 如何判断一个数是不是2的某次方：如果一个数的二进制只有1个1，就是2的某次方；否则就不是
 	// 怎么判断一个数二进制只有1个1：提取最右侧的1，如果和自己一样大，就是只有1个1
 	public static boolean isMSum2(int num) {
-//		return num == (num & (~num + 1));
-		return num == (num & (-num));
+//		return num != (num & (~num + 1));
+		return num != (num & (-num));
 	}
 
 	public static void main(String[] args) {
