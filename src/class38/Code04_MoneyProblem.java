@@ -1,7 +1,7 @@
 package class38;
 
 /*
-【题意】
+【题意】打怪兽需要花的最小钱数
 int[] d，d[i]：i号怪兽的能力
 int[] p，p[i]：i号怪兽要求的钱
 开始时你的能力是0，你的目标是从0号怪兽开始，通过所有的怪兽。
@@ -28,25 +28,26 @@ code2：1：55
 【思维导图】
 [从左往右的尝试模型]
 思路一：
-	1.当前来到了index号怪兽的面前，你的能力是ability，如果要通过后续所有的怪兽，请返回需要花的最少钱数。process1(int ability, int index)
-	2.basecase：index来到结尾，后续已经没有怪兽了，返回0
-	3.主过程，根据能力值，可能性一：必须贿赂怪兽；可能性二：可以贿赂，也可以不贿赂
-	4.如果改dp，index：0-N，ability：0-所有怪兽能力的累加和，如果每个怪兽能力都很大，比如都是10^8左右，那么ability就会
+	1.
+		process1(int ability, int index)：当前来到了index号怪兽的面前，你的能力是ability，如果要通过后续所有的怪兽，请返回需要花的最少钱数。
+		basecase：index来到结尾，后续已经没有怪兽了，返回0
+		主过程，根据能力值，可能性一：必须贿赂怪兽；可能性二：可以贿赂，也可以不贿赂
+	2.如果改dp，index：0-N，ability：0-所有怪兽能力的累加和，如果每个怪兽能力都很大，比如都是10^8左右，那么ability就会
 超过10^8，填完整张表，就会超时
-	5.如果怪兽的能力值比较小，比如说100以内，怪兽的数量呢，100个以内，那我知道这即便是在最夸张的情况下，
+	3.如果怪兽的能力值比较小，比如说100以内，怪兽的数量呢，100个以内，那我知道这即便是在最夸张的情况下，
 我的能力也不会超过10000。累加和最大是10000，index的范围是100，这张表就是一个10^6的一张表，如果我能力比较小，
 我可以知道我做动态规划有前途，在10^8以内，它能填完
 
 思路二：
 	1.
 		process2(int index, int money):当前来到了index号怪兽的面前，花的钱数必须严格等于money，返回能通过的最大能力值。如果花money无法通过，返回-1.
-		basecase:
-	2.主过程，如果不贿赂怪兽，花money钱数之前是能通过到index-1的，并且之前通过的最大能力值必须大于index号怪兽；
-如果贿赂怪兽，花money-p[index]是能通过到index-1的
-	3.index：0-n，money：所有怪兽的钱数累加和。如果你一个怪兽贿赂的钱非常大，这种方法不适用，改成动态规划这张表的规模超过
+		basecase:第1个怪兽，花的钱必须是p[0], 才有意义。此时返回的最大能力值d[0]
+		主过程：可能性一：不贿赂怪兽，花money钱是能通过到index-1的，并且之前通过的最大能力值必须大于index号怪兽；
+				可能性二：贿赂怪兽，花money-p[index]是能通过到index-1的
+	2.index：0-n，money：所有怪兽的钱数累加和。如果你一个怪兽贿赂的钱非常大，这种方法不适用，改成动态规划这张表的规模超过
 10^8不行。如果每一个怪兽贿赂它的钱数都是比较小。比如1~10，怪兽一共有100个，你写这张表的规模就很小就能通过了
 
-腾讯考的时候的数据量：
+三、腾讯考的时候的数据量：
 	真实的考这道题的时候。怪兽数量：500,每个怪兽花的钱1~10，怪兽能力值10^6以上，选择第二种方法.
 	如果怪兽的能力减小了，而钱数变大了，选择第一种方法
  */
@@ -133,25 +134,28 @@ public class Code04_MoneyProblem {
 	// 如果通过不了，返回-1
 	// 如果可以通过，返回能通过情况下的最大能力值
 	public static long process2(int[] d, int[] p, int index, int money) {
+		// 两种basecase都可以。basecase不知道怎么定义的时候，如果你清楚主流程，也可以反推basecase
+		// 这里主流程，index会越来越小，那么basecase无非就是思考index=0，或者index=1怎么样
+
+		// basecase1
 //		if (index == -1) { // 一个怪兽也没遇到呢
-//			return money == 0 ? 0 : -1;
+//			return == 0 ? 0 : -1;
 //		}
-		// 第一个怪兽的情况
+		// basecase2：第一个怪兽的情况
 		if (index == 0) {
-			return money == p[0] ? d[0] : -1; // 第1个怪兽，花的钱必须是p[0], 才有可能。此时的最大能力值d[0]
+			return money == p[0] ? d[0] : -1; // 第1个怪兽，花的钱必须是p[0], 才有意义。此时返回的最大能力值d[0]
 		}
 		// 1) 不贿赂当前index号怪兽
 		long preMaxAbility = process2(d, p, index - 1, money);
 		long p1 = -1;
-		// 花money的钱，之前是能通过到index-1的，并且之前通过的最大能力值必须大于index号怪兽
-		if (preMaxAbility != -1 && preMaxAbility >= d[index]) {
+		if (preMaxAbility != -1 && preMaxAbility >= d[index]) {	// 花money的钱，之前是能通过到index-1的，并且之前通过的最大能力值必须大于index号怪兽
+
 			p1 = preMaxAbility;
 		}
 		// 2) 贿赂当前的怪兽 当前的钱 p[index]
 		long preMaxAbility2 = process2(d, p, index - 1, money - p[index]);
 		long p2 = -1;
-		// 我之前是能通过到index-1的
-		if (preMaxAbility2 != -1) {
+		if (preMaxAbility2 != -1) { // 我之前是能通过到index-1的
 			p2 = d[index] + preMaxAbility2;
 		}
 		return Math.max(p1, p2);
