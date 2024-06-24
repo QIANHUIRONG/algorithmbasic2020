@@ -10,11 +10,22 @@ O(N*logN)
 O(N + K*logN);
 O(N + K*logK);
  */
+
+
 /*
 时间：1：13
 方法1：排序
-方法2【1：15】：堆
-方法3【1：17】：无序数组中的第k小的数模型
+方法2【1：15】
+方法3【1：17】
+ */
+
+/*
+思维导图：
+方法1：排序
+
+方法2：先用heapify建堆；然后依次弹出k个元素，就是O(N + K*logN)
+
+方法3：无序数组中的第k小的数模型
 	 1.先求出无序数组第N-k小的数num
 	 2.再遍历原来的数组，大于num的就进ans[]数组
 	 3.最后没满的，用num补齐
@@ -67,7 +78,7 @@ public class Code02_MaxTopK {
 
 		int heapSize = N;
 		int[] ans = new int[k];
-		int i = 0;
+		int i = 0; // ans专用的指针
 		while (k != 0) {
 			ans[i++] = arr[0];
 			swap(arr, 0, --heapSize);
@@ -75,13 +86,6 @@ public class Code02_MaxTopK {
 			k--;
 		}
 		return ans;
-	}
-
-	public static void heapInsert(int[] arr, int index) {
-		while (arr[index] > arr[(index - 1) / 2]) {
-			swap(arr, index, (index - 1) / 2);
-			index = (index - 1) / 2;
-		}
 	}
 
 	public static void heapify(int[] arr, int index, int heapSize) {
@@ -114,13 +118,13 @@ public class Code02_MaxTopK {
 		// O(N)
 		int num = minKth(arr, N - k);
 		int[] ans = new int[k];
-		int index = 0;
+		int index = 0; // ans专用指针
 		for (int i = 0; i < N; i++) {
 			if (arr[i] > num) {
 				ans[index++] = arr[i];
 			}
 		}
-		for (; index < k; index++) {
+		for (; index < k; index++) { // 其余用num补齐
 			ans[index] = num;
 		}
 		// O(k*logk)
@@ -132,7 +136,7 @@ public class Code02_MaxTopK {
 		return ans;
 	}
 
-	// 时间复杂度O(N)
+	// 时间复杂度O(N)，空间复杂度O(1)
 	public static int minKth(int[] arr, int index) {
 		int L = 0;
 		int R = arr.length - 1;
