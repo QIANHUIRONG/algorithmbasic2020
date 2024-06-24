@@ -1,7 +1,42 @@
 package class20;
 
+/*
+题意：
+给你一个字符串 s ，找出其中最长的回文子序列，并返回该序列的长度。
+子序列定义为：不改变剩余字符顺序的情况下，删除某些字符或者不删除任何字符形成的一个序列。
+示例 1：
+输入：s = "bbbab"
+输出：4
+解释：一个可能的最长回文子序列为 "bbbb" 。
+示例 2：
+输入：s = "cbbd"
+输出：2
+解释：一个可能的最长回文子序列为 "bb" 。
+// 测试链接：516 https://leetcode.cn/problems/longest-palindromic-subsequence/
+ */
+
 // 时间：07
-// 测试链接：516 https://leetcode.com/problems/longest-palindromic-subsequence/
+
+/*
+思维导图：
+
+方法一：最长公共子序列模型，字符串和自己的逆序串的最长公共子序列就是原串的最长回文子序列
+
+方法二：[范围上的尝试模型]
+1.范围模型：经常讨论开头和结尾共同结合的可能性
+
+2.
+	f(char[] str, int L, int R) {}：str在L...R的范围上最长回文子序列长度
+	basecase: 只剩1个字符，或者只剩2个字符，直接求出答案
+	普遍流程：
+		str[L..R]一定不包含L，也一定不包含R
+		str[L..R]可能包含L，一定不包含R
+		str[L..R]一定不包含R，可能包含L
+		str[L..R]一定包含L，一定包含R
+
+3.dp
+ */
+
 public class Code01_PalindromeSubsequence {
 
 	/**
@@ -18,10 +53,6 @@ public class Code01_PalindromeSubsequence {
 	}
 
 	// str[L..R]最长回文子序列长度返回
-	// str[L..R]一定不包含L，也一定不包含R
-	// str[L..R]可能包含L，一定不包含R
-	// str[L..R]一定不包含R，可能包含L
-	// str[L..R]一定包含L，一定包含R
 	public static int f(char[] str, int L, int R) {
 		if (L == R) {
 			return 1;

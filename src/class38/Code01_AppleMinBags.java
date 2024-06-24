@@ -43,7 +43,6 @@ public class Code01_AppleMinBags {
 		int bag8 = apple / 8;
 		int rest = apple - bag8 * 8;
 		while(bag8 >= 0) {
-			// rest 个
 			if(rest % 6 ==0) {
 				return bag8 + (rest / 6);
 			} else {

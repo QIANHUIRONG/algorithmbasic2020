@@ -1,8 +1,35 @@
 package class18;
 
+
+/*
+题意：
+	玩家A和玩家B依次拿走每张纸牌，
+	规定玩家A先拿，玩家B后拿，
+	但是每个玩家每次只能拿走最左或最右的纸牌，
+	玩家A和玩家B都绝顶聪明。请返回最后获胜者的分数
+ */
 /*
 时间：1：31
  */
+/*
+思维导图
+1.范围上的尝试模型
+2.首先先手不是必赢，举个例子：1，100，1， 先手无论怎么拿，后手都会拿走100
+3.
+	f1(int[] arr, int L, int R) {}，arr[L..R]你去先手获得的最好分数返回
+	basecase：L==R时，就是return arr[L]
+	普遍位置：拿L, 然后去arr[L+1,R]后手；或者拿R，去arr[L,R-1]后手，求max
+4.
+	g1(int[] arr, int L, int R) {}  arr[L..R]你去后手获得的最好分数返回
+	basecase：L==R时，你是后手，先手一定会拿走，return 0
+	普遍位置：对手拿走了L位置，你去arr[L+1,R]先手；对手拿走了R位置，你去arr[L,R-1]先手，求min
+5.第四步求min，解释一下：
+	 因为你是后手姿态，对手是先手姿态，又是绝顶聪明的，对手会拿走先手姿态下的最大，而你只能拿到最小值
+	 比如[100, 3], 你是后手，那么先手一定会拿走100， 你只剩一个[3]去继续先手。
+	 先手一定赢吗？不一定，比如[1,100,1]，无论先手拿什么，后手一定拿100
+
+ */
+
 public class Code02_CardsInLine {
 
 	// 根据规则，返回获胜者的分数
@@ -15,9 +42,9 @@ public class Code02_CardsInLine {
 		if (arr == null || arr.length == 0) {
 			return 0;
 		}
-		int first = f1(arr, 0, arr.length - 1);
-		int second = g1(arr, 0, arr.length - 1);
-		return Math.max(first, second);
+		int first = f1(arr, 0, arr.length - 1); // 先手
+		int second = g1(arr, 0, arr.length - 1); // 后手
+		return Math.max(first, second); // 返回先手、后手谁赢
 	}
 
 	// arr[L..R]，先手获得的最好分数返回

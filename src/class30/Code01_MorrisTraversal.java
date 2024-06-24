@@ -3,14 +3,16 @@ package class30;
 // 笔记是完整的，不需要看思维导图！！！
 
 /*
-时间：8
+题意：Morris遍历
  */
+
 /*
+时间
 传统的二叉树的三序遍历【8】
 Morris【15】：时间复杂度o(n), 空间复杂度o(1)。利用了一棵树中叶子大量的空闲指针
 流程【17】
 流程为什么对【30】
-morris加工加工先序中序后序【36】
+morris加工先序中序后序【36】
 morris code【40】
 morris 加工先序 code【48】
 morris 加工中序 code【52】
@@ -20,9 +22,13 @@ morris 加工后序【1：00】
 如何判断一棵树是搜索二叉树【1：17】：把中序遍历的打印行为变成对比行为
  */
 
+
+// 思维导图：
+
 /*
 二叉树的三序遍历，递归的方式，时间复杂度O(N),空间复杂度O(H),H是树的高度;
 使用Morris改写的三序遍历，可以做到时间复杂度O(N),空间复杂度O(1)!
+笔试的时候用递归，面试的时候先说递归，再装逼说morris
 */
 
 /*
@@ -68,13 +74,6 @@ morris遍历加工后序遍历
 ->链表反转，打印，打印完，记得再反转回来；
  */
 
-/*
-时间复杂度o(n), 空间复杂度(1).
- */
-
-/*
-笔试的时候用递归，面试的时候先说递归，再装逼说morris
- */
 
 /*
 Morris改写判断是否是搜索二叉树
@@ -116,26 +115,18 @@ public class Code01_MorrisTraversal {
 		while (cur != null) {  // cur为空时，遍历结束
 			mostRight = cur.left;
 			if (mostRight != null) { // 要去找左树上的最右孩子，如果连左树都没有，直接指向右子树，cur = cur.right;
-				// 有左树，会经过两次
-				// 找左树上的最右孩子；mostRight.right != cur这个条件确保第一次标记过后，第二次拿到的mostRight节点是对的
-				while (mostRight.right != null && mostRight.right != cur) {
+				while (mostRight.right != null && mostRight.right != cur) {// 找左树上的最右孩子；mostRight.right != cur这个条件确保第一次标记过后，第二次拿到的mostRight节点是对的
 					mostRight = mostRight.right;
 				}
-
-				if (mostRight.right == null) {
-					// MostRight的右指针指向空，也就是第一次来到当前节点
-					// 让MostRight的右指针指向cur，然后cur指向左子树
-					mostRight.right = cur;
+				if (mostRight.right == null) { // MostRight的右指针指向空，也就是第一次来到当前节点
+					mostRight.right = cur;// 让MostRight的右指针指向cur，然后cur指向左子树
 					cur = cur.left;
-				} else {
-					// MostRight的右指针指向cur，也就是第二次来到当前节点
-					// 让MostRight的右指针指向null，然后cur指向右子树
-					mostRight.right = null;
+				} else { // MostRight的右指针指向cur，也就是第二次来到当前节点
+					mostRight.right = null; // 让MostRight的右指针指向null，然后cur指向右子树
 					cur = cur.right;
 				}
 			} else {
-				// 根本没有左树，直接指向右子树
-				cur = cur.right;
+				cur = cur.right;// 根本没有左树，直接指向右子树
 			}
 		}
 	}
@@ -159,8 +150,7 @@ public class Code01_MorrisTraversal {
 					mostRight = mostRight.right;
 				}
 				if (mostRight.right == null) {
-					// 有左树会经过两次的就在两次中的第一次打印；
-					System.out.print(cur.value + " ");
+					System.out.print(cur.value + " ");// 有左树会经过两次的就在两次中的第一次打印；
 					mostRight.right = cur;
 					cur = cur.left;
 				} else {
@@ -168,8 +158,7 @@ public class Code01_MorrisTraversal {
 					cur = cur.right;
 				}
 			} else {
-				// 	没有左树只经过1次的就在经过1次那里直接打印；
-				System.out.print(cur.value + " ");
+				System.out.print(cur.value + " ");	// 	没有左树只经过1次的就在经过1次那里直接打印；
 				cur = cur.right;
 			}
 		}
@@ -250,18 +239,16 @@ public class Code01_MorrisTraversal {
 					cur = cur.right;
 				}
 			} else {
-				// 没有左树的只会经过1次不鸟它
-				cur = cur.right;
+				cur = cur.right;// 没有左树的只会经过1次不鸟它
 			}
 		}
-		// Morris遍历完后，逆序打印整棵树的右边界，注意是整棵树
-		printEdge(head);
+		printEdge(head);// Morris遍历完后，逆序打印整棵树的右边界，注意是整棵树
 		System.out.println();
 	}
 
 	// 打印，后序遍历使用
 	public static void printEdge(Node head) {
-		Node tail = reverseEdge(head);
+		Node tail = reverseEdge(head); // tail是反转后的头
 		Node cur = tail;
 		while (cur != null) {
 			System.out.print(cur.value + " ");
@@ -301,23 +288,18 @@ public class Code01_MorrisTraversal {
 					mostRight = mostRight.right;
 				}
 				if (mostRight.right == null) {
-					// 第1次
 					mostRight.right = cur;
 					cur = cur.left;
 				} else {
-					// 第2次
-					// 中序遍历，判断前一个数是否小于后一个数
-					if (pre != null && pre >= cur.value) {
-						ans = false; // 千万不要直接返回fasle了，因为你改过了指针，要让morris跑完，让指针复原
+					if (pre != null && pre >= cur.value) {// 中序遍历，判断前一个数是否小于后一个数
+						ans = false; // 千万不要直接返回false了，因为你改过了指针，要让morris跑完，让指针复原
 					}
 					pre = cur.value;
 					mostRight.right = null;
 					cur = cur.right;
 				}
 			} else {
-				// 没左树
-				// 中序遍历，判断前一个数是否小于后一个数
-				if (pre != null && pre >= cur.value) {
+				if (pre != null && pre >= cur.value) {	// 中序遍历，判断前一个数是否小于后一个数
 					ans = false;
 				}
 				pre = cur.value;

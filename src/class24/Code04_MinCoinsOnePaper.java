@@ -3,12 +3,33 @@ package class24;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.LinkedList;
-
+/*
+题意：货币数组组成面值的最少货币数
+arr是货币数组，其中的值都是正数。再给定一个正数aim。
+每个值都认为是一张货币，
+返回组成aim的最少货币数
+注意：
+因为是求最少货币数，所以每一张货币认为是相同或者不同就不重要了
+ */
 /*
 时间：2：04
-1、法1：从左往右尝试模型，0位置要和不要2条路，1位置要和不要两条路，依次展开
-2、法2：收集面值数组和张数数组。接下来，0位置用1张的时候，展开；0位置用2张的时候展开...
+1、法1：从左往右尝试模型，0位置的钱要和不要2条路，1位置的钱要和不要两条路...依次展开。最后改动态规划
+	1.
+		process(int[] arr, int index, int rest) {}：当前来到index位置，从index开始往后的货币自由选择，返回凑出rest这么多钱的最少张数
+		basecase:
+			1.index == arr.length, 没有货币可选了，如果rest=0，要凑出0，返回最少0张（注意这里不是求方法数，如果是求方法数，应该返回1）
+			2.if (rest < 0) ，rest提前掉到0一下， 返回无效解Integer.MAX_VALUE
+		普遍流程：
+			1.可能性一：不要index位置的数
+			2.可能性二：要index位置的数，如果下游没有给我返回无效解，这个可能性就有效，否则无效
+			二者求min
+	2.Code02_CoinsWayEveryPaperDifferent，求的是方法数；本道题求的是最少张树
+	求方法数，basecase  index == arr.length, 没有货币可选了，如果rest=0，返回1种方法；然后两种可能性累加
 
+
+2、法2：收集面值数组和张数数组。接下来，0位置用1张的时候，展开；0位置用2张的时候展开... todo
+
+3、用窗口优化 todo
  */
 public class Code04_MinCoinsOnePaper {
 

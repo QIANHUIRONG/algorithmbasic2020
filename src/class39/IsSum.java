@@ -3,13 +3,31 @@ package class39;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/*
+题意：
+arr中的值可能为正，可能为负，可能为0
+自由选择arr中的数字，能不能累加得到sum
+ */
+
 // 这道题是一个小小的补充，课上没有讲
 // 但是如果你听过体系学习班动态规划专题和本节课的话
 // 这道题就是一道水题
+
+/*
+思维导图：
+	1.常规解法：arr[i]不大的情况下， sum不会特别大，可以用
+		boolean process1(int[] arr, int i, int sum) {}， 当前来到i位置，arr从0...i，自由选择数字，能不能搞出sum
+		basecase:
+		主流程：
+			可能性一：不要i位置的数，那就是arr0...i -1能不能搞出sum
+			可能性二：要i位置的数，就是arr0..i-1能不能搞出sum-arr[i]
+			两种可能性只要有一种能搞出来sum就行
+
+	2.分治，arr[i]很大，但是arr长度n很小，只有40
+
+ */
 public class IsSum {
 
-	// arr中的值可能为正，可能为负，可能为0
-	// 自由选择arr中的数字，能不能累加得到sum
 	// 暴力递归方法
 	public static boolean isSum1(int[] arr, int sum) {
 		if (sum == 0) {

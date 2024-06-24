@@ -1,9 +1,12 @@
 package class39;
 
+import java.util.HashSet;
 import java.util.TreeSet;
 
-// 题意：
+/*
+// 题意：非负数组子序列中累加和%m的最大值
 // 给定一个非负数组arr，和一个正数m。 返回arr的所有子序列中累加和%m之后的最大值。
+ */
 
 /*
 时间
@@ -25,11 +28,27 @@ code：45
 	3.index的取值：0-n，sum的取值：所有数字的累加和，不大
 
 
-解法二：
+解法二：数组值巨大，%m的m不大
 	1.dp[i][j]:arr0.i所有的数字自由选择，所搞出来的所有累加和再模m之后有没有余数j
 	2.主流程：
-		1.完全不使用i位置数字dp[i-1][j]，arr从0~i-1所有的数字搞出来的累加和能不能模完M之后搞出j
-		2.使用i位置的数：【23】
+		1.可能性一：完全不使用i位置数字dp[i-1][j]，arr从0~i-1所有的数字搞出来的累加和能不能模完M之后搞出j
+		2.可能性二：使用i位置的数：【23】
+            情况一：i = 4, arr[i] = 5,j=7,m = 8,cur = 5 % 8 = 3
+            3 <= 8,那么如果要凑出dp[4][7], 就需要凑出dp[3][4], 就是dp[i - 1][j - cur]
+            宏观理解：要搞出余数7，我当前这个数余数是3，那只要之前能给我搞出余数4就行了。
+            这里已经包括了，cur==j的情况，这时候会拿dp[i-1][0]。
+
+            情况二：i = 4, arr[i] = 11,j = 3, m = 7, cur = 11 % 7 = 4
+            4 > 3, 如果要凑出dp[4][3],  （11 + ？） % 7 = 3， ？ = 6， 6 = 7 + 3 - 4， 依赖dp[i-1][m + j - cur]
+            宏观理解：要搞出余数3，我当前这个数的余数的4，那只要之前能给我搞出余数6就行了，我的余数加上之前的余数 = 10，10%7=3
+            int cur = arr[i] % m;
+
+            if (cur <= j) {
+                dp[i][j] |= dp[i - 1][j - cur];
+            } else {
+                dp[i][j] |= dp[i - 1][j - cur + m]; // 相比上一个，就相当于再加一个m
+            }
+
 
 解法三：
 	1.arr每个位置值巨大，m的值巨大，但是arr长度30以内，这种情况下用分治。如果直接暴力展开，2^30 > 10^8, 所以可以拆成2份1
@@ -53,41 +72,46 @@ public class Code01_SubsquenceMaxModM {
     /*
     数据量1：数组值都不大，n很大
      */
-//	public static int max1(int[] arr, int m) {
-//		HashSet<Integer> set = new HashSet<>();
-//		// arr从0位置开始自由选择，递归收集所有的累加和，再去%m求最大
-//		process(arr, 0, 0, set);
-//		int max = 0;
-//		for (Integer sum : set) {
-//			max = Math.max(max, sum % m);
-//		}
-//		return max;
-//	}
-//
-//	public static void process(int[] arr, int index, int sum, HashSet<Integer> set) {
-//		if (index == arr.length) {
-//			set.add(sum);
-//		} else {
-//			process(arr, index + 1, sum, set);
-//			process(arr, index + 1, sum + arr[index], set);
-//		}
-//	}
-    public static int max1(int[] arr, int m) {
-        TreeSet<Integer> set = new TreeSet<>();
-        // arr从0位置开始自由选择，递归收集所有的累加和，再去%m求最大
-        process(arr, 0, 0, m, set);
-        // floor: 找到<=x，最接近x的
-        return set.isEmpty() ? 0 : set.floor(m);
-    }
+	public static int max1(int[] arr, int m) {
+		HashSet<Integer> set = new HashSet<>();
+		// arr从0位置开始自由选择，递归收集所有的累加和，再去%m求最大
+		process(arr, 0, 0, set);
+		int max = 0;
+		for (Integer sum : set) {
+			max = Math.max(max, sum % m);
+		}
+		return max;
+	}
 
-    public static void process(int[] arr, int index, int sum, int m, TreeSet<Integer> set) {
-        if (index == arr.length) {
-            set.add(sum % m);
-        } else {
-            process(arr, index + 1, sum, m, set);
-            process(arr, index + 1, sum + arr[index], m, set);
-        }
-    }
+	public static void process(int[] arr, int index, int sum, HashSet<Integer> set) {
+		if (index == arr.length) {
+			set.add(sum);
+		} else {
+			process(arr, index + 1, sum, set);
+			process(arr, index + 1, sum + arr[index], set);
+		}
+	}
+
+	// 和上面思想一样，只不过容器换成了treeSet
+//    public static int max1(int[] arr, int m) {
+//        if (arr == null || arr.length == 0) {
+//            return 0;
+//        }
+//        TreeSet<Integer> set = new TreeSet<>();
+//        // arr从0位置开始自由选择，递归收集所有的累加和，再去%m求最大
+//        process(arr, 0, 0, m, set);
+//        // floor: 找到<=x，最接近x的
+//        return set.floor(m);
+//    }
+//
+//    public static void process(int[] arr, int index, int sum, int m, TreeSet<Integer> treeSet) {
+//        if (index == arr.length) {
+//            treeSet.add(sum % m);
+//        } else {
+//            process(arr, index + 1, sum, m, treeSet);
+//            process(arr, index + 1, sum + arr[index], m, treeSet);
+//        }
+//    }
 
     /*
     数据量一对应的动态规划
@@ -113,7 +137,7 @@ public class Code01_SubsquenceMaxModM {
                 dp[index][sum] = dp[index - 1][sum];
                 // 选了index位置的数
                 if (sum - arr[index] >= 0) {
-                    dp[index][sum] |= dp[index - 1][sum - arr[index]];
+                    dp[index][sum] |= dp[index - 1][sum - arr[index]]; // dp[index][sum]初始是false，如果dp[index - 1][sum - arr[index]]为true就是true，为false就是false
                 }
             }
         }
@@ -127,9 +151,11 @@ public class Code01_SubsquenceMaxModM {
     }
 
 
+
+
     /*
     数据量2：数组值巨大，n不大
-    数据量2对应的dp。没有写暴力递归
+    数据量2对应的dp。没有写暴力递归->尝试了下，好像搞不定啊，又变成max1了
      */
     public static int max3(int[] arr, int m) {
         int N = arr.length;
@@ -138,27 +164,29 @@ public class Code01_SubsquenceMaxModM {
         // dp[i][j]:arr0.i所有的数字自由选择，所搞出来的所有累加和再%m之后有没有余数j
         boolean[][] dp = new boolean[N][m];
         for (int i = 0; i < N; i++) {
-            dp[i][0] = true;
+            dp[i][0] = true; // 搞出余数0，就是什么数都不选就是余数0
         }
-        dp[0][arr[0] % m] = true;
+        dp[0][arr[0] % m] = true; // 只能选arr[0], 它搞出来的余数是啥，那个格子就是true
         for (int i = 1; i < N; i++) {
             for (int j = 1; j < m; j++) {
-                // 情况一：不使用i位置的数
+                // 可能性一：不使用i位置的数，arr从0~i-1所有的数字搞出来的累加和能不能模完M之后搞出j
                 dp[i][j] = dp[i - 1][j];
 
 				/*
-				情况二：使用i位置的数
+				可能性二：使用i位置的数
 				1、i = 4, arr[i] = 5,j=7,m = 8,cur = 5 % 8 = 3
 				3 <= 8,那么如果要凑出dp[4][7], 就需要凑出dp[3][4], 就是dp[i - 1][j - cur]
+				宏观理解：要搞出余数7，我当前这个数余数是3，那只要之前能给我搞出余数4就行了。
 
 				2、i = 4, arr[i] = 11,j = 3, m = 7, cur = 11 % 7 = 4
 				4 > 3, 如果要凑出dp[4][3],  （11 + ？） % 7 = 3， ？ = 6， 6 = 7 + 3 - 4， 依赖dp[i-1][m + j - cur]
+				宏观理解：要搞出余数3，我当前这个数的余数的4，那只要之前能给我搞出余数6就行了，我的余数加上之前的余数 = 10，10%7=3
 				 */
                 int cur = arr[i] % m;
                 if (cur <= j) {
                     dp[i][j] |= dp[i - 1][j - cur];
                 } else {
-                    dp[i][j] |= dp[i - 1][j - cur + m]; // 相比上一个，就相当于再加一个m，
+                    dp[i][j] |= dp[i - 1][j - cur + m]; // 相比上一个，就相当于再加一个m
                 }
             }
         }
@@ -172,6 +200,7 @@ public class Code01_SubsquenceMaxModM {
 
     // 如果arr的累加和很大，m也很大
     // 但是arr的长度相对不大
+    // 用分治法
     public static int max4(int[] arr, int m) {
         if (arr.length == 1) {
             return arr[0] % m;
@@ -182,13 +211,13 @@ public class Code01_SubsquenceMaxModM {
         TreeSet<Integer> sortSet2 = new TreeSet<>();
         process4(arr, mid + 1, 0, arr.length - 1, m, sortSet2);
         int ans = 0;
-        ans = Math.max(ans, sortSet1.floor(m));
-        ans = Math.max(ans, sortSet2.floor(m));
+        ans = Math.max(ans, sortSet1.floor(m)); // 先抓一下，答案可能只来自左侧
+        ans = Math.max(ans, sortSet2.floor(m)); // 先抓一下，答案可能只来自右侧
         for (Integer leftMod : sortSet1) {
-            // m=8， leftMod = 3， 右边应该去找<=4距离4最近的
+            // m=8， leftMod = 3， 右边应该去找<=4距离4最近的。treeSet.floor(x), 就是找到<=x距离x最近的！
             ans = Math.max(ans, leftMod + sortSet2.floor(m - 1 - leftMod));
         }
-        for (Integer rightMod : sortSet2) {
+        for (Integer rightMod : sortSet2) { // 原本是没有这段代码的，没有这段也行，但是加了好像好理解一点，不然我总感觉漏了一边
             ans = Math.max(ans, rightMod + sortSet1.floor(m - 1 - rightMod));
         }
         return ans;

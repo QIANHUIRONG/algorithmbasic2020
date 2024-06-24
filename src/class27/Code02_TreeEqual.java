@@ -3,9 +3,18 @@ package class27;
 import java.util.ArrayList;
 
 /*
+题意：两棵二叉树是否有一致结构的子树
+ */
+/*
 题意：1：59
-流程：2：01	序列化两棵树，看子树是不是在
-
+流程：2：01	序列化两棵树t1,t2，如果t2序列化的结果是t1的子串，那么就有一直结构的子树
+序列化：o(n),kmp:o(n)
+注意：
+		32
+	11		45
+19		13
+先序结果：["32", "11", "19", null,null,"13",null,null,"45",null,null]
+注意，32要理解为单个字符，也就是原本的kmp是String s去玩；现在用String[]数组去玩kmp，每一个字符是一个string
  */
 public class Code02_TreeEqual {
 

@@ -1,7 +1,7 @@
 package class40;
 
 /**
- * 【题意】
+ * 【题意】原地旋转正方形柜阵
  * 给定一个正方形矩阵matrix，原地调整成顺时针90度转动的样子
  */
 /*
@@ -21,8 +21,6 @@ package class40;
 
 2.一圈里面的怎么办？
 	分组调整。N*N的正方形就分为N-1组
-
-
  */
 public class Code05_RotateMatrix {
 

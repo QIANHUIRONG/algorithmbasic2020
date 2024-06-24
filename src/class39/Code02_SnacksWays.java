@@ -1,7 +1,7 @@
 package class39;
 
 /*
-【题意】
+【题意】背包中有多少种零食放法
 背包容量为w
 一共有n袋零食, 第i袋零食体积为v[i]
 总体积不超过背包容量的情况下，
@@ -11,7 +11,7 @@ package class39;
 【时间】
 题意：46
 用经典流程：48
-用分治，code：52 【在下一节】
+用分治，code：52 【在下一个文件】
 整合逻辑：1：11
 总结：1：22
  */
@@ -19,12 +19,16 @@ package class39;
 /*
 【思维导图】
 经典流程：从左到右尝试模型
-1、int process(int[] arr, int index, int rest) ：当前来到index位置，index及其之后的零食自由选择，还剩的容量是rest，返回选择方案
-2、index位置要和不要两种选择
+1、
+	int process(int[] arr, int index, int rest) ：当前来到index位置，index及其之后的零食自由选择，还剩的容量是rest，返回选择方案
+	basecase：i=arr.length,return rest < 0 ? 0 : 1; // 收集一种方法数，叫做我之前做过的决定，求方法数的都是这个套路
+	主流程：
+		可能性一：不要index位置的数
+		可能性二：要index位置的数
+		两种可能性的方法数累加
 
 3、本题给的数据量是：
 链接：https://www.nowcoder.com/questionTerminal/d94bb2fa461d42bcb4c0f2b94f5d4281
-来源：牛客网
 输入包括两行
 第一行为两个正整数n和w(1 <= n <= 30, 1 <= w <= 2 * 10^9),表示零食的数量和背包的容量。
 第二行n个正整数v[i](0 <= v[i] <= 10^9),表示每袋零食的体积。
@@ -44,16 +48,16 @@ public class Code02_SnacksWays {
 	// 从左往右的经典模型
 	// 当前来到index位置，index及其之后的零食自由选择，还剩的容量是rest，返回选择方案
 	public static int process(int[] arr, int index, int rest) {
-		if (rest < 0) { // 没有容量了
-			return -1; // -1 无方案的意思
-		}
+//		if (rest < 0) { // 没有容量了
+//			return -1; // -1 无方案的意思
+//		}
 		if (index == arr.length) { // 无零食可选
-			return 1; // 收集一种方法数，叫做我之前做过的决定
+			return rest < 0 ? 0 : 1; // 收集一种方法数，叫做我之前做过的决定
 		}
 		// index号零食，要 or 不要
 		int next1 = process(arr, index + 1, rest); // 不要
 		int next2 = process(arr, index + 1, rest - arr[index]); // 要
-		return next1 + (next2 == -1 ? 0 : next2);
+		return next1 +  next2;
 	}
 
 	/*
@@ -98,8 +102,8 @@ public class Code02_SnacksWays {
 	}
 
 	public static void main(String[] args) {
-		int[] arr = { 4, 3, 2, 9 };
-		int w = 8;
+		int[] arr = { 4, 3, 2, 9 ,3,4,7,46,89,102,65,23,46,57,8,9,33,27,65,33,88};
+		int w = 120;
 		System.out.println(ways1(arr, w));
 		System.out.println(ways2(arr, w));
 		System.out.println(ways3(arr, w));
