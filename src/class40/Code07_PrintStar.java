@@ -22,11 +22,6 @@ public class Code07_PrintStar {
 
         // 初始化
         char[][] m = new char[N][N];
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                m[i][j] = ' ';
-            }
-        }
         // 转圈填*
         int a = 0;
         int b = 0;
@@ -84,6 +79,15 @@ public class Code07_PrintStar {
 
     public static void main(String[] args) {
         printStar(10);
+        //数组是引用类型，它的元素相当于类的成员变量，因此数组一经分配空间，其中的每个元素也被按照成员变量同样的方式被隐式
+        //对于基本数据类型而言，默认初始化值各有不同
+        //对于引用数据类型而言，默认初始化值为null(注意与0不同！)
+        //char:默认值0，或者'\u0000'表现为空
+        System.out.println("================");
+        char[] chars = new char[5];
+        for (char aChar : chars) {
+            System.out.println(aChar == 0);
+        }
     }
 
 }
