@@ -42,12 +42,12 @@ public class Code08_ZigZagPrintMatrix {
     }
 
     public static void printLevel(int[][] m, int a, int b, int c, int d, boolean f) {
-        if (f) {
-            while (a <= c && b >= d) {
+        if (f) {// 右上到左下
+            while (a <= c) {
                 System.out.print(m[a++][b--] + " ");
             }
-        } else {
-            while (c >= a && d <= b) {
+        } else {// 左下到右上
+            while (c >= a) {
                 System.out.print(m[c--][d++] + " ");
             }
         }
